@@ -1,0 +1,153 @@
+import {createRouter, createWebHashHistory} from 'vue-router'
+import ArticleIndex from "../views/article/index";
+import ArticleList from "../views/article/list";
+import ArticleCreate from "../views/article/create";
+import ArticleDetail from "../views/article/detail";
+import LayOut from '../layout/index'
+const routes = [
+    {
+        path: '/',
+        component: LayOut,
+        redirect: '/test',
+    },
+    {
+        path: '/test',
+        component: LayOut,
+    },
+    {
+        path:'/article/test',
+        component: ArticleList,
+    },
+    {
+        path: '/article',
+        component: ArticleIndex,
+        children: [
+            {
+                path: 'list',
+                component: ArticleList,
+                name:'article list'
+            },
+            {
+                path: 'detail',
+                component: ArticleDetail,
+                name:'article detail'
+
+            },
+            {
+                path: 'create',
+                component: ArticleCreate,
+                name:'article create'
+            }
+        ]
+    }
+
+]
+
+const router = createRouter({
+    // 4. 内部提供了 history 模式的实现。为了简单起见，我们在这里使用 hash 模式。
+    history: createWebHashHistory(),
+    routes, // `routes: routes` 的缩写
+})
+export default router
+// import Vue from 'vue'
+// import Router from 'vue-router'
+//
+// Vue.use(Router)
+//
+// /* Layout */
+//
+// /**
+//  * Note: sub-menu only appear when route children.length >= 1
+//  * Detail see: https://panjiachen.github.io/vue-element-admin-site/guide/essentials/router-and-nav.html
+//  *
+//  * hidden: true                   if set true, item will not show in the sidebar(default is false)
+//  * alwaysShow: true               if set true, will always show the root menu
+//  *                                if not set alwaysShow, when item has more than one children route,
+//  *                                it will becomes nested mode, otherwise not show the root menu
+//  * redirect: noRedirect           if set noRedirect will no redirect in the breadcrumb
+//  * name:'router-name'             the name is used by <keep-alive> (must set!!!)
+//  * meta : {
+//     roles: ['admin','editor']    control the page roles (you can set multiple roles)
+//     title: 'title'               the name show in sidebar and breadcrumb (recommend set)
+//     icon: 'svg-name'/'el-icon-x' the icon show in the sidebar
+//     breadcrumb: false            if set false, the item will hidden in breadcrumb(default is true)
+//     activeMenu: '/example/list'  if set path, the sidebar will highlight the path you set
+//   }
+//  */
+//
+// /**
+//  * constantRoutes
+//  * a base page that does not have permission requirements
+//  * all roles can be accessed
+//  */
+// export const constantRoutes = [
+//     {
+//         path: '/',
+//         component: Layout,
+//         redirect: '/article',
+//         children: [{
+//             path: 'dashboard',
+//             name: 'Dashboard',
+//             component: () => import('@/views/dashboard/index'),
+//             meta: { title: 'Dashboard', icon: 'dashboard' }
+//         }]
+//     },
+//
+//     {
+//         path: '/wiki',
+//         component: Layout,
+//         redirect: '/wiki/list',
+//         name: 'docs',
+//         hidden: true,
+//         meta: {
+//             roles: ['admin'],
+//             title: '文档',
+//             icon: 'el-icon-s-help'
+//         },
+//         children: [
+//             {
+//                 path: 'list',
+//                 component: () => import('@/views/wiki/list'),
+//                 name: 'ArticleList',
+//                 meta: { title: '文档列表', icon: 'list' }
+//             },
+//             {
+//                 path: 'create',
+//                 component: () => import('@/views/wiki/create'),
+//                 name: 'CreateArticle',
+//                 meta: { title: '创建文档', icon: 'edit' }
+//             },
+//             {
+//                 path: 'edit/:id(\\d+)',
+//                 component: () => import('@/views/wiki/edit'),
+//                 name: 'EditArticle',
+//                 meta: { title: 'Edit Article', noCache: true, activeMenu: '/wiki/edit' },
+//                 hidden: true
+//             },
+//             {
+//                 path: 'detail/:id(\\d+)',
+//                 component: () => import('@/views/wiki/detail'),
+//                 name: 'ArticleDetail',
+//                 meta: { title: 'Article Detail', noCache: true, activeMenu: '/wiki/detail' },
+//                 hidden: true
+//             }
+//         ]
+//     },
+//
+// ]
+//
+// const createRouter = () => new Router({
+//     // mode: 'history', // require service support
+//     scrollBehavior: () => ({ y: 0 }),
+//     routes: constantRoutes
+// })
+//
+// const router = createRouter()
+//
+// // Detail see: https://github.com/vuejs/vue-router/issues/1234#issuecomment-357941465
+// export function resetRouter() {
+//     const newRouter = createRouter()
+//     router.matcher = newRouter.matcher // reset router
+// }
+//
+// export default router
