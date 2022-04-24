@@ -5,46 +5,7 @@
         <p>Left Sidebar</p>
         <p>Left Sidebar</p>
         <p>Left Sidebar</p>
-        <p>Left Sidebar</p>
-        <p>Left Sidebar</p>
-        <p>Left Sidebar</p>
-        <p>Left Sidebar</p>
-        <p>Left Sidebar</p>
-        <p>Left Sidebar</p>
-        <p>Left Sidebar</p>
-        <p>Left Sidebar</p>
-        <p>Left Sidebar</p>
-        <p>Left Sidebar</p>
-        <p>Left Sidebar</p>
-        <p>Left Sidebar</p>
-        <p>Left Sidebar</p>
-        <p>Left Sidebar</p>
-        <p>Left Sidebar</p>
-        <p>Left Sidebar</p>
-        <p>Left Sidebar</p>
-        <p>Left Sidebar</p>
-        <p>Left Sidebar</p>
-        <p>Left Sidebar</p>
-        <p>Left Sidebar</p>
-        <p>Left Sidebar</p>
-        <p>Left Sidebar</p>
-        <p>Left Sidebar</p>
-        <p>Left Sidebar</p>
-        <p>Left Sidebar</p>
-        <p>Left Sidebar</p>
-        <p>Left Sidebar</p>
-        <p>Left Sidebar</p>
-        <p>Left Sidebar</p>
-        <p>Left Sidebar</p>
-        <p>Left Sidebar</p>
-        <p>Left Sidebar</p>
-        <p>Left Sidebar</p>
-        <p>Left Sidebar</p>
-        <p>Left Sidebar</p>
-        <p>Left Sidebar</p>
-        <p>Left Sidebar</p>
-        <p>Left Sidebar</p>
-        <p>Left Sidebar</p>
+
     </div>
 
 </template>
