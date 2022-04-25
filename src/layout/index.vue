@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div style="height: 100%;">
         <el-row class="el-margin-side">
             <el-col :span="24">
                 <main-header></main-header>
@@ -11,7 +11,7 @@
                 <left-sidebar class="sidebar-container"></left-sidebar>
             </el-col>
             <el-col :span="16">
-                <app-main class="main-container "></app-main>
+                <app-main class="main-container1"></app-main>
             </el-col>
             <el-col :span="4">
                 <right-sidebar class="sidebar-container"></right-sidebar>

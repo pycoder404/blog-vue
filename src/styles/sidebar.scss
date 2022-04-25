@@ -27,9 +27,16 @@
     z-index: 1001;
     overflow: hidden;
     position: relative;
+    flex:1;
 
   }
+  .main-container1 {
+    min-height: 100%;
+    background-color: #ccc8c7;
+    height: 100%;
+    overflow: hidden;
 
+  }
   .withoutAnimation {
 
     .main-container,

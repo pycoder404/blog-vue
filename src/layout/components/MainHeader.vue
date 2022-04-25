@@ -1,53 +1,96 @@
 <template>
-    <div class="main-header">
-        <div class="left-menu">
-            <el-link href="/">HOME</el-link>
-            <el-link href="/">LIST</el-link>
-            <el-link href="/">HOME</el-link>
-            <el-link href="/">HOME</el-link>
-            <el-link href="/">HOME</el-link>
-        </div>
+    <el-row>
+        <el-col :span="18">
+            <el-menu
+                    class="el-menu-demo"
+                    mode="horizontal"
+                    background-color="#545c64"
+                    text-color="#fff"
+                    active-text-color="#ffd04b"
+                    @select="handleSelect"
+            >
+                <el-menu-item index="1">
+                    <el-link href="/">HOME</el-link>
+                </el-menu-item>
+                <el-menu-item index="2">
+                    <el-link href="/">HOME</el-link>
+                </el-menu-item>
+                <el-menu-item index="3">
+                    <el-link href="/">HOME</el-link>
+                </el-menu-item>
+                <el-menu-item index="4">
+                    <el-link href="/">HOME</el-link>
+                </el-menu-item>
+                <el-menu-item class="right-menu" index="5">
+                    <el-link href="/">HOME</el-link>
+                </el-menu-item>
+            </el-menu>
+        </el-col>
+        <el-col :span="6">
 
-        <div class="right-menu">
-            <svg-icon icon="alipay"></svg-icon>
-            <svg-icon icon="error"></svg-icon>
-            <el-link href="https://github.com/pycoder404/blog-django" target="_blank"><svg-icon icon="git"></svg-icon></el-link>
-            <svg-icon icon="gmail"></svg-icon>
-            <svg-icon icon="qq"></svg-icon>
-            <svg-icon icon="wechat"></svg-icon>
+            <el-menu
+                    class="el-menu-demo"
+                    mode="horizontal"
+                    background-color="#545c64"
+                    text-color="#fff"
+                    active-text-color="#ffd04b"
+            >
+                <el-menu-item index="1">
+                    <el-link href="https://github.com/pycoder404/blog-django" target="_blank">
+                        <svg-icon icon="git"></svg-icon>
+                    </el-link>
+                </el-menu-item>
 
-        </div>
-    </div>
+                <el-menu-item index="3">
+                    <el-link href="https://github.com/pycoder404/blog-django" target="_blank">
+                        <svg-icon icon="gmail"></svg-icon>
+                    </el-link>
+                </el-menu-item>
+                <el-menu-item style="" index="4">
+                    <el-link href="https://github.com/pycoder404/blog-django" target="_blank">
+                        <svg-icon icon="wechat"></svg-icon>
+                    </el-link>
+                </el-menu-item>
+            </el-menu>
+        </el-col>
+    </el-row>
+
 </template>
 
 <script>
+    /* eslint-disable */
     // import {mapGetters} from 'vuex'
     // import Breadcrumb from '@/components/Breadcrumb'
     // import Hamburger from '@/components/Hamburger'
+    import {ref} from 'vue'
+
+
     import SvgIcon from '@/components/SvgIcon/index'
+
     export default {
-        components:{
+        components: {
             SvgIcon
-        }
-        // components: {
-        //     Breadcrumb,
-        //     Hamburger
-        // },
+        },
+        data() {
+            return {
+                activeIndex: ref('1'),
+                activeIndex2: ref('2')
+
+            }
+
+        },
+
         // computed: {
         //     ...mapGetters([
         //         'sidebar',
         //         'avatar'
         //     ])
         // },
-        // methods: {
-        //     toggleSideBar() {
-        //         this.$store.dispatch('app/toggleSideBar')
-        //     },
-        //     async logout() {
-        //         await this.$store.dispatch('user/logout')
-        //         this.$router.push(`/login?redirect=${this.$route.fullPath}`)
-        //     }
-        // }
+        methods: {
+            handleSelect(key, keyPath) {
+                console.log(key, keyPath)
+            }
+        }
     }
 </script>
 
@@ -61,9 +104,26 @@
         color: black;
     }
 
+    .center {
+        margin: 0 20px;
+        position: absolute;
+        top: 25%;
+    }
+
     .el-link .el-icon--right.el-icon {
         vertical-align: text-bottom;
 
+    }
+
+    .icon-padding {
+        padding-bottom: 20px;
+    }
+
+    .right-menu {
+        float: right;
+        height: 100%;
+        margin-right: 30px;
+        display: flex;
     }
 
     .main-header {
@@ -86,7 +146,7 @@
         .right-menu {
             float: right;
             height: 100%;
-            line-height: 50px;
+            line-height: 100%;
             margin-right: 30px;
             display: flex;
 
@@ -102,6 +162,7 @@
                 color: #5a5e66;
                 vertical-align: text-bottom;
                 margin-right: 30px;
+
                 &.hover-effect {
                     cursor: pointer;
                     transition: background .3s;
