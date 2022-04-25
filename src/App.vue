@@ -19,6 +19,6 @@ export default {
   text-align: center;
   color: #2c3e50;
   margin: 10px 10px auto;
-    height: 100%;
+    height: 100vh;
 }
 </style>

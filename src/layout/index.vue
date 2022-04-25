@@ -1,5 +1,5 @@
 <template>
-    <div style="height: 100%;">
+    <div class="container">
         <el-row class="el-margin-side">
             <el-col :span="24">
                 <main-header></main-header>
@@ -58,13 +58,20 @@
             top: 0;
         }
     }
-
+    .container {
+        height: 100%;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        box-sizing: border-box;
+    }
     .el-margin-side {
         margin-left: 5px;
         margin-right: 5px;
     }
     .main-content {
-        margin-top:5px;
+        flex:1;
     }
     .drawer-bg {
         background: #000;
