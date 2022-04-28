@@ -1,6 +1,26 @@
 <template>
+<!--        <div class="main-header">-->
+<!--            <div class="left-menu">-->
+<!--                <el-link href="/">HOME</el-link>-->
+<!--                <el-link href="/">LIST</el-link>-->
+<!--                <el-link href="/">HOME</el-link>-->
+<!--                <el-link href="/">HOME</el-link>-->
+<!--                <el-link href="/">HOME</el-link>-->
+<!--            </div>-->
+
+<!--            <div class="right-menu">-->
+<!--                <svg-icon icon="alipay"></svg-icon>-->
+<!--                <svg-icon icon="error"></svg-icon>-->
+<!--                <el-link href="https://github.com/pycoder404/blog-django" target="_blank"><svg-icon icon="git"></svg-icon></el-link>-->
+<!--                <svg-icon icon="gmail"></svg-icon>-->
+<!--                <svg-icon icon="qq"></svg-icon>-->
+<!--                <svg-icon icon="wechat"></svg-icon>-->
+
+<!--            </div>-->
+<!--        </div>-->
+
     <el-row>
-        <el-col :span="18">
+        <el-col :span="20">
             <el-menu
                     class="el-menu-demo"
                     mode="horizontal"
@@ -13,21 +33,20 @@
                     <el-link href="/">HOME</el-link>
                 </el-menu-item>
                 <el-menu-item index="2">
-                    <el-link href="/">HOME</el-link>
+                    <el-link href="/#/article/list">LIST</el-link>
                 </el-menu-item>
                 <el-menu-item index="3">
-                    <el-link href="/">HOME</el-link>
+                    <el-link href="/#/article/create">NEW</el-link>
                 </el-menu-item>
                 <el-menu-item index="4">
-                    <el-link href="/">HOME</el-link>
+                    <el-link href="/#/article/detail">DETAIL</el-link>
                 </el-menu-item>
                 <el-menu-item class="right-menu" index="5">
-                    <el-link href="/">HOME</el-link>
+                    <el-link href="/">x</el-link>
                 </el-menu-item>
             </el-menu>
         </el-col>
-        <el-col :span="6">
-
+        <el-col :span="4">
             <el-menu
                     class="el-menu-demo"
                     mode="horizontal"
@@ -123,13 +142,13 @@
         float: right;
         height: 100%;
         margin-right: 30px;
-        display: flex;
     }
 
     .main-header {
         height: 50px;
         overflow: hidden;
         position: relative;
+        /*background: #545c64;*/
         /*background: #e9e5e5;*/
         background: white;
         box-shadow: 0 1px 4px rgba(0, 21, 41, .08);

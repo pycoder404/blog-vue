@@ -1,5 +1,5 @@
-import {createRouter, createWebHashHistory} from 'vue-router'
-import ArticleIndex from "../views/article/index";
+import {createRouter,createWebHashHistory} from 'vue-router'
+// import ArticleIndex from "../views/article/index";
 import ArticleList from "../views/article/list";
 import ArticleCreate from "../views/article/create";
 import ArticleDetail from "../views/article/detail";
@@ -8,19 +8,11 @@ const routes = [
     {
         path: '/',
         component: LayOut,
-        redirect: '/test',
     },
-    {
-        path: '/test',
-        component: LayOut,
-    },
-    {
-        path:'/article/test',
-        component: ArticleList,
-    },
+
     {
         path: '/article',
-        component: ArticleIndex,
+        component: LayOut,
         children: [
             {
                 path: 'list',
@@ -28,7 +20,7 @@ const routes = [
                 name:'article list'
             },
             {
-                path: 'detail',
+                path: 'detail/:id(\\d+)',
                 component: ArticleDetail,
                 name:'article detail'
 
@@ -45,7 +37,9 @@ const routes = [
 
 const router = createRouter({
     // 4. 内部提供了 history 模式的实现。为了简单起见，我们在这里使用 hash 模式。
+    mode: 'history',
     history: createWebHashHistory(),
+    // history: createWebHistory(),
     routes, // `routes: routes` 的缩写
 })
 export default router

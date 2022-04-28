@@ -7,14 +7,8 @@
         </el-row>
 
         <el-row class="el-margin-side main-content">
-            <el-col :span="4">
-                <left-sidebar class="sidebar-container"></left-sidebar>
-            </el-col>
-            <el-col :span="16">
-                <app-main class="main-container1"></app-main>
-            </el-col>
-            <el-col :span="4">
-                <right-sidebar class="sidebar-container"></right-sidebar>
+            <el-col :span="24">
+                <app-main class="main-container"></app-main>
             </el-col>
         </el-row>
 
@@ -29,14 +23,12 @@
 </template>
 
 <script>
-    import {MainHeader, LeftSidebar, AppMain,RightSidebar,MainFooter} from './components'
+    import {MainHeader, AppMain,MainFooter} from './components'
     export default {
         name: 'LayOut',
         components: {
             MainHeader,
-            LeftSidebar,
             AppMain,
-            RightSidebar,
             MainFooter
         }
     }

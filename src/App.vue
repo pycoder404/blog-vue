@@ -18,7 +18,7 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin: 10px 10px auto;
+  margin: 5px 5px auto;
     height: 100vh;
 }
 </style>

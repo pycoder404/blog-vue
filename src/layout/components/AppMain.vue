@@ -1,13 +1,16 @@
 <template>
-    <div>
-        <p> Main page</p>
-        <el-button type="primary">Hello</el-button>
-    </div>
+    <router-view :key="key"></router-view>
 </template>
 
 <script>
+
     export default {
-        name: "AppMain"
+        name: "AppMain",
+        computed: {
+            key() {
+                return this.$route.path
+            }
+        }
     }
 </script>
 

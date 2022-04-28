@@ -12,7 +12,7 @@ export function getArticleDetail(queryParams) {
     return request({
         url: '/article/detail/',
         method: 'get',
-        queryParams
+        params: queryParams
     })
 }
 
