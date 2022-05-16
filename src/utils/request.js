@@ -1,6 +1,6 @@
 import axios from 'axios'
-import { ElMessageBox, ElMessage } from 'element-plus'
-import store from '@/store'
+import { ElMessage } from 'element-plus'
+// import store from '@/store'
 // import { getToken } from '@/utils/auth'
 axios.defaults.withCredentials = true
 // create an axios instance
@@ -44,42 +44,54 @@ service.interceptors.response.use(
    */
   response => {
     const res = response.data
-
+    return  res
     // if the custom code is not 20000, it is judged as an error.
     // todo set code is null as default
-    if (res.code !== 0) {
-      ElMessage({
-        message: res.message || 'Response status code error',
-        type: 'error',
-        duration: 5 * 1000
-      })
-
-      // 50008: Illegal token; 50012: Other clients logged in; 50014: Token expired;
-      if (res.code === 50008 || res.code === 50012 || res.code === 50014) {
-        // to re-login
-        ElMessageBox.confirm('You have been logged out, you can cancel to stay on this page, or log in again', 'Confirm logout', {
-          confirmButtonText: 'Re-Login',
-          cancelButtonText: 'Cancel',
-          type: 'warning'
-        }).then(() => {
-          store.dispatch('user/resetToken').then(() => {
-            location.reload()
-          })
-        })
-      }
-      // console.log('res is', res)
-      return Promise.reject(new Error(res.message || 'Error'))
-    } else {
-      return res
-    }
+    // if (res.code !== 0) {
+    //   ElMessage({
+    //     message: res.message || 'Response status code error',
+    //     type: 'error',
+    //     duration: 5 * 1000
+    //   })
+    //
+    //   // 50008: Illegal token; 50012: Other clients logged in; 50014: Token expired;
+    //   if (res.code === 50008 || res.code === 50012 || res.code === 50014) {
+    //     // to re-login
+    //     ElMessageBox.confirm('You have been logged out, you can cancel to stay on this page, or log in again', 'Confirm logout', {
+    //       confirmButtonText: 'Re-Login',
+    //       cancelButtonText: 'Cancel',
+    //       type: 'warning'
+    //     }).then(() => {
+    //       store.dispatch('user/resetToken').then(() => {
+    //         location.reload()
+    //       })
+    //     })
+    //   }
+    //   // console.log('res is', res)
+    //   return Promise.reject(new Error(res.message || 'Error'))
+    // } else {
+    //   return res
+    // }
   },
   error => {
-    console.log('err' + error) // for debug
-    ElMessage({
-      message: error.message,
-      type: 'error',
-      duration: 5 * 1000
-    })
+    console.log('err is: ' + error) // for debug
+    console.log(error.detail)
+    console.dir(error)
+    if (error.response){
+      const err = error.response.data
+      // todo  redirect to login page for unauthorized user (status 401)
+      ElMessage({
+        message: err.detail || '系统遇到未知错误，请联系管理员',
+        type: 'error',
+        duration: 3 * 1000
+      })
+    } else {
+      ElMessage({
+        message: '后台系统异常,请联系管理员',
+        type: 'error',
+        duration: 3 * 1000
+      })
+    }
     return Promise.reject(error)
   }
 )

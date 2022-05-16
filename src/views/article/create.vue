@@ -1,11 +1,11 @@
 <template>
     <div class="createPost-container">
-        <el-form ref="postForm" :model="postForm" :rules="rules">
+        <el-form ref="postFormRef" :model="postForm" :rules="rules">
             <div class="createPost-main-container">
                 <el-form-item prop="title">
-                    <MDinput v-model="postForm.title" style="width: 100%" :maxlength="100" name="name" required>
+                    <el-input v-model="postForm.title" style="width: 100%" :maxlength="100" required>
                         Title
-                    </MDinput>
+                    </el-input>
                 </el-form-item>
 
                 <el-form-item prop="content">
@@ -35,10 +35,8 @@
 </template>
 
 <script>
-
     // import Tinymce from '@/components/Tinymce'
     // import Upload from '@/components/UploadFile/index'
-    import MDinput from '@/components/MdInput/index'
     import StickyNav from '@/components/StickyNav' // 粘性header组件
     // import { validURL } from '@/utils/validate'
     import {getArticleDetail, createArticle,} from '@/api/article'
@@ -50,23 +48,21 @@
     // import VueUeditorWrap from 'vue-ueditor-wrap'
     // import MarkdownEditor from '@/components/MarkdownEditor'
 
-    const defaultForm = {
-        status: 'draft',
-        title: '', // 文章题目
-        content: '', // 文章内容
-        content_short: '', // 文章摘要
-        source_uri: '', // 文章外链
-        id: undefined,
-        platforms: ['a-platform'],
-        comment_disabled: false,
-        importance: 0
-    }
+    // const defaultForm = {
+    //     status: 'draft',
+    //     title: '', // 文章题目
+    //     content: '', // 文章内容
+    //     content_short: '', // 文章摘要
+    //     id: undefined,
+    //     platforms: ['a-platform'],
+    //     comment_disabled: false,
+    //     importance: 0
+    // }
 
     export default {
         name: 'ArticleDetail',
         components: {
             // Tinymce,
-            MDinput,
             // Upload,
             StickyNav,
             // CommentDropdown,
@@ -94,7 +90,13 @@
 
             return {
                 image_upload_url: 'http://10.89.228.206:28088/files/upload/',
-                postForm: Object.assign({}, defaultForm),
+                // postForm: Object.assign({}, defaultForm),
+                postForm: {
+                    status: 'draft',
+                    title: '', // 文章题目
+                    content: '', // 文章内容
+                    importance: 1
+                },
                 html: '',
                 loading: false,
                 editorConfig: {
@@ -201,7 +203,7 @@
             },
             submitForm() {
                 console.log(this.postForm)
-                this.$refs.postForm.validate(valid => {
+                this.$refs.postFormRef.validate(valid => {
                     if (valid) {
                         this.loading = true
                         createArticle(this.postForm).then(() => {
@@ -214,7 +216,6 @@
                                 duration: 2000
                             })
                         })
-                        this.postForm.status = 'published'
                         this.loading = false
                     } else {
                         console.log('error submit!!')
