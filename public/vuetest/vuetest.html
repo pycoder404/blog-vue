@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:v-bind="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8">
+    <title>VueTest </title>
+    <!--    <script src="https://unpkg.com/vue@3.2.33"></script>-->
+    <script src="http://10.89.228.206:8002/bv/public/static/vue.global.3.2.33.js"></script>
+</head>
+<body>
+<div id="app">
+    <p>Hello: {{ name }}</p>
+
+
+
+</div>
+<script type="text/javascript">
+    const App = {
+        data() {
+            return {
+                name:'VUE'
+            }
+        }
+    }
+    const app = Vue.createApp(App)
+    app.mount('#app')
+
+
+</script>
+</body>
+</html>

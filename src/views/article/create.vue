@@ -12,6 +12,7 @@
                     <mavon-editor
                             ref="editor"
                             class="mavon-edtior-custom"
+                            :ishljs="true"
                             v-model="postForm.content"
                             @imgAdd="handleImgUpload"
                     />

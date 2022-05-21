@@ -1,18 +1,38 @@
 <template>
-    <div>
-        <el-row v-for="article in artcilesList" :key="article.id">
-            <el-col style="background-color: cornsilk">
-                <p>{{ article.content }}</p>
-            </el-col>
-        </el-row>
-    </div>
+    <div style="background-color: #f7f5f5">
+        <div v-for="article in articleList" :key="article.id" class="article-main">
+            <el-row style="background-color: white">
+                <el-col>
+<!--                                        <div class="article-title">-->
+<!--                                            <a :href="'/#/article/detail/'+article.id" class="article-title" style="text-decoration:none">-->
+<!--                                                {{ article.title }}-->
+<!--                                            </a>-->
+<!--                                        </div>-->
+                    <div class="article-title">
+                        <router-link
+                                :to="'/article/detail/'+ article.id"
+                                class="article-title"
+                        >{{article.title}}
+                        </router-link>
+                    </div>
+                    <el-divider border-style="dotted" style="margin: 1px 0;"/>
 
+                    <div class="article-desc">
+                        <span>
+                            @{{article.created_time }} {{ article.author.username }}, 30000 views,20 likes,30 comments
+                        </span>
+                    </div>
+                </el-col>
+            </el-row>
+            <!--        <el-divider style="margin: 10px 0;"/>-->
+        </div>
+    </div>
 
 
 </template>
 
 <script>
-    import { fetchArticleList } from '@/api/article'
+    import {fetchArticleList} from '@/api/article'
 
 
     export default {
@@ -34,7 +54,7 @@
                 listLoading: true,
                 listQuery: {
                     page: 1,
-                    limit: 20
+                    pagesize: 20
                 }
             }
         },
@@ -42,7 +62,7 @@
             this.getList()
         },
         computed: {
-            artcilesList(){
+            artcilesList() {
                 return this.articleList
             }
         },
@@ -50,9 +70,7 @@
             getList() {
                 this.listLoading = true
                 fetchArticleList(this.listQuery).then(response => {
-                    console.log(response)
                     this.articleList = response.data
-                    console.log(this.articleList)
                     this.articleCount = response.count
                     this.listLoading = false
                 })
@@ -65,9 +83,41 @@
     .edit-input {
         padding-right: 100px;
     }
+
     .cancel-btn {
         position: absolute;
         right: 15px;
         top: 10px;
     }
+
+    .article-main {
+        margin: 20px 100px;
+        box-shadow: 1px 2px 3px #ddd;
+        border: 1px solid #ddd;
+    }
+
+    .article-title {
+        text-align: left;
+        margin: 5px 10px;
+        font-size: 20px;
+        font-weight: bold;
+        color: black;
+        text-decoration:none
+
+    }
+
+    .article-body {
+        padding: 10px
+    }
+    a:hover{
+        color: blue;
+    }
+    .article-desc {
+        font-size: 12px;
+        color: #303030;
+        margin: 5px 0;
+        padding-right: 20px;
+        text-align: right;
+    }
+
 </style>

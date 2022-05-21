@@ -23,7 +23,7 @@
 </template>
 
 <script>
-    import {MainHeader, AppMain,MainFooter} from './components'
+    import {MainHeader, AppMain, MainFooter} from './components'
     export default {
         name: 'LayOut',
         components: {

@@ -8,11 +8,13 @@ const routes = [
     {
         path: '/',
         component: LayOut,
+        redirect: '/article'
     },
 
     {
         path: '/article',
         component: LayOut,
+        redirect:'/article/list',
         children: [
             {
                 path: 'list',
