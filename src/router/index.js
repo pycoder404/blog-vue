@@ -1,4 +1,4 @@
-import {createRouter,createWebHashHistory} from 'vue-router'
+import {createRouter,createWebHistory} from 'vue-router'
 // import ArticleIndex from "../views/article/index";
 import ArticleList from "../views/article/list";
 import ArticleCreate from "../views/article/create";
@@ -40,7 +40,7 @@ const routes = [
 const router = createRouter({
     // 4. 内部提供了 history 模式的实现。为了简单起见，我们在这里使用 hash 模式。
     mode: 'history',
-    history: createWebHashHistory(),
+    history: createWebHistory(),
     // history: createWebHistory(),
     routes, // `routes: routes` 的缩写
 })

@@ -11,8 +11,10 @@
                     <div class="content-margin-left">
                         <h3>{{ articleDetail.title }}</h3>
                     </div>
-                <highlightjs language='python' code="import os\n print('hello world')" />
+<!--                <highlightjs language='python' code="import os\n print('hello world')" />-->
+                        <div v-hlcode v-html="articleDetail.content"></div>
             </div>
+
         </el-col>
 
         <el-col :span="5">
@@ -82,6 +84,9 @@
 </script>
 
 <style scoped>
+    /*@import './styles/atom-one-dark.css';*/
+    @import './styles/github-dark.css';
+
     .grid-content {
         border-radius: 4px;
     }

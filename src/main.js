@@ -2,7 +2,8 @@ import {createApp} from 'vue'
 import App from './App.vue'
 import router from './router'
 
-import 'highlight.js/styles/atom-one-dark.css'
+import hljs from 'highlight.js'
+// import 'highlight.js/styles/atom-one-dark.css'
 import 'highlight.js/lib/common'
 import hljsVuePlugin from '@highlightjs/vue-plugin'
 
@@ -15,14 +16,12 @@ import 'mavon-editor/dist/css/index.css'
 
 const app = createApp(App)
 //
-// app.directive('highlight', function(el) {
-//     const blocks = el.querySelectorAll('pre code')
-//     setTimeout(() => {
-//         blocks.forEach((block) => {
-//             hljs.highlightBlock(block)
-//         })
-//     }, 10000)
-// })
+app.directive('hlcode', function(el) {
+    const blocks = el.querySelectorAll('pre code')
+    blocks.forEach((block) => {
+        hljs.highlightBlock(block)
+    })
+})
 // import RouterView from 'vue-router'
 // 全局注册组件，对所有page可见
 // import ArticleIndex from './views/article/index.vue'
@@ -35,7 +34,6 @@ const app = createApp(App)
 //     app.component(name,(ElIconModules as any)[name])
 // }
 app.component('DeleteFilled', DeleteFilled)
-// app.component('MavonEditor', mavonEditor)
 app.use(router).use(hljsVuePlugin).use(ElementPlus).use(mavonEditor).mount('#app')
 // app.use(ElementPlus, { size: 'small', zIndex: 5000 })
 // app.mount('#app')
