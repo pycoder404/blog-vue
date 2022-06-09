@@ -3,6 +3,7 @@ import {createRouter,createWebHistory} from 'vue-router'
 import ArticleList from "../views/article/list";
 import ArticleCreate from "../views/article/create";
 import ArticleDetail from "../views/article/detail";
+import ArticleEdit from "../views/article/edit";
 import LayOut from '../layout/index'
 const routes = [
     {
@@ -25,6 +26,12 @@ const routes = [
                 path: 'detail/:id(\\d+)/',
                 component: ArticleDetail,
                 name:'article detail'
+
+            },
+            {
+                path: 'edit/:id(\\d+)/',
+                component: ArticleEdit,
+                name:'article edit'
 
             },
             {

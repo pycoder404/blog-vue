@@ -22,11 +22,31 @@
                 </el-form-item>
             </div>
         </el-form>
-
+        <el-radio-group v-model="postForm.category">
+            <el-radio-button label="1">python</el-radio-button>
+            <el-radio-button label="2">vue</el-radio-button>
+            <el-radio-button label="3">django</el-radio-button>
+            <el-radio-button label="4">linux</el-radio-button>
+        </el-radio-group>
+        <el-select
+                v-model="postForm.tags"
+                placeholder="Select"
+                :reserve-keyword="false"
+                multiple
+                filterable
+                default-first-option
+                allow-create
+                size="small">
+            <el-option
+                    v-for="tagname in tags"
+                    :key="tagname"
+                    :label="tagname"
+                    :value="tagname"
+            />
+        </el-select>
         <sticky-nav
-                :z-index="1800"
                 :class-name="'sub-navbar '+postForm.status"
-                style="padding: 0px 45px 20px 50px;margin-bottom: 30px;"
+                style="padding: 0px 45px 15px 45px;"
         >
             <el-button v-loading="loading" style="margin-left: 10px;" type="success" @click="submitForm">
                 Submit
@@ -61,7 +81,7 @@
     // }
 
     export default {
-        name: 'ArticleDetail',
+        name: 'CreateArticle',
         components: {
             // Tinymce,
             // Upload,
@@ -96,7 +116,10 @@
                     status: 'draft',
                     title: '', // 文章题目
                     content: '', // 文章内容
-                    importance: 1
+                    importance: 1,
+                    category:'',
+                    tags:[]
+
                 },
                 html: '',
                 loading: false,
@@ -108,7 +131,9 @@
                     title: [{validator: validateRequire}],
                     content: [{validator: validateRequire}]
                 },
-                tempRoute: {}
+                tempRoute: {},
+                tags: ['python','vue','仓库'],
+                selectedTags:[]
             }
         },
         computed: {
@@ -127,8 +152,8 @@
         },
         created() {
             if (this.isEdit) {
-                const id = this.$route.params && this.$route.params.id
-                this.fetchData({id: id, isedit: this.isEdit})
+                const articleId = this.$route.params && this.$route.params.id
+                this.fetchData(articleId, {'isedit': this.isEdit})
             }
 
             // Why need to make a copy of this.$route here?
@@ -138,13 +163,11 @@
         },
         methods: {
 
-            submit() {
-                console.log(this.content)
-                console.log(this.html)
-            },
-            fetchData(queryParam) {
-                getArticleDetail(queryParam).then(response => {
-                    this.postForm = response.data
+            fetchData(articleId, queryParam) {
+                console.log(articleId, queryParam)
+                getArticleDetail(articleId, queryParam).then(response => {
+                    console.log(response.data)
+                    this.postForm = response
 
                     // just for test
                     // this.postForm.title += `   Article Id:${this.postForm.id}`
@@ -230,14 +253,18 @@
 
 <style lang="scss" scoped>
     @import "~@/styles/mixin.scss";
+
     .mavon-edtior-custom {
         width: 100%;
         min-height: 600px;
     }
+
     .createPost-container {
         position: relative;
+
         .createPost-main-container {
             padding: 10px 50px 20px 50px;
+
             .postInfo-container {
                 position: relative;
                 @include clearfix;
