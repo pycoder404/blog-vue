@@ -1,6 +1,8 @@
 <template>
     <div class="main-footer">
-        <p>foooter</p>
+        <span>Copyright@pycoder404</span>
+        <br>
+        <span>powered by pycoder404</span>
     </div>
 </template>
 
@@ -13,10 +15,10 @@
 <style scoped>
     .main-footer {
         margin-bottom: 5px;
-        height: 50px;
+        height: 40px;
         overflow: hidden;
         display: block;
-        background: #e9e5e5;
+        background: #f7f4f4;
         box-shadow: 0 1px 4px rgba(0, 21, 41, .08);
     }
 </style>

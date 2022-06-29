@@ -8,11 +8,29 @@
 
         <el-col :span="14">
             <div class="col-bg" style="background-color: white">
-                    <div class="content-margin-left">
-                        <h3>{{ articleDetail.title }}</h3>
-                    </div>
-<!--                <highlightjs language='python' code="import os\n print('hello world')" />-->
-                        <div v-hlcode v-html="articleDetail.content"></div>
+                <div class="content-margin-left">
+                    <h3>{{ articleDetail.title }}</h3>
+                </div>
+                <div v-hlcode v-html="articleDetail.content"></div>
+                <el-divider>END</el-divider>
+
+                <like-favorite></like-favorite>
+
+
+                <div class="article-desc">
+                        <span>
+                            @{{articleDetail.created_time }} {{ articleDetail.author }}, views:{{articleDetail.views_count}} likes:{{articleDetail.likes_count}} comments:0
+                            <el-button icon="DeleteFilled" type="text"/>
+                            <router-link
+                                    :to="'/article/edit/'+ articleDetail.id"
+                            ><el-button
+                                    icon="EditPen"
+                                    type="text"/>
+                        </router-link>
+                        </span>
+
+                </div>
+                <br>
             </div>
 
         </el-col>
@@ -27,6 +45,7 @@
 
 <script>
     import {getArticleDetail} from '@/api/article'
+    import LikeFavorite from "@/views/article/components/LikeFavorite";
     //
     // const defaultForm = {
     //     status: 'draft',
@@ -44,6 +63,7 @@
     // }
     export default {
         name: "ArticleDetail",
+        components:{LikeFavorite},
         data() {
             return {
                 articleDetail: {},
@@ -112,6 +132,14 @@
     .bg-purple-dark {
         background: #99a9bf;
     }
+    .article-desc {
+        font-size: 16px;
+        color: #303030;
+        margin: 5px 0;
+        padding-right: 30px;
+        text-align: right;
+    }
+
 
     .col-bg {
         text-align: left;

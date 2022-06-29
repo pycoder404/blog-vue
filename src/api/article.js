@@ -1,6 +1,6 @@
 import request from '@/utils/request'
 
-export function fetchArticleList(queryParams) {
+export function getArticleList(queryParams) {
     return request({
         url: '/article/list/',
         method: 'get',
@@ -23,3 +23,29 @@ export function createArticle(data) {
         data: data
     })
 }
+
+export function UpdateArticle(articleId, data) {
+    return request({
+        url: '/article/update/' + articleId + '/',
+        method: 'put',
+        data: data
+    })
+}
+
+
+export function getTagList(queryParams) {
+    return request({
+        url: '/tag/',
+        method: 'get',
+        params: queryParams
+    })
+}
+
+export function getCategoryList(queryParams) {
+    return request({
+        url: '/category/',
+        method: 'get',
+        params: queryParams
+    })
+}
+

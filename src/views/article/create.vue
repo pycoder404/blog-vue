@@ -21,29 +21,38 @@
                     <!--          <markdown-editor v-model="postForm.content" height="600px" />-->
                 </el-form-item>
             </div>
+            <el-form-item prop="category">
+                <el-radio-group v-model="postForm.category">
+                    <el-radio-button
+                            v-for="category in articleCategory"
+                            :key="category['id']"
+                            :label="category['id']"
+                    >
+                        {{category['title']}}
+                    </el-radio-button>
+                </el-radio-group>
+            </el-form-item>
+            <el-form-item prop="tags">
+                <el-select
+                        v-model="postForm.tags"
+                        placeholder="Select Article Tag"
+                        :reserve-keyword="false"
+                        multiple
+                        filterable
+                        default-first-option
+                        allow-create
+                        size="small">
+                    <el-option
+                            v-for="tag in articleTags"
+                            :key="tag['text']"
+                            :label="tag['text']"
+                            :value="tag['text']"
+                    />
+                </el-select>
+            </el-form-item>
+
         </el-form>
-        <el-radio-group v-model="postForm.category">
-            <el-radio-button label="1">python</el-radio-button>
-            <el-radio-button label="2">vue</el-radio-button>
-            <el-radio-button label="3">django</el-radio-button>
-            <el-radio-button label="4">linux</el-radio-button>
-        </el-radio-group>
-        <el-select
-                v-model="postForm.tags"
-                placeholder="Select"
-                :reserve-keyword="false"
-                multiple
-                filterable
-                default-first-option
-                allow-create
-                size="small">
-            <el-option
-                    v-for="tagname in tags"
-                    :key="tagname"
-                    :label="tagname"
-                    :value="tagname"
-            />
-        </el-select>
+
         <sticky-nav
                 :class-name="'sub-navbar '+postForm.status"
                 style="padding: 0px 45px 15px 45px;"
@@ -60,7 +69,7 @@
     // import Upload from '@/components/UploadFile/index'
     import StickyNav from '@/components/StickyNav' // 粘性header组件
     // import { validURL } from '@/utils/validate'
-    import {getArticleDetail, createArticle,} from '@/api/article'
+    import {getArticleDetail, createArticle, UpdateArticle,getTagList,getCategoryList} from '@/api/article'
 
     // import { searchUser } from '@/api/remote-search'
     // import Warning from './Warning'
@@ -117,8 +126,8 @@
                     title: '', // 文章题目
                     content: '', // 文章内容
                     importance: 1,
-                    category:'',
-                    tags:[]
+                    category: '',
+                    tags: []
 
                 },
                 html: '',
@@ -129,11 +138,12 @@
                 userListOptions: [],
                 rules: {
                     title: [{validator: validateRequire}],
-                    content: [{validator: validateRequire}]
+                    content: [{validator: validateRequire}],
+                    category: [{validator: validateRequire}]
                 },
                 tempRoute: {},
-                tags: ['python','vue','仓库'],
-                selectedTags:[]
+                articleTags: [],
+                articleCategory: [],
             }
         },
         computed: {
@@ -151,6 +161,8 @@
             }
         },
         created() {
+            this.fetchArticleTags()
+            this.fetchArticleCategory()
             if (this.isEdit) {
                 const articleId = this.$route.params && this.$route.params.id
                 this.fetchData(articleId, {'isedit': this.isEdit})
@@ -162,20 +174,42 @@
             this.tempRoute = Object.assign({}, this.$route)
         },
         methods: {
-
             fetchData(articleId, queryParam) {
-                console.log(articleId, queryParam)
                 getArticleDetail(articleId, queryParam).then(response => {
-                    console.log(response.data)
                     this.postForm = response
-
                     // just for test
                     // this.postForm.title += `   Article Id:${this.postForm.id}`
                     // this.postForm.content_short += `   Article Id:${this.postForm.id}`
-
                     // set tagsview title
                     this.setTagsViewTitle()
-
+                    // set page title
+                    this.setPageTitle()
+                }).catch(err => {
+                    console.log(err)
+                })
+            },
+            fetchArticleTags(queryParam) {
+                getTagList(queryParam).then(response => {
+                    this.articleTags = response.data
+                    // just for test
+                    // this.postForm.title += `   Article Id:${this.postForm.id}`
+                    // this.postForm.content_short += `   Article Id:${this.postForm.id}`
+                    // set tagsview title
+                    this.setTagsViewTitle()
+                    // set page title
+                    this.setPageTitle()
+                }).catch(err => {
+                    console.log(err)
+                })
+            },
+            fetchArticleCategory(queryParam) {
+                getCategoryList(queryParam).then(response => {
+                    this.articleCategory = response.data
+                    // just for test
+                    // this.postForm.title += `   Article Id:${this.postForm.id}`
+                    // this.postForm.content_short += `   Article Id:${this.postForm.id}`
+                    // set tagsview title
+                    this.setTagsViewTitle()
                     // set page title
                     this.setPageTitle()
                 }).catch(err => {
@@ -230,16 +264,30 @@
                 this.$refs.postFormRef.validate(valid => {
                     if (valid) {
                         this.loading = true
-                        createArticle(this.postForm).then(() => {
-                            // this.list.unshift(this.temp)
-                            this.recordDialogVisible = false
-                            this.$notify({
-                                title: 'Success',
-                                message: 'Created Successfully',
-                                type: 'success',
-                                duration: 2000
+                        if (this.isEdit) {
+                            const articleId = this.$route.params && this.$route.params.id
+                            UpdateArticle(articleId, this.postForm).then(() => {
+                                // this.list.unshift(this.temp)
+                                this.recordDialogVisible = false
+                                this.$notify({
+                                    title: 'Success',
+                                    message: 'Update Successfully',
+                                    type: 'success',
+                                    duration: 2000
+                                })
                             })
-                        })
+                        } else {
+                            createArticle(this.postForm).then(() => {
+                                // this.list.unshift(this.temp)
+                                this.recordDialogVisible = false
+                                this.$notify({
+                                    title: 'Success',
+                                    message: 'Created Successfully',
+                                    type: 'success',
+                                    duration: 2000
+                                })
+                            })
+                        }
                         this.loading = false
                     } else {
                         console.log('error submit!!')

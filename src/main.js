@@ -9,14 +9,14 @@ import hljsVuePlugin from '@highlightjs/vue-plugin'
 
 import ElementPlus from 'element-plus'
 import 'element-plus/dist/index.css'
-import { DeleteFilled } from '@element-plus/icons-vue'
+import {DeleteFilled, EditPen} from '@element-plus/icons-vue'
 import mavonEditor from 'mavon-editor'
 import 'mavon-editor/dist/css/index.css'
 
 
 const app = createApp(App)
 //
-app.directive('hlcode', function(el) {
+app.directive('hlcode', function (el) {
     const blocks = el.querySelectorAll('pre code')
     blocks.forEach((block) => {
         hljs.highlightBlock(block)
@@ -33,7 +33,9 @@ app.directive('hlcode', function(el) {
 // for (const name in ElIconModules){
 //     app.component(name,(ElIconModules as any)[name])
 // }
+
 app.component('DeleteFilled', DeleteFilled)
+app.component('EditPen', EditPen)
 app.use(router).use(hljsVuePlugin).use(ElementPlus).use(mavonEditor).mount('#app')
 // app.use(ElementPlus, { size: 'small', zIndex: 5000 })
 // app.mount('#app')

@@ -33,16 +33,22 @@
                     <el-link href="/">HOME</el-link>
                 </el-menu-item>
                 <el-menu-item index="2">
-                    <el-link href="/article/list">LIST</el-link>
+                    <el-link href="/article/list">归档</el-link>
                 </el-menu-item>
                 <el-menu-item index="3">
-                    <el-link href="/article/create">NEW</el-link>
+                    <el-link href="/article/list">分类</el-link>
                 </el-menu-item>
                 <el-menu-item index="4">
-                    <el-link href="/article/detail">DETAIL</el-link>
+                    <el-link href="/article/list">标签</el-link>
                 </el-menu-item>
-                <el-menu-item class="right-menu" index="5">
-                    <el-link href="/">x</el-link>
+                <el-menu-item index="5">
+                    <el-link href="/article/list">project</el-link>
+                </el-menu-item>
+                <el-menu-item index="6">
+                    <el-link href="/article/create">NEW</el-link>
+                </el-menu-item>
+                <el-menu-item index="7">
+                    <el-link href="/article/detail">aboutme</el-link>
                 </el-menu-item>
             </el-menu>
         </el-col>

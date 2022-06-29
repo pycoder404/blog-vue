@@ -3,11 +3,11 @@
         <div v-for="article in articleList" :key="article.id" class="article-main">
             <el-row style="background-color: white">
                 <el-col>
-<!--                                        <div class="article-title">-->
-<!--                                            <a :href="'/#/article/detail/'+article.id" class="article-title" style="text-decoration:none">-->
-<!--                                                {{ article.title }}-->
-<!--                                            </a>-->
-<!--                                        </div>-->
+                    <!--                                        <div class="article-title">-->
+                    <!--                                            <a :href="'/#/article/detail/'+article.id" class="article-title" style="text-decoration:none">-->
+                    <!--                                                {{ article.title }}-->
+                    <!--                                            </a>-->
+                    <!--                                        </div>-->
                     <div class="article-title">
                         <router-link
                                 :to="'/article/detail/'+ article.id"
@@ -19,8 +19,17 @@
 
                     <div class="article-desc">
                         <span>
-                            @{{article.created_time }} {{ article.author.username }}, 30000 views,20 likes,30 comments
+                            @{{article.created_time }} {{ article.author }}, views:{{article.views_count}} likes:{{article.likes_count}} comments:0
+                            <el-button icon="DeleteFilled" type="text"/>
+                            <router-link
+                                    :to="'/article/edit/'+ article.id"
+                                    class="article-title"
+                            ><el-button
+                                    icon="EditPen"
+                                    type="text"/>
+                        </router-link>
                         </span>
+
                     </div>
                 </el-col>
             </el-row>
@@ -32,9 +41,7 @@
 </template>
 
 <script>
-    import {fetchArticleList} from '@/api/article'
-
-
+    import {getArticleList} from '@/api/article'
     export default {
         name: 'ArticleList',
         filters: {
@@ -69,12 +76,13 @@
         methods: {
             getList() {
                 this.listLoading = true
-                fetchArticleList(this.listQuery).then(response => {
+                getArticleList(this.listQuery).then(response => {
                     this.articleList = response.data
                     this.articleCount = response.count
                     this.listLoading = false
                 })
             }
+
         }
     }
 </script>
@@ -91,7 +99,7 @@
     }
 
     .article-main {
-        margin: 20px 100px;
+        margin: 10px 100px;
         box-shadow: 1px 2px 3px #ddd;
         border: 1px solid #ddd;
     }
@@ -102,21 +110,23 @@
         font-size: 20px;
         font-weight: bold;
         color: black;
-        text-decoration:none
+        text-decoration: none
 
     }
 
     .article-body {
         padding: 10px
     }
-    a:hover{
+
+    a:hover {
         color: blue;
     }
+
     .article-desc {
         font-size: 12px;
         color: #303030;
         margin: 5px 0;
-        padding-right: 20px;
+        padding-right: 30px;
         text-align: right;
     }
 
