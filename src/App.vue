@@ -1,7 +1,10 @@
 <template>
 <!--  <img alt="Vue logo" src="./assets/logo.png">-->
 <!--  <HelloWorld msg="Welcome to Your Vue.js App"/>-->
-    <router-view></router-view>
+    <div id="app">
+        <router-view></router-view>
+    </div>
+
 </template>
 
 <script>
@@ -19,6 +22,6 @@ export default {
   text-align: center;
   color: #2c3e50;
   margin: 5px 5px auto;
-    height: 100vh;
+  height: 100vh;
 }
 </style>

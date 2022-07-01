@@ -1,43 +1,48 @@
-import {createRouter,createWebHistory} from 'vue-router'
+import {createRouter, createWebHistory} from 'vue-router'
 // import ArticleIndex from "../views/article/index";
 import ArticleList from "../views/article/list";
 import ArticleCreate from "../views/article/create";
 import ArticleDetail from "../views/article/detail";
 import ArticleEdit from "../views/article/edit";
 import LayOut from '../layout/index'
+import LoginPage from '../views/login/index'
+
 const routes = [
     {
         path: '/',
         component: LayOut,
         redirect: '/article'
     },
-
+    {
+        path: '/login',
+        component: LoginPage,
+    },
     {
         path: '/article',
         component: LayOut,
-        redirect:'/article/list',
+        redirect: '/article/list',
         children: [
             {
                 path: 'list',
                 component: ArticleList,
-                name:'article list'
+                name: 'article list'
             },
             {
                 path: 'detail/:id(\\d+)/',
                 component: ArticleDetail,
-                name:'article detail'
+                name: 'article detail'
 
             },
             {
                 path: 'edit/:id(\\d+)/',
                 component: ArticleEdit,
-                name:'article edit'
+                name: 'article edit'
 
             },
             {
                 path: 'create',
                 component: ArticleCreate,
-                name:'article create'
+                name: 'article create'
             }
         ]
     }
