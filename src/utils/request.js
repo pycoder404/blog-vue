@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { ElMessage } from 'element-plus'
-// import store from '@/store'
-// import { getToken } from '@/utils/auth'
+import store from '@/store'
+import { getAccessToken } from '@/utils/auth'
 axios.defaults.withCredentials = true
 // create an axios instance
 const service = axios.create({
@@ -9,26 +9,25 @@ const service = axios.create({
   withCredentials: true, // send cookies when cross-domain requests
   timeout: 15000 // request timeout
 })
-
 // request interceptor
-// service.interceptors.request.use(
-//   config => {
-//     // do something before request is sent
-//     if (store.getters.token) {
-//       // let each request carry token
-//       // ['X-Token'] is a custom headers key
-//       // please modify it according to the actual situation
-//       config.headers['X-Token'] = getToken()
-//     }
-//     return config
-//   },
-//   error => {
-//     // do something with request error
-//     console.log("error in config")
-//     console.log(error) // for debug
-//     return Promise.reject(error)
-//   }
-// )
+service.interceptors.request.use(
+  config => {
+    // do something before request is sent
+    if (store.getters.accessToken) {
+      // let each request carry token
+      // ['X-Token'] is a custom headers key
+      // please modify it according to the actual situation
+      config.headers['Authorization'] = 'Bearer ' + getAccessToken()
+    }
+    return config
+  },
+  error => {
+    // do something with request error
+    console.log("error in config")
+    console.log(error) // for debug
+    return Promise.reject(error)
+  }
+)
 
 // response interceptor
 service.interceptors.response.use(
