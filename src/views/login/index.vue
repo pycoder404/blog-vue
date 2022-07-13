@@ -155,15 +155,16 @@
             handleLogin() {
                 this.$refs.loginFormRef.validate(valid => {
                     if (valid) {
-                        console.info("tttttttttttttttxxxxxxxxxxxx")
+                        console.info("begin handle login")
                         this.loading = true
                         this.$store.dispatch('user/login', this.loginForm)
                             .then(() => {
+                                console.log("login succed")
                                 this.$router.push({path: this.redirect || '/', query: this.otherQuery})
                                 this.loading = false
                             })
                             .catch(() => {
-                                console.info("ffffffffffxxxxxxxxx")
+                                console.info("error in handle login")
 
                                 this.loading = false
                             })

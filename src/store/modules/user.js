@@ -3,21 +3,29 @@ import { getAccessToken, setAccessToken, removeAccessToken } from '@/utils/auth'
 import { getRefreshToken, setRefreshToken, removeRefreshToken } from '@/utils/auth'
 import router from '@/router'
 
-const state = {
-    accessToken: getAccessToken(),
-    refreshToken: getRefreshToken(),
-    name: '',
-    avatar: '',
-    introduction: '',
-    roles: []
+
+const getDefaultState = () => {
+    return {
+        token: getAccessToken(),
+        refreshToken: getRefreshToken(),
+        name: '',
+        avatar: '',
+        introduction: '',
+        roles: []
+    }
 }
 
+const state = getDefaultState()
+
 const mutations = {
+    RESET_STATE: (state) => {
+        Object.assign(state, getDefaultState())
+    },
     SET_ACCESS_TOKEN: (state, token) => {
-        state.token = token
+        state.accessToken = token
     },
     SET_REFRESH_TOKEN: (state, token) => {
-        state.token = token
+        state.refreshToken = token
     },
     SET_INTRODUCTION: (state, introduction) => {
         state.introduction = introduction
@@ -36,17 +44,19 @@ const mutations = {
 const actions = {
     // user login
     login({ commit }, userInfo) {
-        console.info("login xxxxxxxxxxx")
+        console.info("login in store")
         const { username, password } = userInfo
         return new Promise((resolve, reject) => {
             login({ username: username.trim(), password: password }).then(response => {
                 const data  = response
+                console.log("login done")
                 console.info(data)
                 commit('SET_ACCESS_TOKEN', data.access)
                 commit('SET_REFRESH_TOKEN', data.refresh)
                 // token保存在cookie和store中
                 setAccessToken(data.access)
                 setRefreshToken(data.refresh)
+                console.log("set access token done")
                 resolve()
             }).catch(error => {
                 reject(error)
@@ -54,11 +64,17 @@ const actions = {
         })
     },
 
+
+    // todo 为啥vue-element-admin框架中F5刷新界面会重新获取info，如何实现的？
+    // todo 是permission中的限制吗？
     // get user info
     getInfo({ commit, state }) {
         return new Promise((resolve, reject) => {
-            getInfo(state.token).then(response => {
-                const { data } = response
+            getInfo(state.accessToken).then(response => {
+                console.log('response is:',response)
+                // const { data } = response
+                const data = response
+                console.log('data is:',data)
 
                 if (!data) {
                     reject('Verification failed, please Login again.')
@@ -86,6 +102,7 @@ const actions = {
     logout({ commit, state, dispatch }) {
         return new Promise((resolve, reject) => {
             logout(state.token).then(() => {
+                // 保存了两份，一份是store， 一份是cookie
                 commit('SET_ACCESS_TOKEN', '')
                 commit('SET_REFRESH_TOKEN', '')
                 commit('SET_ROLES', [])
@@ -106,8 +123,7 @@ const actions = {
     // remove token
     resetToken({ commit }) {
         return new Promise(resolve => {
-            commit('SET_TOKEN', '')
-            commit('SET_ROLES', [])
+            commit('RESET_STATE')
             removeAccessToken()
             removeRefreshToken()
             resolve()
@@ -118,7 +134,7 @@ const actions = {
     async changeRoles({ commit, dispatch }, role) {
         const token = role + '-token'
 
-        commit('SET_TOKEN', token)
+        commit('SET_ACCESS_TOKEN', token)
         setAccessToken(token)
 
         const { roles } = await dispatch('getInfo')

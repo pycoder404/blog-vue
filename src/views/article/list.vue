@@ -99,7 +99,7 @@
     }
 
     .article-main {
-        margin: 10px 100px;
+        margin: 10px 200px;
         box-shadow: 1px 2px 3px #ddd;
         border: 1px solid #ddd;
     }

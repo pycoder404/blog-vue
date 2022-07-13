@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { ElMessage } from 'element-plus'
+import { ElMessageBox } from 'element-plus'
 import store from '@/store'
 import { getAccessToken } from '@/utils/auth'
 axios.defaults.withCredentials = true
@@ -17,7 +17,9 @@ service.interceptors.request.use(
       // let each request carry token
       // ['X-Token'] is a custom headers key
       // please modify it according to the actual situation
-      config.headers['Authorization'] = 'Bearer ' + getAccessToken()
+      console.log("access token is ok")
+      console.log(getAccessToken())
+      config.headers['Authorization'] = 'AccessToken ' + getAccessToken()
     }
     return config
   },
@@ -79,13 +81,13 @@ service.interceptors.response.use(
     if (error.response){
       const err = error.response.data
       // todo  redirect to login page for unauthorized user (status 401)
-      ElMessage({
+      ElMessageBox({
         message: err.detail || '系统遇到未知错误，请联系管理员',
         type: 'error',
         duration: 3 * 1000
       })
     } else {
-      ElMessage({
+      ElMessageBox({
         message: '后台系统异常,请联系管理员',
         type: 'error',
         duration: 3 * 1000

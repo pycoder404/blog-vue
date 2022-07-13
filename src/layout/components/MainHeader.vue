@@ -33,7 +33,7 @@
                     <el-link href="/">HOME</el-link>
                 </el-menu-item>
                 <el-menu-item index="2">
-                    <el-link href="/article/list">归档</el-link>
+                    <router-link to="/article/list">归档</router-link>
                 </el-menu-item>
                 <el-menu-item index="3">
                     <el-link href="/article/list">分类</el-link>
@@ -186,7 +186,6 @@
                 font-size: 18px;
                 color: #5a5e66;
                 vertical-align: text-bottom;
-                margin-right: 30px;
 
                 &.hover-effect {
                     cursor: pointer;
