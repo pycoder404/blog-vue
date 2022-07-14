@@ -13,16 +13,15 @@ const whiteList = ['/login', '/auth-redirect'] // no redirect whitelist
 router.beforeEach(async (to, from, next) => {
     // start progress bar
     NProgress.start()
-    console.log("before each 1111")
+    console.log("before route change")
     // set page title
     document.title = getPageTitle(to.meta.title)
 
     // determine whether the user has logged in
     const hasAccessToken = getAccessToken()
-
+    console.log("check is has access token: ",hasAccessToken)
     if (hasAccessToken) {
-        console.log("has accesstoken")
-        console.log(hasAccessToken)
+        console.log("has access token:",hasAccessToken)
         // FIXME  添加对accessToken的过期检查和refresh
         if (to.path === '/login') {
             // if is logged in, redirect to the home page
@@ -31,12 +30,14 @@ router.beforeEach(async (to, from, next) => {
         } else {
             // determine whether the user has obtained his permission roles through getInfo
             console.log("check is has roles")
+            console.log(store.getters.roles)
             const hasRoles = store.getters.roles && store.getters.roles.length > 0
             if (hasRoles) {
                 console.log("yes has roles")
                 next()
-                console.log('nex done')
+                console.log('next done')
             } else {
+                console.log('can not get roles from store')
                 try {
                     // get user info
                     // note: roles must be a object array! such as: ['admin'] or ,['developer','editor']

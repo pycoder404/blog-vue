@@ -15,7 +15,14 @@ const getDefaultState = () => {
     }
 }
 
-const state = getDefaultState()
+const state = {
+    accessToken: getAccessToken(),
+    refreshToken: getRefreshToken(),
+    name: '',
+    avatar: '',
+    introduction: '',
+    roles: []
+}
 
 const mutations = {
     RESET_STATE: (state) => {
@@ -81,7 +88,7 @@ const actions = {
                 }
 
                 const { roles, name, avatar, introduction } = data
-
+                console.log("roles in getinfo is: ",roles)
                 // roles must be a non-empty array
                 if (!roles || roles.length <= 0) {
                     reject('getInfo: roles must be a non-null array!')
@@ -101,6 +108,7 @@ const actions = {
     // user logout
     logout({ commit, state, dispatch }) {
         return new Promise((resolve, reject) => {
+
             logout(state.token).then(() => {
                 // 保存了两份，一份是store， 一份是cookie
                 commit('SET_ACCESS_TOKEN', '')
