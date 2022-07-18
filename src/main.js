@@ -10,7 +10,7 @@ import store from  './store'
 import ElementPlus from 'element-plus'
 import 'element-plus/dist/index.css'
 
-import {DeleteFilled, EditPen} from '@element-plus/icons-vue'
+import {DeleteFilled, EditPen,CaretBottom,Search} from '@element-plus/icons-vue'
 
 
 import hljs from 'highlight.js'
@@ -43,6 +43,8 @@ app.directive('hlcode', function (el) {
 
 app.component('DeleteFilled', DeleteFilled)
 app.component('EditPen', EditPen)
+app.component('CaretBottom', CaretBottom)
+app.component('SearchIcon', Search)
 app.use(router).use(store).use(hljsVuePlugin).use(ElementPlus).use(mavonEditor).mount('#app')
 // app.use(ElementPlus, { size: 'small', zIndex: 5000 })
 // app.mount('#app')

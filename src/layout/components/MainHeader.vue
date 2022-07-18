@@ -1,25 +1,32 @@
 <template>
     <div class="main-header">
+        <div class="left-menu">
+            <router-link to="/" class="left-menu-item">HOME</router-link>
+            <router-link to="/article/list" class="left-menu-item">LIST</router-link>
+            <router-link to="/article/list" class="left-menu-item">ARCHIVE</router-link>
+            <router-link to="/article/create" class="left-menu-item">NEW</router-link>
+        </div>
+
         <div class="right-menu">
-            <el-button>serach</el-button>
+            <el-button class="right-menu-item"> <el-icon><SearchIcon /></el-icon>
+            </el-button>
             <el-dropdown class="avatar-container right-menu-item hover-effect" trigger="click">
                 <div class="avatar-wrapper">
-                    <img :src="avatar+'?imageView2/1/w/80/h/80'" class="user-avatar">
-                    <i class="el-icon-caret-bottom"/>
+                    <el-avatar shape="square" :size="40" fit="fill" :src="avatar"></el-avatar>
+                    <el-icon><CaretBottom /></el-icon>
                 </div>
+
                 <template #dropdown>
                 <el-dropdown-menu>
-                    <router-link to="/profile/index">
-                        <el-dropdown-item>Profile</el-dropdown-item>
-                    </router-link>
                     <router-link to="/">
-                        <el-dropdown-item>Dashboard</el-dropdown-item>
+                        <el-dropdown-item>Home</el-dropdown-item>
                     </router-link>
-                    <a target="_blank" href="https://github.com/PanJiaChen/vue-element-admin/">
+                    <router-link to="/article/new">
+                        <el-dropdown-item>New</el-dropdown-item>
+                    </router-link>
+
+                    <a target="_blank" href="https://github.com/pycoder404/blog-vue">
                         <el-dropdown-item>Github</el-dropdown-item>
-                    </a>
-                    <a target="_blank" href="https://panjiachen.github.io/vue-element-admin-site/#/">
-                        <el-dropdown-item>Docs</el-dropdown-item>
                     </a>
                     <el-dropdown-item divided @click="logout">
                         <span style="display:block;">Log Out</span>
@@ -157,6 +164,34 @@
         position: relative;
         background: #fff;
         box-shadow: 0 1px 4px rgba(0, 21, 41, .08);
+        .left-menu {
+            float: left;
+            height: 100%;
+            line-height: 50px;
+
+            &:focus {
+                outline: none;
+            }
+
+            .left-menu-item {
+                display: inline-block;
+                padding: 0 8px;
+                height: 100%;
+                font-size: 18px;
+                color: #5a5e66;
+                vertical-align: text-bottom;
+
+                &.hover-effect {
+                    cursor: pointer;
+                    transition: background .3s;
+
+                    &:hover {
+                        background: rgba(0, 0, 0, .025)
+                    }
+                }
+            }
+
+        }
 
         .hamburger-container {
             line-height: 46px;
@@ -208,7 +243,6 @@
             }
 
             .avatar-container {
-                margin-right: 30px;
 
                 .avatar-wrapper {
                     margin-top: 5px;
@@ -257,11 +291,7 @@
         padding-bottom: 20px;
     }
 
-    .right-menu {
-        float: right;
-        height: 100%;
-        margin-right: 30px;
-    }
+
 
 
 </style>
