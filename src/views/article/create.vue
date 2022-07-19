@@ -21,34 +21,30 @@
                     <!--          <markdown-editor v-model="postForm.content" height="600px" />-->
                 </el-form-item>
             </div>
-            <el-form-item prop="category">
+            <el-form-item label="分类" prop="category">
                 <el-radio-group v-model="postForm.category">
                     <el-radio-button
-                            v-for="category in articleCategory"
+                            v-for="category in articleCategories"
                             :key="category['id']"
                             :label="category['id']"
                     >
                         {{category['title']}}
                     </el-radio-button>
+                    <el-button icon="PlusIcon">新建分类</el-button>
                 </el-radio-group>
             </el-form-item>
-            <el-form-item prop="tags">
-                <el-select
+            <el-form-item label='标签' prop="tags">
+                <el-checkbox-group
                         v-model="postForm.tags"
-                        placeholder="Select Article Tag"
-                        :reserve-keyword="false"
-                        multiple
-                        filterable
-                        default-first-option
-                        allow-create
-                        size="small">
-                    <el-option
+                >
+                    <el-checkbox
                             v-for="tag in articleTags"
                             :key="tag['text']"
                             :label="tag['text']"
                             :value="tag['text']"
                     />
-                </el-select>
+                    <el-button icon="PlusIcon">新建标签</el-button>
+                </el-checkbox-group>
             </el-form-item>
 
         </el-form>
@@ -69,7 +65,7 @@
     // import Upload from '@/components/UploadFile/index'
     import StickyNav from '@/components/StickyNav' // 粘性header组件
     // import { validURL } from '@/utils/validate'
-    import {getArticleDetail, createArticle, UpdateArticle,getTagList,getCategoryList} from '@/api/article'
+    import {getArticleDetail, createArticle, UpdateArticle, getTagList, getCategoryList} from '@/api/article'
 
     // import { searchUser } from '@/api/remote-search'
     // import Warning from './Warning'
@@ -143,7 +139,7 @@
                 },
                 tempRoute: {},
                 articleTags: [],
-                articleCategory: [],
+                articleCategories: [],
             }
         },
         computed: {
@@ -204,7 +200,7 @@
             },
             fetchArticleCategory(queryParam) {
                 getCategoryList(queryParam).then(response => {
-                    this.articleCategory = response.data
+                    this.articleCategories = response.data
                     // just for test
                     // this.postForm.title += `   Article Id:${this.postForm.id}`
                     // this.postForm.content_short += `   Article Id:${this.postForm.id}`

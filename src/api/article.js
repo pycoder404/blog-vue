@@ -2,7 +2,7 @@ import request from '@/utils/request'
 
 export function getArticleList(queryParams) {
     return request({
-        url: '/article/list/',
+        url: '/api/article/list/',
         method: 'get',
         params: queryParams
     })
@@ -10,7 +10,7 @@ export function getArticleList(queryParams) {
 
 export function getArticleDetail(articleId, queryParams) {
     return request({
-        url: '/article/detail/' + articleId + '/',
+        url: '/api/article/detail/' + articleId + '/',
         method: 'get',
         params: queryParams
     })
@@ -18,7 +18,7 @@ export function getArticleDetail(articleId, queryParams) {
 
 export function createArticle(data) {
     return request({
-        url: '/article/create/',
+        url: '/api/article/create/',
         method: 'post',
         data: data
     })
@@ -26,7 +26,7 @@ export function createArticle(data) {
 
 export function UpdateArticle(articleId, data) {
     return request({
-        url: '/article/update/' + articleId + '/',
+        url: '/api/article/update/' + articleId + '/',
         method: 'put',
         data: data
     })
@@ -35,7 +35,7 @@ export function UpdateArticle(articleId, data) {
 
 export function getTagList(queryParams) {
     return request({
-        url: '/tag/',
+        url: '/api/tag/',
         method: 'get',
         params: queryParams
     })
@@ -43,7 +43,7 @@ export function getTagList(queryParams) {
 
 export function getCategoryList(queryParams) {
     return request({
-        url: '/category/',
+        url: '/api/category/',
         method: 'get',
         params: queryParams
     })
