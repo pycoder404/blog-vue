@@ -12,6 +12,9 @@
     import IconGmail from "./components/IconGmail";
     import IconQq from "./components/IconQQ";
     import IconWechat from "./components/IconWechat";
+    import IconLike from "./components/IconLike";
+    import IconView from "./components/IconView";
+    import IconComment from "./components/IconComment";
 
     const IconMap = {
         alipay: 'icon-alipay',
@@ -20,6 +23,9 @@
         gmail: 'icon-gmail',
         qq: 'icon-qq',
         wechat: 'icon-wechat',
+        like: 'icon-like',
+        view: 'icon-view',
+        comment: 'icon-comment',
     }
 
     export default {
@@ -30,7 +36,10 @@
             IconGithub,
             IconGmail,
             IconQq,
-            IconWechat
+            IconWechat,
+            IconLike,
+            IconView,
+            IconComment
         },
         props: {
             icon: {

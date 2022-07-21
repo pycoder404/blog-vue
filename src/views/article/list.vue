@@ -3,11 +3,6 @@
         <div v-for="article in articleList" :key="article.id" class="article-main">
             <el-row style="background-color: white">
                 <el-col>
-                    <!--                                        <div class="article-title">-->
-                    <!--                                            <a :href="'/#/article/detail/'+article.id" class="article-title" style="text-decoration:none">-->
-                    <!--                                                {{ article.title }}-->
-                    <!--                                            </a>-->
-                    <!--                                        </div>-->
                     <div class="article-title">
                         <router-link
                                 :to="'/article/detail/'+ article.id"
@@ -42,8 +37,13 @@
 
 <script>
     import {getArticleList} from '@/api/article'
+    // import SvgIcon from '@/components/SvgIcon/index'
+
     export default {
         name: 'ArticleList',
+        // components:{
+        //     SvgIcon
+        // },
         filters: {
             statusFilter(status) {
                 const statusMap = {
@@ -68,14 +68,10 @@
         created() {
             this.getList()
         },
-        computed: {
-            artcilesList() {
-                return this.articleList
-            }
-        },
         methods: {
             getList() {
                 this.listLoading = true
+                Object.assign(this.listQuery,this.$route.query)
                 getArticleList(this.listQuery).then(response => {
                     this.articleList = response.data
                     this.articleCount = response.count

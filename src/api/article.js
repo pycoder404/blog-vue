@@ -31,21 +31,3 @@ export function UpdateArticle(articleId, data) {
         data: data
     })
 }
-
-
-export function getTagList(queryParams) {
-    return request({
-        url: '/api/tag/',
-        method: 'get',
-        params: queryParams
-    })
-}
-
-export function getCategoryList(queryParams) {
-    return request({
-        url: '/api/category/',
-        method: 'get',
-        params: queryParams
-    })
-}
-

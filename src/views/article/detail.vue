@@ -12,14 +12,14 @@
                     <h3>{{ articleDetail.title }}</h3>
                 </div>
                 <div v-hlcode v-html="articleDetail.content"></div>
-                <el-divider>END</el-divider>
+                <el-divider></el-divider>
 
                 <like-favorite></like-favorite>
 
 
                 <div class="article-desc">
                         <span>
-                            @{{articleDetail.created_time }} {{ articleDetail.author }}, views:{{articleDetail.views_count}} likes:{{articleDetail.likes_count}} comments:0
+                            @{{articleDetail.created_time }} {{ articleDetail.author }},views:{{articleDetail.views_count}} likes:{{articleDetail.likes_count}} comments:0
                             <el-button icon="DeleteFilled" type="text"/>
                             <router-link
                                     :to="'/article/edit/'+ articleDetail.id"
@@ -45,6 +45,8 @@
 
 <script>
     import {getArticleDetail} from '@/api/article'
+    // import SvgIcon from '@/components/SvgIcon/index'
+
     import LikeFavorite from "@/views/article/components/LikeFavorite";
     //
     // const defaultForm = {

@@ -13,12 +13,12 @@ const service = axios.create({
 service.interceptors.request.use(
   config => {
     // do something before request is sent
+    // 在permission中在每一个路由变化之前对accessToken进行过期检查，或者使用refreshToken刷新accessToken
+    // 给请求都添加一个accessToken
     if (store.getters.accessToken) {
       // let each request carry token
       // ['X-Token'] is a custom headers key
       // please modify it according to the actual situation
-      console.log("access token is ok")
-      console.log(getAccessToken())
       config.headers['Authorization'] = 'AccessToken ' + getAccessToken()
     }
     return config
@@ -47,7 +47,7 @@ service.interceptors.response.use(
     const res = response.data
     return  res
     // if the custom code is not 20000, it is judged as an error.
-    // todo set code is null as default
+    // TODO set code is null as default
     // if (res.code !== 0) {
     //   ElMessage({
     //     message: res.message || 'Response status code error',
@@ -76,8 +76,6 @@ service.interceptors.response.use(
   },
   error => {
     console.log('err is: ' + error) // for debug
-    console.log(error.detail)
-    console.dir(error)
     if (error.response){
       const err = error.response.data
       // todo  redirect to login page for unauthorized user (status 401)

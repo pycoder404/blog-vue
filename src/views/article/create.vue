@@ -16,37 +16,36 @@
                             v-model="postForm.content"
                             @imgAdd="handleImgUpload"
                     />
-                    <!--          <Tinymce ref="editor" v-model="postForm.content" :height="600" />-->
-                    <!--          <vue-ueditor-wrap v-model="postForm.content" :config="editorConfig" :height="800" />-->
-                    <!--          <markdown-editor v-model="postForm.content" height="600px" />-->
                 </el-form-item>
             </div>
+
             <el-form-item label="分类" prop="category">
                 <el-radio-group v-model="postForm.category">
                     <el-radio-button
                             v-for="category in articleCategories"
-                            :key="category['id']"
-                            :label="category['id']"
+                            :key="category['title']"
+                            :label="category['title']"
+                            :value="category['id']"
                     >
                         {{category['title']}}
                     </el-radio-button>
                     <el-button icon="PlusIcon">新建分类</el-button>
                 </el-radio-group>
             </el-form-item>
+
             <el-form-item label='标签' prop="tags">
                 <el-checkbox-group
                         v-model="postForm.tags"
                 >
                     <el-checkbox
                             v-for="tag in articleTags"
-                            :key="tag['text']"
-                            :label="tag['text']"
-                            :value="tag['text']"
+                            :key="tag['title']"
+                            :label="tag['title']"
+                            :value="tag['title']"
                     />
                     <el-button icon="PlusIcon">新建标签</el-button>
                 </el-checkbox-group>
             </el-form-item>
-
         </el-form>
 
         <sticky-nav
@@ -61,34 +60,19 @@
 </template>
 
 <script>
-    // import Tinymce from '@/components/Tinymce'
     // import Upload from '@/components/UploadFile/index'
     import StickyNav from '@/components/StickyNav' // 粘性header组件
     // import { validURL } from '@/utils/validate'
-    import {getArticleDetail, createArticle, UpdateArticle, getTagList, getCategoryList} from '@/api/article'
-
-    // import { searchUser } from '@/api/remote-search'
-    // import Warning from './Warning'
+    import {getArticleDetail, createArticle, UpdateArticle} from '@/api/article'
+    import {getTagList} from '@/api/tag'
+    import {getCategoryList} from '@/api/category'
     // import { CommentDropdown, PlatformDropdown, SourceUrlDropdown } from './Dropdown'
     import axios from 'axios'
-    // import VueUeditorWrap from 'vue-ueditor-wrap'
-    // import MarkdownEditor from '@/components/MarkdownEditor'
 
-    // const defaultForm = {
-    //     status: 'draft',
-    //     title: '', // 文章题目
-    //     content: '', // 文章内容
-    //     content_short: '', // 文章摘要
-    //     id: undefined,
-    //     platforms: ['a-platform'],
-    //     comment_disabled: false,
-    //     importance: 0
-    // }
 
     export default {
         name: 'CreateArticle',
         components: {
-            // Tinymce,
             // Upload,
             StickyNav,
             // CommentDropdown,
@@ -126,12 +110,7 @@
                     tags: []
 
                 },
-                html: '',
                 loading: false,
-                editorConfig: {
-                    UEDITOR_HOME_URL: '/ueditor/'
-                },
-                userListOptions: [],
                 rules: {
                     title: [{validator: validateRequire}],
                     content: [{validator: validateRequire}],
@@ -157,11 +136,12 @@
             }
         },
         created() {
-            this.fetchArticleTags()
+            // fixme 如果有异常了，不应该进入编辑界面，防止对原有文章的破坏
+            this.fetchArticleTag()
             this.fetchArticleCategory()
             if (this.isEdit) {
                 const articleId = this.$route.params && this.$route.params.id
-                this.fetchData(articleId, {'isedit': this.isEdit})
+                this.fetchArticle(articleId, {'isedit': this.isEdit})
             }
 
             // Why need to make a copy of this.$route here?
@@ -170,7 +150,7 @@
             this.tempRoute = Object.assign({}, this.$route)
         },
         methods: {
-            fetchData(articleId, queryParam) {
+            fetchArticle(articleId, queryParam) {
                 getArticleDetail(articleId, queryParam).then(response => {
                     this.postForm = response
                     // just for test
@@ -184,7 +164,7 @@
                     console.log(err)
                 })
             },
-            fetchArticleTags(queryParam) {
+            fetchArticleTag(queryParam) {
                 getTagList(queryParam).then(response => {
                     this.articleTags = response.data
                     // just for test
@@ -212,10 +192,11 @@
                     console.log(err)
                 })
             },
+
             handleImgUpload(pos, $file) {
-                var formdata = new FormData()
-                formdata.append('upload_file', $file)
-                var that = this
+                const formData = new FormData();
+                formData.append('upload_file', $file)
+                const that = this;
                 // const formData = new FormData()
                 // formData.append('upload_file', blobInfo.blob(), blobInfo.filename())
                 axios({
@@ -224,7 +205,7 @@
                     headers: {
                         'Content-Type': 'application/x-www-form-urlencoded'
                     },
-                    data: formdata
+                    data: formData
                 }).then(res => {
                     // if (res.data.code !== 0) {
                     //   failure('Http Error' + res.message)
@@ -262,31 +243,37 @@
                         this.loading = true
                         if (this.isEdit) {
                             const articleId = this.$route.params && this.$route.params.id
-                            UpdateArticle(articleId, this.postForm).then(() => {
-                                // this.list.unshift(this.temp)
-                                this.recordDialogVisible = false
+                            UpdateArticle(articleId, this.postForm).then((res) => {
+                                const resp = res
                                 this.$notify({
                                     title: 'Success',
                                     message: 'Update Successfully',
                                     type: 'success',
                                     duration: 2000
                                 })
+                                this.$router.push({name:'articleDetailPage',params:{id:resp.id}})
+                            })
+                            .catch((err) => {
+                                console.log("Error in update article",err)
                             })
                         } else {
-                            createArticle(this.postForm).then(() => {
-                                // this.list.unshift(this.temp)
-                                this.recordDialogVisible = false
+                            createArticle(this.postForm).then((res) => {
+                                const resp = res
                                 this.$notify({
                                     title: 'Success',
                                     message: 'Created Successfully',
                                     type: 'success',
                                     duration: 2000
                                 })
+                                this.$router.push({name:'articleDetailPage',params:{id:resp.id}})
+                            })
+                            .catch((err) => {
+                                console.log("Error in create article",err)
                             })
                         }
                         this.loading = false
                     } else {
-                        console.log('error submit!!')
+                        console.log('valid error!!')
                         return false
                     }
                 })

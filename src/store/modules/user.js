@@ -57,7 +57,6 @@ const actions = {
             login({ username: username.trim(), password: password }).then(response => {
                 const data  = response
                 console.log("login done")
-                console.info(data)
                 commit('SET_ACCESS_TOKEN', data.access)
                 commit('SET_REFRESH_TOKEN', data.refresh)
                 // token保存在cookie和store中
@@ -78,17 +77,17 @@ const actions = {
     getInfo({ commit, state }) {
         return new Promise((resolve, reject) => {
             getInfo(state.accessToken).then(response => {
-                console.log('response is:',response)
+                // console.log('response is:',response)
                 // const { data } = response
                 const data = response
-                console.log('data is:',data)
+                // console.log('data is:',data)
 
                 if (!data) {
                     reject('Verification failed, please Login again.')
                 }
 
                 const { roles, name, avatar, introduction } = data
-                console.log("roles in getinfo is: ",roles)
+                // console.log("roles in getinfo is: ",roles)
                 // roles must be a non-empty array
                 if (!roles || roles.length <= 0) {
                     reject('getInfo: roles must be a non-null array!')

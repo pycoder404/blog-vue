@@ -21,7 +21,7 @@
                     <router-link to="/">
                         <el-dropdown-item>Home</el-dropdown-item>
                     </router-link>
-                    <router-link to="/article/new">
+                    <router-link to="/article/create">
                         <el-dropdown-item>New</el-dropdown-item>
                     </router-link>
 
