@@ -67,7 +67,8 @@
     import {getTagList} from '@/api/tag'
     import {getCategoryList} from '@/api/category'
     // import { CommentDropdown, PlatformDropdown, SourceUrlDropdown } from './Dropdown'
-    import axios from 'axios'
+    // import axios from 'axios'
+    import {uploadFile} from "@/api/files";
 
 
     export default {
@@ -99,7 +100,7 @@
             }
 
             return {
-                image_upload_url: 'http://10.89.228.206:28088/files/upload/',
+                // image_upload_url: 'http://10.89.228.206:28088/api/article/upload/',
                 // postForm: Object.assign({}, defaultForm),
                 postForm: {
                     status: 'draft',
@@ -197,23 +198,30 @@
                 const formData = new FormData();
                 formData.append('upload_file', $file)
                 const that = this;
-                // const formData = new FormData()
-                // formData.append('upload_file', blobInfo.blob(), blobInfo.filename())
-                axios({
-                    method: 'post',
-                    url: this.image_upload_url,
-                    headers: {
-                        'Content-Type': 'application/x-www-form-urlencoded'
-                    },
-                    data: formData
-                }).then(res => {
-                    // if (res.data.code !== 0) {
-                    //   failure('Http Error' + res.message)
-                    //   return
-                    // }
+                uploadFile(formData).then((res)=>{
                     const img_url = res.data.url
                     that.$refs.editor.$img2Url(pos, img_url)
-                })
+
+                }).catch(err => {
+                          console.log(err)
+                        })
+                // const formData = new FormData()
+                // formData.append('upload_file', blobInfo.blob(), blobInfo.filename())
+                // axios({
+                //     method: 'post',
+                //     url: this.image_upload_url,
+                //     headers: {
+                //         'Content-Type': 'application/x-www-form-urlencoded'
+                //     },
+                //     data: formData
+                // }).then(res => {
+                //     // if (res.data.code !== 0) {
+                //     //   failure('Http Error' + res.message)
+                //     //   return
+                //     // }
+                //     const img_url = res.data.url
+                //     that.$refs.editor.$img2Url(pos, img_url)
+                // })
 
                 // fixme 这里使用封装的方法错误，提示object(...) is not a function,应该是返回类型不对(promise?)
                 // uploadFiles(formData).then((res) => {
