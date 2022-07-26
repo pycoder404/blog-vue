@@ -1,5 +1,5 @@
 <template>
-    <el-icon><DeleteFilled /></el-icon>
+    <el-icon><PlusIcon /></el-icon>
 </template>
 
 <script>

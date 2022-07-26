@@ -28,7 +28,6 @@
                     </div>
                 </el-col>
             </el-row>
-            <!--        <el-divider style="margin: 10px 0;"/>-->
         </div>
     </div>
 

@@ -13,7 +13,7 @@
                 </div>
                 <div v-hlcode v-html="articleDetail.content"></div>
                 <el-divider></el-divider>
-
+                <category-and-tag :article-detail="articleDetail"></category-and-tag>
                 <like-favorite></like-favorite>
 
 
@@ -48,6 +48,7 @@
     // import SvgIcon from '@/components/SvgIcon/index'
 
     import LikeFavorite from "@/views/article/components/LikeFavorite";
+    import CategoryAndTag from "@/views/article/components/CategoryAndTag";
     //
     // const defaultForm = {
     //     status: 'draft',
@@ -65,7 +66,7 @@
     // }
     export default {
         name: "ArticleDetail",
-        components:{LikeFavorite},
+        components:{LikeFavorite,CategoryAndTag},
         data() {
             return {
                 articleDetail: {},
