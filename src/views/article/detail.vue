@@ -50,20 +50,7 @@
     import LikeFavorite from "@/views/article/components/LikeFavorite";
     import CategoryAndTag from "@/views/article/components/CategoryAndTag";
     //
-    // const defaultForm = {
-    //     status: 'draft',
-    //     title: 'title', // 文章题目
-    //     content: 'content', // 文章内容
-    //     toc: '', // 文章目录
-    //     content_short: '', // 文章摘要
-    //     source_uri: '', // 文章外链
-    //     image_uri: '', // 文章图片
-    //     display_time: undefined, // 前台展示时间
-    //     id: undefined,
-    //     platforms: ['a-platform'],
-    //     comment_disabled: false,
-    //     importance: 0
-    // }
+
     export default {
         name: "ArticleDetail",
         components:{LikeFavorite,CategoryAndTag},
@@ -99,6 +86,7 @@
                     // // set page title
                     // this.setPageTitle()
                 }).catch(err => {
+                    // FIXME  访问一个不存在的文章过程中应该跳转到404界面
                     console.log(err)
                 })
             }

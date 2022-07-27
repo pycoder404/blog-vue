@@ -29,9 +29,21 @@
                     >
                         {{category['title']}}
                     </el-radio-button>
-                    <el-button icon="PlusIcon">新建分类</el-button>
+                    <el-button icon="PlusIcon" @click="addCategoryDialogVisible=true">新建分类</el-button>
+
                 </el-radio-group>
             </el-form-item>
+
+            <el-dialog v-model="addCategoryDialogVisible" title="添加分类">
+
+                        <el-input v-model="newCategory" />
+                <template #footer>
+                      <span class="dialog-footer">
+                        <el-button @click="addCategoryDialogVisible = false">Cancel</el-button>
+                        <el-button type="primary" @click="submitToCreateCategory">Confirm</el-button>
+                      </span>
+                </template>
+            </el-dialog>
 
             <el-form-item label='标签' prop="tags">
                 <el-checkbox-group
@@ -43,9 +55,19 @@
                             :label="tag['title']"
                             :value="tag['title']"
                     />
-                    <el-button icon="PlusIcon">新建标签</el-button>
+                    <el-button icon="PlusIcon" @click="addTagDialogVisible=true">新建标签</el-button>
                 </el-checkbox-group>
             </el-form-item>
+
+            <el-dialog v-model="addTagDialogVisible" title="添加标签">
+                <el-input v-model="newTag" />
+                <template #footer>
+                      <span class="dialog-footer">
+                        <el-button @click="addTagDialogVisible = false">Cancel</el-button>
+                        <el-button type="primary" @click="submitToCreateTag">Confirm</el-button>
+                      </span>
+                </template>
+            </el-dialog>
         </el-form>
 
         <sticky-nav
@@ -63,9 +85,9 @@
     // import Upload from '@/components/UploadFile/index'
     import StickyNav from '@/components/StickyNav' // 粘性header组件
     // import { validURL } from '@/utils/validate'
-    import {getArticleDetail, createArticle, UpdateArticle} from '@/api/article'
-    import {getTagList} from '@/api/tag'
-    import {getCategoryList} from '@/api/category'
+    import {getArticleDetail, createArticle, updateArticle} from '@/api/article'
+    import {getTagList,createTag} from '@/api/tag'
+    import {getCategoryList,createCategory} from '@/api/category'
     // import { CommentDropdown, PlatformDropdown, SourceUrlDropdown } from './Dropdown'
     // import axios from 'axios'
     import {uploadFile} from "@/api/files";
@@ -100,8 +122,6 @@
             }
 
             return {
-                // image_upload_url: 'http://10.89.228.206:28088/api/article/upload/',
-                // postForm: Object.assign({}, defaultForm),
                 postForm: {
                     status: 'draft',
                     title: '', // 文章题目
@@ -112,6 +132,10 @@
 
                 },
                 loading: false,
+                addCategoryDialogVisible:false,
+                addTagDialogVisible:false,
+                newCategory:'',
+                newTag: '',
                 rules: {
                     title: [{validator: validateRequire}],
                     content: [{validator: validateRequire}],
@@ -135,6 +159,9 @@
                     this.postForm.display_time = new Date(val)
                 }
             }
+            // articleCategory:{
+            //     return this.articleCategories
+            // }
         },
         created() {
             // fixme 如果有异常了，不应该进入编辑界面，防止对原有文章的破坏
@@ -251,7 +278,7 @@
                         this.loading = true
                         if (this.isEdit) {
                             const articleId = this.$route.params && this.$route.params.id
-                            UpdateArticle(articleId, this.postForm).then((res) => {
+                            updateArticle(articleId, this.postForm).then((res) => {
                                 const resp = res
                                 this.$notify({
                                     title: 'Success',
@@ -286,6 +313,38 @@
                     }
                 })
             },
+            submitToCreateCategory() {
+                const data={title:this.newCategory}
+                createCategory(data).then(() => {
+                    this.addCategoryDialogVisible = false
+                    this.fetchArticleCategory()
+                    this.$notify({
+                        title: 'Success',
+                        message: 'Create Successfully',
+                        type: 'success',
+                        duration: 2000
+                    })
+                })
+                    .catch((err) => {
+                        console.log("Error: ",err)
+                    })
+            },
+        submitToCreateTag() {
+            const data={title:this.newTag}
+            createTag(data).then(() => {
+                this.addTagDialogVisible = false
+                this.fetchArticleTag()
+                this.$notify({
+                    title: 'Success',
+                    message: 'Create Successfully',
+                    type: 'success',
+                    duration: 2000
+                })
+            })
+                .catch((err) => {
+                    console.log("Error: ",err)
+                })
+        }
         }
     }
 </script>

@@ -24,7 +24,7 @@ export function createArticle(data) {
     })
 }
 
-export function UpdateArticle(articleId, data) {
+export function updateArticle(articleId, data) {
     return request({
         url: '/api/article/update/' + articleId + '/',
         method: 'put',
