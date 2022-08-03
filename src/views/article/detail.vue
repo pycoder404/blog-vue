@@ -1,18 +1,20 @@
 <template>
     <el-row>
-        <el-col :span="5">
+        <el-col :span="4">
             <div class="col-bg">
                 <p>left sidebar</p>
             </div>
         </el-col>
 
-        <el-col :span="14">
+        <el-col :span="16">
             <div class="col-bg" style="background-color: white">
                 <div class="content-margin-left">
                     <h3>{{ articleDetail.title }}</h3>
                 </div>
                 <div v-hlcode v-html="articleDetail.content"></div>
+
                 <el-divider></el-divider>
+
                 <category-and-tag :article-detail="articleDetail"></category-and-tag>
                 <like-favorite></like-favorite>
 
@@ -28,14 +30,13 @@
                                     type="text"/>
                         </router-link>
                         </span>
-
                 </div>
                 <br>
             </div>
 
         </el-col>
 
-        <el-col :span="5">
+        <el-col :span="4">
             <div class="col-bg">
                 <div v-html="articleDetail.toc"/>
             </div>
@@ -73,9 +74,9 @@
             fetchData(articleId) {
                 console.log("get article deatil queryparam: ", articleId)
                 getArticleDetail(articleId).then(response => {
-                    console.log(response)
-                    this.articleDetail = response
-
+                    const data = response
+                    data['toc'] = response['toc'].replaceAll('<ul','<ul class=article-toc')
+                    this.articleDetail = data
                     // just for test
                     // this.postForm.title += `   Article Id:${this.postForm.id}`
                     // this.postForm.content_short += `   Article Id:${this.postForm.id}`
@@ -139,5 +140,15 @@
         margin-left: 15px;
         background: #d3dce6;
     }
+
+</style>
+<style>
+    .article-toc {
+        list-style-type: none;
+        padding: 0px 15px;
+
+
+    }
+
 
 </style>
