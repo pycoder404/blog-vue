@@ -1,12 +1,13 @@
 <template>
     <el-row>
         <el-col :span="4">
-            <div class="col-bg">
+            <div  class="col-bg">
                 <p>left sidebar</p>
             </div>
         </el-col>
 
-        <el-col :span="16">
+
+        <el-col class="border-side" :span="16">
             <div class="col-bg" style="background-color: white">
                 <div class="content-margin-left">
                     <h3>{{ articleDetail.title }}</h3>
@@ -33,8 +34,8 @@
                 </div>
                 <br>
             </div>
-
         </el-col>
+
 
         <el-col :span="4">
             <div class="col-bg">
@@ -132,13 +133,18 @@
         text-align: right;
     }
 
+    .border-side {
+        border-left-style: solid;
+        border-right-style: solid;
+        border-width: 1px;
+        border-color:rgba(0, 0, 0, 0.125);
+    }
 
     .col-bg {
         text-align: left;
         height: 100%;
         border-radius: 4px;
         margin-left: 15px;
-        background: #d3dce6;
     }
 
 </style>

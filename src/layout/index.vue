@@ -1,29 +1,29 @@
 <template>
     <div class="container">
-        <el-row class="el-margin-side">
+        <el-row style="border-bottom: solid 1px rgba(0, 0, 0, 0.125)">
             <el-col :span="24">
                 <main-header></main-header>
             </el-col>
         </el-row>
 
-        <el-row class="el-margin-side main-content">
+        <el-row class="main-content">
             <el-col :span="24">
                 <app-main class="main-container"></app-main>
             </el-col>
         </el-row>
 
-        <el-row class="el-margin-side">
+        <el-row style="border-top: solid 1px rgba(0, 0, 0, 0.125)">
             <el-col :span="24">
                 <main-footer></main-footer>
             </el-col>
         </el-row>
     </div>
 
-
 </template>
 
 <script>
     import {MainHeader, AppMain, MainFooter} from './components'
+
     export default {
         name: 'LayOut',
         components: {
@@ -50,6 +50,7 @@
             top: 0;
         }
     }
+
     .container {
         height: 100%;
         width: 100%;
@@ -58,13 +59,16 @@
         justify-content: space-between;
         box-sizing: border-box;
     }
+
     .el-margin-side {
         margin-left: 5px;
         margin-right: 5px;
     }
+
     .main-content {
-        flex:1;
+        flex: 1;
     }
+
     .drawer-bg {
         background: #000;
         opacity: 0.3;
