@@ -1,6 +1,6 @@
 <template>
     <div class="container">
-        <el-row style="border-bottom: solid 1px rgba(0, 0, 0, 0.125)">
+        <el-row >
             <el-col :span="24">
                 <main-header></main-header>
             </el-col>
@@ -82,9 +82,10 @@
     .fixed-header {
         position: fixed;
         top: 0;
-        right: 0;
+        left: 0;
         z-index: 9;
-        width: calc(100% - #{$sideBarWidth});
+        width: 100%;
+        height: 50px;
         transition: width 0.28s;
     }
 

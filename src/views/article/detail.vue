@@ -1,18 +1,18 @@
 <template>
     <el-row>
-        <el-col :span="4">
-            <div  class="col-bg">
-                <p>left sidebar</p>
+        <el-col class="article-left-sidebar" :span="4">
+            <div>
+                <p>left sider</p>
             </div>
         </el-col>
 
-
         <el-col class="border-side" :span="16">
-            <div class="col-bg" style="background-color: white">
-                <div class="content-margin-left">
+            <div class="article-body">
+                <div>
                     <h3>{{ articleDetail.title }}</h3>
                 </div>
-                <div v-hlcode v-html="articleDetail.content"></div>
+
+                <div v-hlcode class="article-content" v-html="articleDetail.content"></div>
 
                 <el-divider></el-divider>
 
@@ -37,9 +37,11 @@
         </el-col>
 
 
-        <el-col :span="4">
-            <div class="col-bg">
+        <el-col class="article-right-sidebar" :span="4">
+            <div>
+                <!--                <el-card class="bg-purple-dark">-->
                 <div v-html="articleDetail.toc"/>
+                <!--                </el-card>-->
             </div>
         </el-col>
     </el-row>
@@ -55,7 +57,7 @@
 
     export default {
         name: "ArticleDetail",
-        components:{LikeFavorite,CategoryAndTag},
+        components: {LikeFavorite, CategoryAndTag},
         data() {
             return {
                 articleDetail: {},
@@ -76,7 +78,7 @@
                 console.log("get article deatil queryparam: ", articleId)
                 getArticleDetail(articleId).then(response => {
                     const data = response
-                    data['toc'] = response['toc'].replaceAll('<ul','<ul class=article-toc')
+                    data['toc'] = response['toc'].replaceAll('<ul', '<ul class=article-toc')
                     this.articleDetail = data
                     // just for test
                     // this.postForm.title += `   Article Id:${this.postForm.id}`
@@ -100,31 +102,15 @@
     /*@import './styles/atom-one-dark.css';*/
     @import './styles/github-dark.css';
 
-    .grid-content {
-        border-radius: 4px;
-    }
-
-    .margin-side {
-        margin: 5px 15px 0px 15px;
-    }
-
-    .margin-left {
-        height: 100%;
-        margin-left: 30px;
-    }
-
     .content-margin-left {
         margin-left: 20px;
     }
 
-    .margin-right {
-        margin-right: 30px;
-        height: 100%;
-    }
 
     .bg-purple-dark {
         background: #99a9bf;
     }
+
     .article-desc {
         font-size: 16px;
         color: #303030;
@@ -137,24 +123,56 @@
         border-left-style: solid;
         border-right-style: solid;
         border-width: 1px;
-        border-color:rgba(0, 0, 0, 0.125);
+        border-color: rgba(0, 0, 0, 0.125);
     }
 
-    .col-bg {
+
+    .article-left-sidebar {
+        background: #99a9bf;
         text-align: left;
         height: 100%;
         border-radius: 4px;
-        margin-left: 15px;
+        padding-left: 20px;
     }
 
+    .article-body {
+        text-align: left;
+        height: 100%;
+        border-radius: 4px;
+        padding-left: 20px;
+    }
+
+    .article-right-sidebar {
+        background: #99a9bf;
+        text-align: left;
+        height: 100%;
+        border-radius: 4px;
+    }
 </style>
 <style>
-    .article-toc {
+    .article-toc  {
         list-style-type: none;
-        padding: 0px 15px;
-
+        padding-inline-start: 20px;
 
     }
+    a {
+        color: blue;
+    }
 
+    .article-toc  a:link {
+        color: black;
+    }
+    .article-toc a:visited {
+        color: gray;
+    }
+    .article-toc  a:hover {
+        color: blue;
+    }
+    .article-toc  a:active {
+        color: red;
+    }
+    .article-content a {
+        color: blue;
+    }
 
 </style>
