@@ -38,11 +38,13 @@
 
 
         <el-col class="article-right-sidebar" :span="4">
-            <div>
-                <!--                <el-card class="bg-purple-dark">-->
-                <div v-html="articleDetail.toc"/>
-                <!--                </el-card>-->
-            </div>
+                <el-scrollbar always="true">
+                <div class="article-toc-card">
+                    <el-card :body-style="tocBodyStyle" shadow="hover">
+                        <div v-html="articleDetail.toc"/>
+                    </el-card>
+                </div>
+                </el-scrollbar>
         </el-col>
     </el-row>
 </template>
@@ -62,6 +64,7 @@
             return {
                 articleDetail: {},
                 tempRoute: {},
+                tocBodyStyle: {padding: '5px 20px 10px 0px'}
             }
         },
 
@@ -124,11 +127,11 @@
         border-right-style: solid;
         border-width: 1px;
         border-color: rgba(0, 0, 0, 0.125);
+        background-color: white;
     }
 
 
     .article-left-sidebar {
-        background: #99a9bf;
         text-align: left;
         height: 100%;
         border-radius: 4px;
@@ -143,34 +146,43 @@
     }
 
     .article-right-sidebar {
-        background: #99a9bf;
         text-align: left;
-        height: 100%;
         border-radius: 4px;
     }
+
+    .article-toc-card {
+
+    }
+
+
 </style>
 <style>
-    .article-toc  {
+    .article-toc {
         list-style-type: none;
         padding-inline-start: 20px;
 
     }
+
     a {
         color: blue;
     }
 
-    .article-toc  a:link {
+    .article-toc a:link {
         color: black;
     }
+
     .article-toc a:visited {
         color: gray;
     }
-    .article-toc  a:hover {
+
+    .article-toc a:hover {
         color: blue;
     }
-    .article-toc  a:active {
+
+    .article-toc a:active {
         color: red;
     }
+
     .article-content a {
         color: blue;
     }
