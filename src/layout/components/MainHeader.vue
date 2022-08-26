@@ -36,86 +36,7 @@
             </el-dropdown>
         </div>
     </div>
-    <!--        <div class="main-header">-->
-    <!--            <div class="left-menu">-->
-    <!--                <el-link href="/">HOME</el-link>-->
-    <!--                <el-link href="/">LIST</el-link>-->
-    <!--                <el-link href="/">HOME</el-link>-->
-    <!--                <el-link href="/">HOME</el-link>-->
-    <!--                <el-link href="/">HOME</el-link>-->
-    <!--            </div>-->
 
-    <!--            <div class="right-menu">-->
-    <!--                <svg-icon icon="alipay"></svg-icon>-->
-    <!--                <svg-icon icon="error"></svg-icon>-->
-    <!--                <el-link href="https://github.com/pycoder404/blog-django" target="_blank"><svg-icon icon="git"></svg-icon></el-link>-->
-    <!--                <svg-icon icon="gmail"></svg-icon>-->
-    <!--                <svg-icon icon="qq"></svg-icon>-->
-    <!--                <svg-icon icon="wechat"></svg-icon>-->
-
-    <!--            </div>-->
-    <!--        </div>-->
-
-    <!--    <el-row>-->
-    <!--        <el-col :span="20">-->
-    <!--            <el-menu-->
-    <!--                    class="el-menu-demo"-->
-    <!--                    mode="horizontal"-->
-    <!--                    background-color="#545c64"-->
-    <!--                    text-color="#fff"-->
-    <!--                    active-text-color="#ffd04b"-->
-    <!--                    @select="handleSelect"-->
-    <!--            >-->
-    <!--                <el-menu-item index="1">-->
-    <!--                    <el-link href="/">HOME</el-link>-->
-    <!--                </el-menu-item>-->
-    <!--                <el-menu-item index="2">-->
-    <!--                    <el-link href="/article/list">归档</el-link>-->
-    <!--                </el-menu-item>-->
-    <!--                <el-menu-item index="3">-->
-    <!--                    <el-link href="/article/list">分类</el-link>-->
-    <!--                </el-menu-item>-->
-    <!--                <el-menu-item index="4">-->
-    <!--                    <el-link href="/article/list">标签</el-link>-->
-    <!--                </el-menu-item>-->
-    <!--                <el-menu-item index="5">-->
-    <!--                    <el-link href="/article/list">project</el-link>-->
-    <!--                </el-menu-item>-->
-    <!--                <el-menu-item index="6">-->
-    <!--                    <el-link href="/article/create">NEW</el-link>-->
-    <!--                </el-menu-item>-->
-    <!--                <el-menu-item index="7">-->
-    <!--                    <el-link href="/article/detail">aboutme</el-link>-->
-    <!--                </el-menu-item>-->
-    <!--            </el-menu>-->
-    <!--        </el-col>-->
-    <!--        <el-col :span="4">-->
-    <!--            <el-menu-->
-    <!--                    class="el-menu-demo"-->
-    <!--                    mode="horizontal"-->
-    <!--                    background-color="#545c64"-->
-    <!--                    text-color="#fff"-->
-    <!--                    active-text-color="#ffd04b"-->
-    <!--            >-->
-    <!--                <el-menu-item index="1">-->
-    <!--                    <el-link href="https://github.com/pycoder404/blog-django" target="_blank">-->
-    <!--                        <svg-icon icon="git"></svg-icon>-->
-    <!--                    </el-link>-->
-    <!--                </el-menu-item>-->
-
-    <!--                <el-menu-item index="3">-->
-    <!--                    <el-link href="https://github.com/pycoder404/blog-django" target="_blank">-->
-    <!--                        <svg-icon icon="gmail"></svg-icon>-->
-    <!--                    </el-link>-->
-    <!--                </el-menu-item>-->
-    <!--                <el-menu-item style="" index="4">-->
-    <!--                    <el-link href="https://github.com/pycoder404/blog-django" target="_blank">-->
-    <!--                        <svg-icon icon="wechat"></svg-icon>-->
-    <!--                    </el-link>-->
-    <!--                </el-menu-item>-->
-    <!--            </el-menu>-->
-    <!--        </el-col>-->
-    <!--    </el-row>-->
 
 </template>
 
@@ -125,8 +46,6 @@
     // import Breadcrumb from '@/components/Breadcrumb'
     // import Hamburger from '@/components/Hamburger'
     import {ref} from 'vue'
-
-
     import SvgIcon from '@/components/SvgIcon/index'
 
     export default {

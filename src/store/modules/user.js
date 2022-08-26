@@ -51,18 +51,18 @@ const mutations = {
 const actions = {
     // user login
     login({ commit }, userInfo) {
-        console.info("login in store")
+        // console.info("login in store")
         const { username, password } = userInfo
         return new Promise((resolve, reject) => {
             login({ username: username.trim(), password: password }).then(response => {
                 const data  = response
-                console.log("login done")
+                // console.log("login done")
                 commit('SET_ACCESS_TOKEN', data.access)
                 commit('SET_REFRESH_TOKEN', data.refresh)
                 // token保存在cookie和store中
                 setAccessToken(data.access)
                 setRefreshToken(data.refresh)
-                console.log("set access token done")
+                // console.log("set access token done")
                 resolve()
             }).catch(error => {
                 reject(error)

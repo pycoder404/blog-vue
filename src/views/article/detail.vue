@@ -38,13 +38,13 @@
 
 
         <el-col class="article-right-sidebar" :span="4">
-                <el-scrollbar always="true">
+            <el-scrollbar :always="true">
                 <div class="article-toc-card">
                     <el-card :body-style="tocBodyStyle" shadow="hover">
                         <div v-html="articleDetail.toc"/>
                     </el-card>
                 </div>
-                </el-scrollbar>
+            </el-scrollbar>
         </el-col>
     </el-row>
 </template>

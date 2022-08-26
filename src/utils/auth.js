@@ -1,4 +1,8 @@
 import Cookies from 'js-cookie'
+import defaultSettings from '@/settings'
+
+const accessExpire = defaultSettings.accessTokenExpire || 1
+const refreshExpire = defaultSettings.refreshTokenExpire || 7
 
 //保存在cookie里的token名称
 const accessTokenKey = 'access_token'
@@ -9,7 +13,7 @@ export function getAccessToken() {
 }
 
 export function setAccessToken(token) {
-    return Cookies.set(accessTokenKey, token)
+    return Cookies.set(accessTokenKey, token, {expires: accessExpire})
 }
 
 export function removeAccessToken() {
@@ -22,7 +26,7 @@ export function getRefreshToken() {
 }
 
 export function setRefreshToken(token) {
-    return Cookies.set(refreshTokenKey, token)
+    return Cookies.set(refreshTokenKey, token, {expires: refreshExpire})
 }
 
 export function removeRefreshToken() {

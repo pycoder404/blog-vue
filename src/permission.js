@@ -23,7 +23,7 @@ router.beforeEach(async (to, from, next) => {
     // console.log("check is has access token: ",hasAccessToken)
     if (hasAccessToken) {
         // console.log("has access token:",hasAccessToken)
-        // FIXME  添加对accessToken的过期检查和refresh
+        // TODO  添加对accessToken的过期检查和refresh
         if (to.path === '/login') {
             // if is logged in, redirect to the home page
             next({path: '/'})
@@ -32,7 +32,8 @@ router.beforeEach(async (to, from, next) => {
             // determine whether the user has obtained his permission roles through getInfo
             // console.log("check is has roles")
             // console.log(store.getters.roles)
-            // FIXME Ctrl + F5强制刷新界面，对store有啥影响吗，为啥会导致没有roles，重新获取Info？
+            // question Ctrl + F5强制刷新界面，对store有啥影响吗，为啥会导致没有roles，重新获取Info？?
+            // note: 因为store是存在内存中的，所以每次刷新就会判断为空，需要重新获取数据，而cookie保存在本地，所以刷新不会丢失
             const hasRoles = store.getters.roles && store.getters.roles.length > 0
             if (hasRoles) {
                 // console.log("yes has roles")
@@ -43,7 +44,7 @@ router.beforeEach(async (to, from, next) => {
                 try {
                     // get user info
                     // note: roles must be a object array! such as: ['admin'] or ,['developer','editor']
-                    // FIXME  这里的roles是user/GetInfo如何反馈的，如何只反馈roles的
+                    // question  这里的roles是user/GetInfo如何反馈的，如何只反馈roles的
                     // console.log("get info")
                     const { roles } = await store.dispatch('user/getInfo')
                     console.log(roles)

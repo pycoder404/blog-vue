@@ -25,24 +25,30 @@ const routes = [
             {
                 path: 'list',
                 component: ArticleList,
-                name: 'articleListPage'
+                name: 'articleListPage',
+                meta: { title: 'ArticleList'}
+
             },
             {
                 path: 'detail/:id(\\d+)/',
                 component: ArticleDetail,
-                name: 'articleDetailPage'
+                name: 'articleDetailPage',
+                meta: { title: 'ArticleDetail'}
 
             },
             {
                 path: 'edit/:id(\\d+)/',
                 component: ArticleEdit,
-                name: 'articleEditPage'
+                name: 'articleEditPage',
+                meta: { title: 'ArticleEdit'}
+
 
             },
             {
                 path: 'create',
                 component: ArticleCreate,
-                name: 'articleCreatePage'
+                name: 'articleCreatePage',
+                meta: { title: 'ArticleCreate'}
             }
         ]
     }

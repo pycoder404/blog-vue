@@ -1,13 +1,14 @@
 <template>
     <div class="login-container">
-        <el-form ref="loginFormRef" :model="loginForm" :rules="loginRules" class="login-form" autocomplete="on" label-position="left">
+        <el-form ref="loginForm" :model="loginForm" :rules="loginRules" class="login-form" autocomplete="on" label-position="left">
+
             <div class="title-container">
                 <h3 class="title">Login Form</h3>
             </div>
 
             <el-form-item prop="username">
         <span class="svg-container">
-          <svg-icon icon-class="user" />
+            <el-icon><User-Icon></User-Icon></el-icon>
         </span>
                 <el-input
                         ref="username"
@@ -23,7 +24,7 @@
             <el-tooltip v-model="capsTooltip" content="Caps lock is On" placement="right" manual>
                 <el-form-item prop="password">
           <span class="svg-container">
-            <svg-icon icon-class="password" />
+            <el-icon><Lock-Icon></Lock-Icon></el-icon>
           </span>
                     <el-input
                             :key="passwordType"
@@ -37,38 +38,34 @@
                             @keyup="checkCapslock"
                             @blur="capsTooltip = false"
                             @keyup.enter="handleLogin"
+                            show-password
+
                     />
-                    <span class="show-pwd" @click="showPwd">
-            <svg-icon :icon-class="passwordType === 'password' ? 'eye' : 'eye-open'" />
-          </span>
+
                 </el-form-item>
             </el-tooltip>
 
             <el-button :loading="loading" type="primary" style="width:100%;margin-bottom:30px;" @click.prevent="handleLogin">Login</el-button>
 
-            <div style="position:relative">
-                <div class="tips">
-                    <span>Username : admin</span>
-                    <span>Password : any</span>
-                </div>
-                <div class="tips">
-                    <span style="margin-right:18px;">Username : editor</span>
-                    <span>Password : any</span>
-                </div>
+<!--            <div style="position:relative;text-align: left">-->
+<!--                <div class="tips">-->
+<!--                    <span>Username : admin</span>-->
+<!--                    <span>Password : any</span>-->
+<!--                </div>-->
 
-                <el-button class="thirdparty-button" type="primary" @click="showDialog=true">
-                    Or connect with
-                </el-button>
-            </div>
+<!--                <el-button class="thirdparty-button" type="primary" @click="showDialog=true">-->
+<!--                    Or connect with-->
+<!--                </el-button>-->
+<!--            </div>-->
         </el-form>
 
-        <el-dialog title="Or connect with" v-show="showDialog">
-            Can not be simulated on local, so please combine you own business simulation! ! !
-            <br>
-            <br>
-            <br>
-<!--            <social-sign />-->
-        </el-dialog>
+<!--        <el-dialog title="Or connect with" v-show="showDialog">-->
+<!--            Can not be simulated on local, so please combine you own business simulation! ! !-->
+<!--            <br>-->
+<!--            <br>-->
+<!--            <br>-->
+<!--&lt;!&ndash;            <social-sign />&ndash;&gt;-->
+<!--        </el-dialog>-->
     </div>
 </template>
 
@@ -97,12 +94,12 @@
             }
             return {
                 loginForm: {
-                    username: 'root',
-                    password: '111111'
+                    username: '',
+                    password: ''
                 },
                 loginRules: {
-                    username: [{required: true, trigger: 'blur', validator: validateUsername}],
-                    password: [{required: true, trigger: 'blur', validator: validatePassword}]
+                    username: [{ required: true, trigger: 'blur', validator: validateUsername }],
+                    password: [{ required: true, trigger: 'blur', validator: validatePassword }]
                 },
                 passwordType: 'password',
                 capsTooltip: false,
@@ -114,7 +111,7 @@
         },
         watch: {
             $route: {
-                handler: function (route) {
+                handler: function(route) {
                     const query = route.query
                     if (query) {
                         this.redirect = query.redirect
@@ -153,19 +150,15 @@
                 })
             },
             handleLogin() {
-                this.$refs.loginFormRef.validate(valid => {
+                this.$refs.loginForm.validate(valid => {
                     if (valid) {
-                        console.info("begin handle login")
                         this.loading = true
                         this.$store.dispatch('user/login', this.loginForm)
                             .then(() => {
-                                console.log("login succed")
-                                this.$router.push({path: this.redirect || '/', query: this.otherQuery})
+                                this.$router.push({ path: this.redirect || '/', query: this.otherQuery })
                                 this.loading = false
                             })
                             .catch(() => {
-                                console.info("error in handle login")
-
                                 this.loading = false
                             })
                     } else {
@@ -221,9 +214,19 @@
     /* reset element-ui css */
     .login-container {
         .el-input {
-            display: inline-block;
             height: 47px;
-            width: 85%;
+            width: 90%;
+
+            .el-input__wrapper {
+                background: transparent;
+                border: 0px;
+                border-radius: 0px;
+                box-shadow: none;
+                align-items: flex-start;
+                flex-grow: 1;
+                justify-content: center;
+                padding: 0 11px;
+            }
 
             input {
                 background: transparent;

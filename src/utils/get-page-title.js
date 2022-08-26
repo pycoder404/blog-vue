@@ -1,6 +1,6 @@
 import defaultSettings from '@/settings'
 
-const title = defaultSettings.title || 'pycoder404 Blog'
+const title = defaultSettings.title || 'A Django Vue Blog'
 
 export default function getPageTitle(pageTitle) {
     if (pageTitle) {

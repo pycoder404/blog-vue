@@ -13,7 +13,7 @@ const service = axios.create({
 service.interceptors.request.use(
   config => {
     // do something before request is sent
-    // 在permission中在每一个路由变化之前对accessToken进行过期检查，或者使用refreshToken刷新accessToken
+    // todo 在permission中在每一个路由变化之前对accessToken进行过期检查，或者使用refreshToken刷新accessToken
     // 给请求都添加一个accessToken
     if (store.getters.accessToken) {
       // let each request carry token
@@ -25,7 +25,6 @@ service.interceptors.request.use(
   },
   error => {
     // do something with request error
-    console.log("error in config")
     console.log(error) // for debug
     return Promise.reject(error)
   }
