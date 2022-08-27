@@ -8,11 +8,10 @@
         </div>
 
         <div class="right-menu">
-            <el-button class="right-menu-item"> <el-icon><SearchIcon /></el-icon>
-            </el-button>
+            <el-button class="right-menu-item"> <el-icon><SearchIcon /></el-icon></el-button>
             <el-dropdown class="avatar-container right-menu-item hover-effect" trigger="click">
                 <div class="avatar-wrapper">
-                    <el-avatar shape="square" :size="40" fit="fill" :src="avatar"></el-avatar>
+                    <el-avatar shape="square" :size="30" fit="fill" :src="avatar"></el-avatar>
                     <el-icon><CaretBottom /></el-icon>
                 </div>
 
@@ -78,15 +77,18 @@
 
 <style lang="scss" scoped>
     .main-header {
-        height: 50px;
+        height: 62px;
         overflow: hidden;
         position: relative;
-        background: #fff;
+        background: #24292f;
+        /*background:#304156;*/
         box-shadow: 0 1px 4px rgba(0, 21, 41, .08);
+        padding:16px 32px;
         .left-menu {
             float: left;
             height: 100%;
-            line-height: 50px;
+            line-height: 30px;
+
 
             &:focus {
                 outline: none;
@@ -97,7 +99,7 @@
                 padding: 0 8px;
                 height: 100%;
                 font-size: 18px;
-                color: #5a5e66;
+                color: #FFFFFF;
                 vertical-align: text-bottom;
 
                 &.hover-effect {
@@ -164,8 +166,6 @@
             .avatar-container {
 
                 .avatar-wrapper {
-                    margin-top: 5px;
-                    position: relative;
 
                     .user-avatar {
                         cursor: pointer;

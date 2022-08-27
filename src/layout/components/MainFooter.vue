@@ -14,8 +14,7 @@
 
 <style scoped>
     .main-footer {
-        margin-bottom: 5px;
-        height: 40px;
+        padding: 5px 0px;
         overflow: hidden;
         display: block;
         background: #fff;

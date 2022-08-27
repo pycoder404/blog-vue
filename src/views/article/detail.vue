@@ -1,5 +1,6 @@
 <template>
-    <el-row>
+    <!--todo use 24 or 20 col?  两边是占满还是留一些空白？-->
+    <el-row :gutter="20" style="margin-top:10px;">
         <el-col class="article-left-sidebar" :span="4">
             <div>
                 <p>left sider</p>

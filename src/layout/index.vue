@@ -12,7 +12,7 @@
             </el-col>
         </el-row>
 
-        <el-row style="border-top: solid 1px rgba(0, 0, 0, 0.125)">
+        <el-row>
             <el-col :span="24">
                 <main-footer></main-footer>
             </el-col>
