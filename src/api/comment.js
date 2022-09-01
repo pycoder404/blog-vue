@@ -2,7 +2,7 @@ import request from '@/utils/request'
 
 export function getCommentList(queryParams) {
     return request({
-        url: '/api/comment/',
+        url: '/api/comment/list/',
         method: 'get',
         params: queryParams
     })

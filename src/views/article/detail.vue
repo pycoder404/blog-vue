@@ -33,6 +33,10 @@
                         </router-link>
                         </span>
                 </div>
+
+                <el-divider></el-divider>
+                <article-comment :article-id="articleId"></article-comment>
+
                 <br>
             </div>
         </el-col>
@@ -54,24 +58,25 @@
     import {getArticleDetail} from '@/api/article'
     // import SvgIcon from '@/components/SvgIcon/index'
 
-    import LikeFavorite from "@/views/article/components/LikeFavorite";
-    import CategoryAndTag from "@/views/article/components/CategoryAndTag";
-    //
+    import LikeFavorite from "@/views/article/components/LikeFavorite"
+    import CategoryAndTag from "@/views/article/components/CategoryAndTag"
+    import ArticleComment from '@/views/article/components/ArticleComment'
 
     export default {
         name: "ArticleDetail",
-        components: {LikeFavorite, CategoryAndTag},
+        components: {LikeFavorite, CategoryAndTag,ArticleComment},
         data() {
             return {
                 articleDetail: {},
                 tempRoute: {},
-                tocBodyStyle: {padding: '5px 20px 10px 0px'}
+                tocBodyStyle: {padding: '5px 20px 10px 0px'},
+                articleId: Number
             }
         },
 
         created() {
-            const articleId = this.$route.params && this.$route.params.id
-            this.fetchData(articleId)
+            this.articleId = this.$route.params && this.$route.params.id
+            this.fetchData(this.articleId)
             // Why need to make a copy of this.$route here?
             // Because if you enter this page and quickly switch tag, may be in the execution of the setTagsViewTitle function, this.$route is no longer pointing to the current page
             // https://github.com/PanJiaChen/vue-element-admin/issues/1221

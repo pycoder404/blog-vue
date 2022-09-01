@@ -1,8 +1,8 @@
 <template>
     <div style="background-color: #f7f5f5">
-        <div v-for="article in articleList" :key="article.id" class="article-main">
+        <div v-for="article in articleList" :key="article.id" >
             <el-row style="background-color: white">
-                <el-col>
+                <el-col :span="14" :offset="5" class="article-main" >
                     <div class="article-title">
                         <router-link
                                 :to="'/article/detail/'+ article.id"
@@ -14,7 +14,7 @@
 
                     <div class="article-desc">
                         <span>
-                            @{{article.created_time }} {{ article.author }}, views:{{article.views_count}} likes:{{article.likes_count}} comments:0
+                            @{{article.created_time }} {{ article.author }}, views:{{article.views_count}} likes:{{article.likes_count}} comments:{{article.comments_count}}
                             <el-button icon="DeleteFilled" type="text"/>
                             <router-link
                                     :to="'/article/edit/'+ article.id"
@@ -28,6 +28,7 @@
                     </div>
                 </el-col>
             </el-row>
+            <!--        <el-divider style="margin: 10px 0;"/>-->
         </div>
     </div>
 
@@ -94,9 +95,10 @@
     }
 
     .article-main {
-        margin: 10px 200px;
+        margin-top:10px;
         box-shadow: 1px 2px 3px #ddd;
         border: 1px solid #ddd;
+        border-radius: 5px;
     }
 
     .article-title {
