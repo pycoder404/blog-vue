@@ -10,14 +10,17 @@
                 <div class="card-header">
                     <!-- todo add isAuthor label -->
                     <span>
-                      <b>{{comment.author}}</b>
-                        <span>{{comment.created_time}}</span>
+                      <b>{{ comment.comment_order}}             {{comment.author}}</b><span>{{comment.created_time}}</span>
 
                     </span>
                     <el-button class="button" text>Operation button</el-button>
                 </div>
             </template>
-            {{comment.content}}
+            <div v-if="comment.parent">
+                <span> replied to  <b>{{ comment.comment_order}}             {{comment.author}}</b></span>
+
+            </div>
+            <div v-hlcode v-html="comment.content"></div>
         </el-card>
     </div>
 
