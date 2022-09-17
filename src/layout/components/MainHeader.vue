@@ -5,6 +5,7 @@
             <router-link to="/article/list" class="left-menu-item">LIST</router-link>
             <router-link to="/article/list" class="left-menu-item">ARCHIVE</router-link>
             <router-link to="/article/create" class="left-menu-item">NEW</router-link>
+
         </div>
 
         <div class="right-menu">

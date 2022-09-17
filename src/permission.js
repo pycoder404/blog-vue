@@ -7,7 +7,7 @@ import {getAccessToken} from '@/utils/auth' // get token from cookie
 import getPageTitle from '@/utils/get-page-title'
 
 NProgress.configure({showSpinner: false}) // NProgress Configuration
-
+// fixme 后续应该不用permission进行管理了，博客相对后台管理系统只需要管理部分的路由即可
 const whiteList = ['/login', '/auth-redirect'] // no redirect whitelist
 
 router.beforeEach(async (to, from, next) => {

@@ -1,6 +1,7 @@
 <template>
     <div class="login-container">
-        <el-form ref="loginForm" :model="loginForm" :rules="loginRules" class="login-form" autocomplete="on" label-position="left">
+        <el-form ref="loginForm" :model="loginForm" :rules="loginRules" class="login-form" autocomplete="on"
+                 label-position="left">
 
             <div class="title-container">
                 <h3 class="title">Login Form</h3>
@@ -20,7 +21,7 @@
                         autocomplete="on"
                 />
             </el-form-item>
-
+            <!-- fixme check Caps-->
             <el-tooltip v-model="capsTooltip" content="Caps lock is On" placement="right" manual>
                 <el-form-item prop="password">
           <span class="svg-container">
@@ -45,38 +46,24 @@
                 </el-form-item>
             </el-tooltip>
 
-            <el-button :loading="loading" type="primary" style="width:100%;margin-bottom:30px;" @click.prevent="handleLogin">Login</el-button>
-
-<!--            <div style="position:relative;text-align: left">-->
-<!--                <div class="tips">-->
-<!--                    <span>Username : admin</span>-->
-<!--                    <span>Password : any</span>-->
-<!--                </div>-->
-
-<!--                <el-button class="thirdparty-button" type="primary" @click="showDialog=true">-->
-<!--                    Or connect with-->
-<!--                </el-button>-->
-<!--            </div>-->
+            <el-button :loading="loading" type="primary" style="width:100%;margin-bottom:30px;"
+                       @click.prevent="handleLogin">Login
+            </el-button>
         </el-form>
 
-<!--        <el-dialog title="Or connect with" v-show="showDialog">-->
-<!--            Can not be simulated on local, so please combine you own business simulation! ! !-->
-<!--            <br>-->
-<!--            <br>-->
-<!--            <br>-->
-<!--&lt;!&ndash;            <social-sign />&ndash;&gt;-->
-<!--        </el-dialog>-->
+        <social-sign/>
+
     </div>
 </template>
 
 <script>
     // import { validUsername } from '@/utils/validate'
-    // import SocialSign from './components/SocialSignin'
+    import SocialSign from './components/SocialSignin'
 
 
     export default {
         name: 'LoginPage',
-        // components: { SocialSign },
+        components: {SocialSign},
         data() {
             const validateUsername = (rule, value, callback) => {
                 if (value.length < 1) {
@@ -98,20 +85,19 @@
                     password: ''
                 },
                 loginRules: {
-                    username: [{ required: true, trigger: 'blur', validator: validateUsername }],
-                    password: [{ required: true, trigger: 'blur', validator: validatePassword }]
+                    username: [{required: true, trigger: 'blur', validator: validateUsername}],
+                    password: [{required: true, trigger: 'blur', validator: validatePassword}]
                 },
                 passwordType: 'password',
                 capsTooltip: false,
                 loading: false,
-                showDialog: false,
                 redirect: undefined,
                 otherQuery: {}
             }
         },
         watch: {
             $route: {
-                handler: function(route) {
+                handler: function (route) {
                     const query = route.query
                     if (query) {
                         this.redirect = query.redirect
@@ -136,7 +122,7 @@
         // },
         methods: {
             checkCapslock(e) {
-                const { key } = e
+                const {key} = e
                 this.capsTooltip = key && key.length === 1 && (key >= 'A' && key <= 'Z')
             },
             showPwd() {
@@ -155,7 +141,7 @@
                         this.loading = true
                         this.$store.dispatch('user/login', this.loginForm)
                             .then(() => {
-                                this.$router.push({ path: this.redirect || '/', query: this.otherQuery })
+                                this.$router.push({path: this.redirect || '/', query: this.otherQuery})
                                 this.loading = false
                             })
                             .catch(() => {
