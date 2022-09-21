@@ -92,6 +92,8 @@
                 capsTooltip: false,
                 loading: false,
                 redirect: undefined,
+                thirdPart: undefined,
+                oauthCode: undefined,
                 otherQuery: {}
             }
         },
@@ -108,8 +110,27 @@
             }
         },
         created() {
+            this.thirdPart = this.$route.params && this.$route.params.thirdPart
+            this.oauthCode = this.$route.query && this.$route.query.code
+            if (this.thirdPart && this.oauthCode) {
+                this.loading = true
+                this.$store.dispatch('user/socialLogin', {'thirdPart': this.thirdPart, 'oauthCode': this.oauthCode})
+                    .then(() => {
+                        this.$router.push({path: this.redirect || '/', query: this.otherQuery})
+                        this.loading = false
+                    })
+                    .catch(() => {
+                        this.$router.push({path: '/'})
+                        this.loading = false
+                    })
+
+            }
+
+            console.info("xxxxxxxxxxxxxx")
+
             // window.addEventListener('storage', this.afterQRScan)
         },
+
         mounted() {
             if (this.loginForm.username === '') {
                 this.$refs.username.focus()
@@ -152,6 +173,18 @@
                         return false
                     }
                 })
+            },
+            handleSocialLogin(thirdPart, oatuhCode) {
+                this.loading = true
+                this.$store.dispatch('user/socialLogin', thirdPart, oatuhCode)
+                    .then(() => {
+                        this.$router.push({path: this.redirect || '/', query: this.otherQuery})
+                        this.loading = false
+                    })
+                    .catch(() => {
+                        this.loading = false
+                    })
+
             },
             getOtherQuery(query) {
                 return Object.keys(query).reduce((acc, cur) => {

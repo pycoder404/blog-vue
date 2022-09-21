@@ -8,7 +8,7 @@ import getPageTitle from '@/utils/get-page-title'
 
 NProgress.configure({showSpinner: false}) // NProgress Configuration
 // fixme 后续应该不用permission进行管理了，博客相对后台管理系统只需要管理部分的路由即可
-const whiteList = ['/login', '/auth-redirect'] // no redirect whitelist
+const whiteList = ['/login', '/auth-redirect','/login/github'] // no redirect whitelist
 
 router.beforeEach(async (to, from, next) => {
     // start progress bar
@@ -32,7 +32,7 @@ router.beforeEach(async (to, from, next) => {
             // determine whether the user has obtained his permission roles through getInfo
             // console.log("check is has roles")
             // console.log(store.getters.roles)
-            // question Ctrl + F5强制刷新界面，对store有啥影响吗，为啥会导致没有roles，重新获取Info？?
+            // note Ctrl + F5强制刷新界面，对store有啥影响吗，为啥会导致没有roles，重新获取Info？?
             // note: 因为store是存在内存中的，所以每次刷新就会判断为空，需要重新获取数据，而cookie保存在本地，所以刷新不会丢失
             const hasRoles = store.getters.roles && store.getters.roles.length > 0
             if (hasRoles) {

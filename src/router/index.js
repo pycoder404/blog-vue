@@ -14,7 +14,7 @@ const routes = [
         redirect: '/article'
     },
     {
-        path: '/login',
+        path: '/login/:thirdPart?',
         component: LoginPage,
     },
     {

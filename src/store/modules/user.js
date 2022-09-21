@@ -1,6 +1,6 @@
-import { login, logout, getInfo } from '@/api/user'
-import { getAccessToken, setAccessToken, removeAccessToken } from '@/utils/auth'
-import { getRefreshToken, setRefreshToken, removeRefreshToken } from '@/utils/auth'
+import {login, socialLogin, logout, getInfo} from '@/api/user'
+import {getAccessToken, setAccessToken, removeAccessToken} from '@/utils/auth'
+import {getRefreshToken, setRefreshToken, removeRefreshToken} from '@/utils/auth'
 import router from '@/router'
 
 
@@ -50,12 +50,12 @@ const mutations = {
 
 const actions = {
     // user login
-    login({ commit }, userInfo) {
+    login({commit}, userInfo) {
         // console.info("login in store")
-        const { username, password } = userInfo
+        const {username, password} = userInfo
         return new Promise((resolve, reject) => {
             login({ username: username.trim(), password: password }).then(response => {
-                const data  = response
+                const data = response
                 // console.log("login done")
                 commit('SET_ACCESS_TOKEN', data.access)
                 commit('SET_REFRESH_TOKEN', data.refresh)
@@ -70,11 +70,36 @@ const actions = {
         })
     },
 
+    socialLogin({commit}, oauthInfo) {
+        // console.info("login in store")
+        // console.info(thirdPart)
+        // console.info("xx")
+        // console.info(oauthCode)
+        // fixme 这里后续应该直接获取到github的access token发送到后端去
+        // fixme 这样后端就不用写callback url即可
+        const {thirdPart, oauthCode} = oauthInfo
 
+        const data = {code: oauthCode}
+        return new Promise((resolve, reject) => {
+            socialLogin(thirdPart, data).then(response => {
+                const data = response
+                // console.log("login done")
+                commit('SET_ACCESS_TOKEN', data.access_token)
+                commit('SET_REFRESH_TOKEN', data.refresh_token)
+                // token保存在cookie和store中
+                setAccessToken(data.access_token)
+                setRefreshToken(data.refresh_token)
+                // console.log("set access token done")
+                resolve()
+            }).catch(error => {
+                reject(error)
+            })
+        })
+    },
     // todo 为啥vue-element-admin框架中F5刷新界面会重新获取info，如何实现的？
     // todo 是permission中的限制吗？
     // get user info
-    getInfo({ commit, state }) {
+    getInfo({commit, state}) {
         return new Promise((resolve, reject) => {
             getInfo(state.accessToken).then(response => {
                 // console.log('response is:',response)
@@ -86,7 +111,7 @@ const actions = {
                     reject('Verification failed, please Login again.')
                 }
 
-                const { roles, name, avatar, introduction } = data
+                const {roles, name, avatar, introduction} = data
                 // console.log("roles in getinfo is: ",roles)
                 // roles must be a non-empty array
                 if (!roles || roles.length <= 0) {
@@ -105,7 +130,7 @@ const actions = {
     },
 
     // user logout
-    logout({ commit, state, dispatch }) {
+    logout({commit, state, dispatch}) {
         return new Promise((resolve, reject) => {
 
             logout(state.token).then(() => {
@@ -118,7 +143,7 @@ const actions = {
 
                 // reset visited views and cached views
                 // to fixed https://github.com/PanJiaChen/vue-element-admin/issues/2485
-                dispatch('tagsView/delAllViews', null, { root: true })
+                dispatch('tagsView/delAllViews', null, {root: true})
 
                 resolve()
             }).catch(error => {
@@ -128,7 +153,7 @@ const actions = {
     },
 
     // remove token
-    resetToken({ commit }) {
+    resetToken({commit}) {
         return new Promise(resolve => {
             commit('RESET_STATE')
             removeAccessToken()
@@ -138,22 +163,22 @@ const actions = {
     },
 
     // dynamically modify permissions
-    async changeRoles({ commit, dispatch }, role) {
+    async changeRoles({commit, dispatch}, role) {
         const token = role + '-token'
 
         commit('SET_ACCESS_TOKEN', token)
         setAccessToken(token)
 
-        const { roles } = await dispatch('getInfo')
+        const {roles} = await dispatch('getInfo')
 
 
         // generate accessible routes map based on roles
-        const accessRoutes = await dispatch('permission/generateRoutes', roles, { root: true })
+        const accessRoutes = await dispatch('permission/generateRoutes', roles, {root: true})
         // dynamically add accessible routes
         router.addRoutes(accessRoutes)
 
         // reset visited views and cached views
-        dispatch('tagsView/delAllViews', null, { root: true })
+        dispatch('tagsView/delAllViews', null, {root: true})
     }
 }
 
