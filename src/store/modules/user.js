@@ -83,7 +83,7 @@ const actions = {
         return new Promise((resolve, reject) => {
             socialLogin(thirdPart, data).then(response => {
                 const data = response
-                // console.log("login done")
+                console.info("login succed")
                 commit('SET_ACCESS_TOKEN', data.access_token)
                 commit('SET_REFRESH_TOKEN', data.refresh_token)
                 // token保存在cookie和store中

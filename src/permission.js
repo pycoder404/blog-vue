@@ -17,30 +17,57 @@ router.beforeEach(async (to, from, next) => {
     // console.log(to.path)
     // set page title
     document.title = getPageTitle(to.meta.title)
+    console.info(to)
+    const thirdPart = to.query && to.query.thirdPart
+    const oauthCode = to.query && to.query.code
+    console.info(thirdPart,oauthCode)
+    if (thirdPart && oauthCode) {
+        try {
+            // social login
+            // console.info(to.query)
+            delete to.query.code
+            delete to.query.thirdPart
+            // console.info("begin to social auth login")
+            await store.dispatch('user/socialLogin',{'thirdPart': thirdPart, 'oauthCode': oauthCode})
+            // console.info("social login done")
+        } catch (error) {
+            // remove token and go to login page to re-login
+            await store.dispatch('user/resetToken')
+            ElMessage.error('Error in login by ',thirdPart)
+            next({...to, replace: true})
+            NProgress.done()
+        }
+
+    }
 
     // determine whether the user has logged in
+    // console.info("xxxxxxxxxxxxxxxxxxxx")
     const hasAccessToken = getAccessToken()
+    // console.info("get haccess token")
     // console.log("check is has access token: ",hasAccessToken)
     if (hasAccessToken) {
-        // console.log("has access token:",hasAccessToken)
+        console.log("has access token:",hasAccessToken)
         // TODO  添加对accessToken的过期检查和refresh
+        // fixme change to check permissions
+
         if (to.path === '/login') {
             // if is logged in, redirect to the home page
-            next({path: '/'})
+                const next_path = to.query && to.query.redirect ? to.query.redirect : '/'
+                next({path: next_path})
             NProgress.done() // hack: https://github.com/PanJiaChen/vue-element-admin/pull/2939
         } else {
             // determine whether the user has obtained his permission roles through getInfo
-            // console.log("check is has roles")
+            console.log("check is has roles")
             // console.log(store.getters.roles)
             // note Ctrl + F5强制刷新界面，对store有啥影响吗，为啥会导致没有roles，重新获取Info？?
             // note: 因为store是存在内存中的，所以每次刷新就会判断为空，需要重新获取数据，而cookie保存在本地，所以刷新不会丢失
             const hasRoles = store.getters.roles && store.getters.roles.length > 0
             if (hasRoles) {
-                // console.log("yes has roles")
+                console.log("yes has roles")
                 next()
-                // console.log('next done')
+                console.log('next done')
             } else {
-                // console.log('can not get roles from store')
+                console.log('can not get roles from store')
                 try {
                     // get user info
                     // note: roles must be a object array! such as: ['admin'] or ,['developer','editor']

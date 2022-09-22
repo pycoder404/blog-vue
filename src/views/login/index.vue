@@ -110,21 +110,21 @@
             }
         },
         created() {
-            this.thirdPart = this.$route.params && this.$route.params.thirdPart
-            this.oauthCode = this.$route.query && this.$route.query.code
-            if (this.thirdPart && this.oauthCode) {
-                this.loading = true
-                this.$store.dispatch('user/socialLogin', {'thirdPart': this.thirdPart, 'oauthCode': this.oauthCode})
-                    .then(() => {
-                        this.$router.push({path: this.redirect || '/', query: this.otherQuery})
-                        this.loading = false
-                    })
-                    .catch(() => {
-                        this.$router.push({path: '/'})
-                        this.loading = false
-                    })
-
-            }
+            // this.thirdPart = this.$route.params && this.$route.params.thirdPart
+            // this.oauthCode = this.$route.query && this.$route.query.code
+            // if (this.thirdPart && this.oauthCode) {
+            //     this.loading = true
+            //     this.$store.dispatch('user/socialLogin', {'thirdPart': this.thirdPart, 'oauthCode': this.oauthCode})
+            //         .then(() => {
+            //             this.$router.push({path: this.redirect || '/', query: this.otherQuery})
+            //             this.loading = false
+            //         })
+            //         .catch(() => {
+            //             this.$router.push({path: '/'})
+            //             this.loading = false
+            //         })
+            //
+            // }
 
             console.info("xxxxxxxxxxxxxx")
 
