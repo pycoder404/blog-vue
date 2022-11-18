@@ -18,7 +18,7 @@ export function getCommentDetail(commentId, queryParams) {
 
 export function createComment(data) {
     return request({
-        url: '/api/comment/',
+        url: '/api/comment/create/',
         method: 'post',
         data: data
     })
@@ -26,7 +26,7 @@ export function createComment(data) {
 
 export function UpdateComment(commentId, data) {
     return request({
-        url: '/api/comment/' + commentId + '/',
+        url: '/api/comment/update' + commentId + '/',
         method: 'put',
         data: data
     })

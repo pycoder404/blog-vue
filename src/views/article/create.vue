@@ -9,10 +9,12 @@
                 </el-form-item>
 
                 <el-form-item prop="content">
+                    <!-- fixme  mavonEdiotr 使用的highlight.js 9.2.0，该版本不支持 github-dark-->
                     <mavon-editor
                             ref="editor"
                             class="mavon-edtior-custom"
                             :ishljs="true"
+                            code-style="vs2015"
                             v-model="postForm.content"
                             @imgAdd="handleImgUpload"
                     />

@@ -8,7 +8,7 @@ const getDefaultState = () => {
     return {
         token: getAccessToken(),
         refreshToken: getRefreshToken(),
-        name: '',
+        username: '',
         avatar: '',
         introduction: '',
         roles: []
@@ -18,7 +18,7 @@ const getDefaultState = () => {
 const state = {
     accessToken: getAccessToken(),
     refreshToken: getRefreshToken(),
-    name: '',
+    username: '',
     avatar: '',
     introduction: '',
     roles: []
@@ -37,8 +37,8 @@ const mutations = {
     SET_INTRODUCTION: (state, introduction) => {
         state.introduction = introduction
     },
-    SET_NAME: (state, name) => {
-        state.name = name
+    SET_USERNAME: (state, username) => {
+        state.username = username
     },
     SET_AVATAR: (state, avatar) => {
         state.avatar = avatar
@@ -96,8 +96,10 @@ const actions = {
             })
         })
     },
-    // todo 为啥vue-element-admin框架中F5刷新界面会重新获取info，如何实现的？
-    // todo 是permission中的限制吗？
+    // note 为啥vue-element-admin框架中F5刷新界面会重新获取info，如何实现的？
+    // note 是permission中router.beforeEach限制
+    // note: 因为store是存在内存中的，所以每次刷新就会判断为空，需要重新获取数据，而cookie保存在本地，所以刷新不会丢失
+
     // get user info
     getInfo({commit, state}) {
         return new Promise((resolve, reject) => {
@@ -111,7 +113,7 @@ const actions = {
                     reject('Verification failed, please Login again.')
                 }
 
-                const {roles, name, avatar, introduction} = data
+                const {roles, username, avatar, introduction} = data
                 // console.log("roles in getinfo is: ",roles)
                 // roles must be a non-empty array
                 if (!roles || roles.length <= 0) {
@@ -119,7 +121,7 @@ const actions = {
                 }
 
                 commit('SET_ROLES', roles)
-                commit('SET_NAME', name)
+                commit('SET_USERNAME', username)
                 commit('SET_AVATAR', avatar)
                 commit('SET_INTRODUCTION', introduction)
                 resolve(data)
@@ -132,7 +134,6 @@ const actions = {
     // user logout
     logout({commit, state, dispatch}) {
         return new Promise((resolve, reject) => {
-
             logout(state.token).then(() => {
                 // 保存了两份，一份是store， 一份是cookie
                 commit('SET_ACCESS_TOKEN', '')
@@ -144,7 +145,6 @@ const actions = {
                 // reset visited views and cached views
                 // to fixed https://github.com/PanJiaChen/vue-element-admin/issues/2485
                 dispatch('tagsView/delAllViews', null, {root: true})
-
                 resolve()
             }).catch(error => {
                 reject(error)

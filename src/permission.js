@@ -7,8 +7,8 @@ import {getAccessToken} from '@/utils/auth' // get token from cookie
 import getPageTitle from '@/utils/get-page-title'
 
 NProgress.configure({showSpinner: false}) // NProgress Configuration
-// fixme 后续应该不用permission进行管理了，博客相对后台管理系统只需要管理部分的路由即可
-const whiteList = ['/login', '/auth-redirect','/login/github'] // no redirect whitelist
+// todo permission，博客相对后台管理系统只需要管理部分的路由即可
+const whiteList = ['/login', '/article/list','/auth-redirect','/login/github'] // no redirect whitelist
 
 router.beforeEach(async (to, from, next) => {
     // start progress bar
@@ -17,10 +17,10 @@ router.beforeEach(async (to, from, next) => {
     // console.log(to.path)
     // set page title
     document.title = getPageTitle(to.meta.title)
-    console.info(to)
+    // console.info(to)
     const thirdPart = to.query && to.query.thirdPart
     const oauthCode = to.query && to.query.code
-    console.info(thirdPart,oauthCode)
+    // console.info(thirdPart,oauthCode)
     if (thirdPart && oauthCode) {
         try {
             // social login
@@ -41,10 +41,7 @@ router.beforeEach(async (to, from, next) => {
     }
 
     // determine whether the user has logged in
-    // console.info("xxxxxxxxxxxxxxxxxxxx")
     const hasAccessToken = getAccessToken()
-    // console.info("get haccess token")
-    // console.log("check is has access token: ",hasAccessToken)
     if (hasAccessToken) {
         console.log("has access token:",hasAccessToken)
         // TODO  添加对accessToken的过期检查和refresh
@@ -70,9 +67,8 @@ router.beforeEach(async (to, from, next) => {
                 console.log('can not get roles from store')
                 try {
                     // get user info
-                    // note: roles must be a object array! such as: ['admin'] or ,['developer','editor']
+                    // question: roles must be a object array! such as: ['admin'] or ,['developer','editor']
                     // question  这里的roles是user/GetInfo如何反馈的，如何只反馈roles的
-                    // console.log("get info")
                     const { roles } = await store.dispatch('user/getInfo')
                     console.log(roles)
                     // // generate accessible routes map based on roles

@@ -14,9 +14,9 @@ import {CaretBottom, DeleteFilled, EditPen, Search, Plus,User,Lock} from '@eleme
 
 
 import hljs from 'highlight.js'
-import 'highlight.js/lib/common'
-import hljsVuePlugin from '@highlightjs/vue-plugin'
+
 import mavonEditor from 'mavon-editor'
+// note 这里引入的css能够全局使用
 import 'mavon-editor/dist/css/index.css'
 
 
@@ -26,9 +26,11 @@ const app = createApp(App)
 app.directive('hlcode', function (el) {
     const blocks = el.querySelectorAll('pre code')
     blocks.forEach((block) => {
-        hljs.highlightBlock(block)
+        hljs.highlightElement(block)
     })
 })
+import 'highlight.js/styles/vs2015.css'
+
 // import RouterView from 'vue-router'
 // 全局注册组件，对所有page可见
 // import ArticleIndex from './views/article/index.vue'
@@ -48,6 +50,6 @@ app.component('SearchIcon', Search)
 app.component('PlusIcon', Plus)
 app.component('UserIcon', User)
 app.component('LockIcon', Lock)
-app.use(router).use(store).use(hljsVuePlugin).use(ElementPlus).use(mavonEditor).mount('#app')
+app.use(router).use(store).use(ElementPlus).use(mavonEditor).mount('#app')
 // app.use(ElementPlus, { size: 'small', zIndex: 5000 })
 // app.mount('#app')

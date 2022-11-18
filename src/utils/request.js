@@ -74,18 +74,18 @@ service.interceptors.response.use(
     // }
   },
   error => {
-    console.log('err is: ' + error) // for debug
+    console.error(error) // for debug
     if (error.response){
       const err = error.response.data
       // todo  redirect to login page for unauthorized user (status 401)
       ElMessageBox({
-        message: err.detail || '系统遇到未知错误，请联系管理员',
+        message: err.detail || '服务器内部错误，请联系管理员',
         type: 'error',
         duration: 3 * 1000
       })
     } else {
       ElMessageBox({
-        message: '后台系统异常,请联系管理员',
+        message: '服务异常,请联系管理员',
         type: 'error',
         duration: 3 * 1000
       })

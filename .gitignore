@@ -10,6 +10,7 @@ yarn-error.log*
 package-lock.json
 tests/**/coverage/
 
+nohup.out
 
 # Editor directories and files
 .idea

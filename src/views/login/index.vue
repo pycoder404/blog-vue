@@ -4,13 +4,13 @@
                  label-position="left">
 
             <div class="title-container">
-                <h3 class="title">Login Form</h3>
+                <h3 class="title">WelCome</h3>
             </div>
 
             <el-form-item prop="username">
-        <span class="svg-container">
-            <el-icon><User-Icon></User-Icon></el-icon>
-        </span>
+                <span class="svg-container">
+                    <el-icon><User-Icon></User-Icon></el-icon>
+                </span>
                 <el-input
                         ref="username"
                         v-model="loginForm.username"
@@ -21,12 +21,13 @@
                         autocomplete="on"
                 />
             </el-form-item>
+
             <!-- fixme check Caps-->
             <el-tooltip v-model="capsTooltip" content="Caps lock is On" placement="right" manual>
                 <el-form-item prop="password">
-          <span class="svg-container">
-            <el-icon><Lock-Icon></Lock-Icon></el-icon>
-          </span>
+                  <span class="svg-container">
+                    <el-icon><Lock-Icon></Lock-Icon></el-icon>
+                  </span>
                     <el-input
                             :key="passwordType"
                             ref="password"
@@ -40,9 +41,7 @@
                             @blur="capsTooltip = false"
                             @keyup.enter="handleLogin"
                             show-password
-
                     />
-
                 </el-form-item>
             </el-tooltip>
 
@@ -51,6 +50,7 @@
             </el-button>
         </el-form>
 
+        <!-- social sign in tab-->
         <social-sign/>
 
     </div>
@@ -109,27 +109,9 @@
                 immediate: true
             }
         },
-        created() {
-            // this.thirdPart = this.$route.params && this.$route.params.thirdPart
-            // this.oauthCode = this.$route.query && this.$route.query.code
-            // if (this.thirdPart && this.oauthCode) {
-            //     this.loading = true
-            //     this.$store.dispatch('user/socialLogin', {'thirdPart': this.thirdPart, 'oauthCode': this.oauthCode})
-            //         .then(() => {
-            //             this.$router.push({path: this.redirect || '/', query: this.otherQuery})
-            //             this.loading = false
-            //         })
-            //         .catch(() => {
-            //             this.$router.push({path: '/'})
-            //             this.loading = false
-            //         })
-            //
-            // }
-
-            console.info("xxxxxxxxxxxxxx")
-
-            // window.addEventListener('storage', this.afterQRScan)
-        },
+        // created() {
+        //     // window.addEventListener('storage', this.afterQRScan)
+        // },
 
         mounted() {
             if (this.loginForm.username === '') {
@@ -174,18 +156,7 @@
                     }
                 })
             },
-            handleSocialLogin(thirdPart, oatuhCode) {
-                this.loading = true
-                this.$store.dispatch('user/socialLogin', thirdPart, oatuhCode)
-                    .then(() => {
-                        this.$router.push({path: this.redirect || '/', query: this.otherQuery})
-                        this.loading = false
-                    })
-                    .catch(() => {
-                        this.loading = false
-                    })
 
-            },
             getOtherQuery(query) {
                 return Object.keys(query).reduce((acc, cur) => {
                     if (cur !== 'redirect') {
@@ -194,24 +165,6 @@
                     return acc
                 }, {})
             }
-            // afterQRScan() {
-            //   if (e.key === 'x-admin-oauth-code') {
-            //     const code = getQueryObject(e.newValue)
-            //     const codeMap = {
-            //       wechat: 'code',
-            //       tencent: 'code'
-            //     }
-            //     const type = codeMap[this.auth_type]
-            //     const codeName = code[type]
-            //     if (codeName) {
-            //       this.$store.dispatch('LoginByThirdparty', codeName).then(() => {
-            //         this.$router.push({ path: this.redirect || '/' })
-            //       })
-            //     } else {
-            //       alert('第三方登录失败')
-            //     }
-            //   }
-            // }
         }
     }
 </script>

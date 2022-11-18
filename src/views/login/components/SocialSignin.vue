@@ -26,48 +26,43 @@
         },
         data() {
             return {
-
                 githubAuthBaseUri: "https://github.com/login/oauth/authorize?client_id=aa6d9aa35a3d63374015"
             }
 
         },
         computed: {
             githubAuthUri() {
-                // const redirect_uri = 'http://10.89.228.206:28080/article/create/?thirdPart=github'
                 // const redirect_uri = encodeURIComponent('xxx/redirect?redirect=' + window.location.origin + '/auth-redirect')
                 // const url = 'https://graph.qq.com/oauth2.0/authorize?response_type=code&client_id=' + client_id + '&redirect_uri=' + redirect_uri
                 const thirdPart = window.location.search === '' ? "?thirdPart=github" : "&thirdPart=github"
                 const redirect_uri = window.location.href + thirdPart
                 console.info(redirect_uri)
-            return this.githubAuthBaseUri + "&redirect_uri=" + encodeURIComponent(redirect_uri)
+                return this.githubAuthBaseUri + "&redirect_uri=" + encodeURIComponent(redirect_uri)
+            }
         }
-    }
-    ,
-    methods: {
-        wechatHandleClick(thirdpart)
-        {
-            alert(thirdpart)
-            console.log(thirdpart)
-            // this.$store.commit('SET_AUTH_TYPE', thirdpart)
-            // const appid = 'xxxxx'
-            // const redirect_uri = encodeURIComponent('xxx/redirect?redirect=' + window.location.origin + '/auth-redirect')
-            // const url = 'https://open.weixin.qq.com/connect/qrconnect?appid=' + appid + '&redirect_uri=' + redirect_uri + '&response_type=code&scope=snsapi_login#wechat_redirect'
-            // openWindow(url, thirdpart, 540, 540)
+        ,
+        methods: {
+            wechatHandleClick(thirdpart) {
+                alert(thirdpart)
+                console.log(thirdpart)
+                // this.$store.commit('SET_AUTH_TYPE', thirdpart)
+                // const appid = 'xxxxx'
+                // const redirect_uri = encodeURIComponent('xxx/redirect?redirect=' + window.location.origin + '/auth-redirect')
+                // const url = 'https://open.weixin.qq.com/connect/qrconnect?appid=' + appid + '&redirect_uri=' + redirect_uri + '&response_type=code&scope=snsapi_login#wechat_redirect'
+                // openWindow(url, thirdpart, 540, 540)
+            },
+            githubHandleClick(thirdpart) {
+                // alert(thirdpart)
+                console.log(thirdpart)
+                // this.$store.commit('SET_AUTH_TYPE', thirdpart)
+                // const client_id = 'aa6d9aa35a3d63374015'
+                // const redirect_uri = encodeURIComponent('/redirect?redirect=' + window.location.origin + '/auth-redirect')
+                // const url = 'https://github.com/login/oauth/authorize?client_id=' + client_id + '&redirect_uri=' + redirect_uri
+                // const url = 'https://github.com/login/oauth/authorize?client_id=' + client_id
+                // this.$router.push(url)
+                // openWindow(url, thirdpart, 540, 540)
+            }
         }
-    ,
-        githubHandleClick(thirdpart)
-        {
-            // alert(thirdpart)
-            console.log(thirdpart)
-            // this.$store.commit('SET_AUTH_TYPE', thirdpart)
-            // const client_id = 'aa6d9aa35a3d63374015'
-            // const redirect_uri = encodeURIComponent('/redirect?redirect=' + window.location.origin + '/auth-redirect')
-            // const url = 'https://github.com/login/oauth/authorize?client_id=' + client_id + '&redirect_uri=' + redirect_uri
-            // const url = 'https://github.com/login/oauth/authorize?client_id=' + client_id
-            // this.$router.push(url)
-            // openWindow(url, thirdpart, 540, 540)
-        }
-    }
     }
 </script>
 

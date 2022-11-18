@@ -109,7 +109,7 @@
 
 <style scoped>
     /*@import './styles/atom-one-dark.css';*/
-    @import './styles/github-dark.css';
+    /*@import './styles/github-dark.css';*/
 
     .content-margin-left {
         margin-left: 20px;
@@ -163,6 +163,7 @@
 
 </style>
 <style>
+    @import './styles/github-dark.css';
     .article-toc {
         list-style-type: none;
         padding-inline-start: 20px;
