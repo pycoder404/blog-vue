@@ -8,11 +8,12 @@
                 :key="comment.id"
         >
             <template #header>
-                <div class="card-header">
+                <div class="card-header" id="comment.comment_order">
                     <!-- todo add isAuthor label -->
-                    <span>
-                      {{ comment.comment_order}}楼  <b>{{comment.author}}</b>  @<span>{{comment.created_time}} </span>
+                        <span>
+                       {{ comment.comment_order}}楼  <b>{{comment.author}}</b>  @<span>{{comment.created_time}} </span>
                     </span>
+
 
                     <el-button
                             type="primary"
@@ -109,15 +110,14 @@
                 if (comment !== undefined) {
                     let content = ''
                     this.commentForm.replied_to = comment.comment_order
-                    content = "> 回复 " + comment.comment_order + "楼  @" + comment.author + "\n"
+                    content = "> 回复 " + comment.comment_order + "楼  @" + comment.author
                     if (quoted) {
-                        content = "<div class='quote-reply'> 引用 " + comment.comment_order + "楼  @" + comment.author + "\n"
+                        content =  "> 引用 " + comment.comment_order + "楼  @" + comment.author + "\n\n"
 
-                        // content = content + ">" + comment.content.split("\n").join("\n>")
-                        content = content + "" + comment.content + "</div>\n\n"
+                        content = content + "<div class='quote-reply'>" +  comment.mdcontent + "</div>"
                     }
 
-                    this.commentForm.content = content + "\n\n\n"
+                    this.commentForm.content = content + "\n\n"
                 }
                 this.$refs.commentEditor.textAreaFocus()
             },
@@ -167,21 +167,23 @@
     .card-header {
         font-size: 1.5ch;
     }
-    p {
-        margin-top: 5px;
-        margin-bottom: 5px;
-    }
+
     .mavon-edtior-custom-comment {
         width: 100%;
         min-height: 200px;
     }
 
     .quote-reply {
-        background-color: #8f8f87;
+        background-color: #ccccc9;
         padding-left: 20px;
     }
 
 
+    blockquote {
+        padding:0 1em;
+        color: black;
+        border-left: 0.25em solid;
+     }
 
     .comment-status {
         text-align: right;

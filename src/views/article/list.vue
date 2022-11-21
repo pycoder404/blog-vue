@@ -15,13 +15,14 @@
                     <div class="article-desc">
                         <span>
                             @{{article.created_time }} {{ article.author }}, views:{{article.views_count}} likes:{{article.likes_count}} comments:{{article.comments_count}}
-                            <el-button icon="DeleteFilled" type="text"/>
+                            <el-button icon="DeleteFilled" text/>
                             <router-link
                                     :to="'/article/edit/'+ article.id"
                                     class="article-title"
                             ><el-button
                                     icon="EditPen"
-                                    type="text"/>
+                                    text
+                                    />
                         </router-link>
                         </span>
 

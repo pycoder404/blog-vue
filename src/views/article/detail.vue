@@ -24,12 +24,13 @@
                 <div class="article-desc">
                         <span>
                             @{{articleDetail.created_time }} {{ articleDetail.author }},views:{{articleDetail.views_count}} likes:{{articleDetail.likes_count}} comments:0
-                            <el-button icon="DeleteFilled" type="text"/>
+                            <el-button icon="DeleteFilled" text/>
                             <router-link
                                     :to="'/article/edit/'+ articleDetail.id"
                             ><el-button
                                     icon="EditPen"
-                                    type="text"/>
+                                    text
+                                    />
                         </router-link>
                         </span>
                 </div>
@@ -75,7 +76,7 @@
         },
 
         created() {
-            this.articleId = this.$route.params && this.$route.params.id
+            this.articleId = this.$route.params && Number(this.$route.params.id)
             this.fetchData(this.articleId)
             // Why need to make a copy of this.$route here?
             // Because if you enter this page and quickly switch tag, may be in the execution of the setTagsViewTitle function, this.$route is no longer pointing to the current page
