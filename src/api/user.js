@@ -8,7 +8,7 @@ export function login(data) {
     })
 }
 
-export function socialLogin(thirdPart,data) {
+export function socialLogin(thirdPart, data) {
     return request({
         url: '/api/user/login/' + thirdPart + '/',
         method: 'post',
@@ -30,3 +30,4 @@ export function logout() {
         method: 'post'
     })
 }
+

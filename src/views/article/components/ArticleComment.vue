@@ -8,9 +8,9 @@
                 :key="comment.id"
         >
             <template #header>
-                <div class="card-header" id="comment.comment_order">
+                <div class="card-header">
                     <!-- todo add isAuthor label -->
-                        <span>
+                    <span>
                        {{ comment.comment_order}}楼  <b>{{comment.author}}</b>  @<span>{{comment.created_time}} </span>
                     </span>
 

@@ -69,6 +69,7 @@ router.beforeEach(async (to, from, next) => {
                     // get user info
                     // question: roles must be a object array! such as: ['admin'] or ,['developer','editor']
                     // question  这里的roles是user/GetInfo如何反馈的，如何只反馈roles的
+                    // note: await 's result and 对象解构赋值
                     const { roles } = await store.dispatch('user/getInfo')
                     console.log(roles)
                     // // generate accessible routes map based on roles

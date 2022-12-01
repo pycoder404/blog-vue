@@ -48,13 +48,15 @@ const mutations = {
     }
 }
 
+
+
 const actions = {
     // user login
     login({commit}, userInfo) {
         // console.info("login in store")
         const {username, password} = userInfo
         return new Promise((resolve, reject) => {
-            login({ username: username.trim(), password: password }).then(response => {
+            login({username: username.trim(), password: password}).then(response => {
                 const data = response
                 // console.log("login done")
                 commit('SET_ACCESS_TOKEN', data.access)
@@ -71,14 +73,7 @@ const actions = {
     },
 
     socialLogin({commit}, oauthInfo) {
-        // console.info("login in store")
-        // console.info(thirdPart)
-        // console.info("xx")
-        // console.info(oauthCode)
-        // fixme 这里后续应该直接获取到github的access token发送到后端去
-        // fixme 这样后端就不用写callback url即可
         const {thirdPart, oauthCode} = oauthInfo
-
         const data = {code: oauthCode}
         return new Promise((resolve, reject) => {
             socialLogin(thirdPart, data).then(response => {
@@ -104,11 +99,7 @@ const actions = {
     getInfo({commit, state}) {
         return new Promise((resolve, reject) => {
             getInfo(state.accessToken).then(response => {
-                // console.log('response is:',response)
-                // const { data } = response
                 const data = response
-                // console.log('data is:',data)
-
                 if (!data) {
                     reject('Verification failed, please Login again.')
                 }
