@@ -8,13 +8,22 @@ import getPageTitle from '@/utils/get-page-title'
 
 NProgress.configure({showSpinner: false}) // NProgress Configuration
 // todo permission，博客相对后台管理系统只需要管理部分的路由即可
-const whiteList = ['/login', '/article/list','/auth-redirect','/login/github'] // no redirect whitelist
+// const whiteList = ['/login', '/article/list', '/login/github', '/article/detail'] // no redirect whitelist
+
+function checkPermission(roles, to) {
+    console.info("check permission")
+    const permittedRoles = to.meta.roles
+    let accessRoles = roles.filter(function (v) {
+        permittedRoles.indexOf(v) > -1
+    })
+    return accessRoles.length > 0
+}
 
 router.beforeEach(async (to, from, next) => {
     // start progress bar
     NProgress.start()
-    // console.log("before route change")
-    // console.log(to.path)
+    console.log("before route change")
+    console.log(to.path)
     // set page title
     document.title = getPageTitle(to.meta.title)
     // console.info(to)
@@ -28,12 +37,12 @@ router.beforeEach(async (to, from, next) => {
             delete to.query.code
             delete to.query.thirdPart
             // console.info("begin to social auth login")
-            await store.dispatch('user/socialLogin',{'thirdPart': thirdPart, 'oauthCode': oauthCode})
+            await store.dispatch('user/socialLogin', {'thirdPart': thirdPart, 'oauthCode': oauthCode})
             // console.info("social login done")
         } catch (error) {
             // remove token and go to login page to re-login
             await store.dispatch('user/resetToken')
-            ElMessage.error('Error in login by ',thirdPart)
+            ElMessage.error('Error in login by ', thirdPart)
             next({...to, replace: true})
             NProgress.done()
         }
@@ -41,66 +50,56 @@ router.beforeEach(async (to, from, next) => {
     }
 
     // determine whether the user has logged in
+    console.info("check if hastoken")
+    let hasPagePermission = false
     const hasAccessToken = getAccessToken()
     if (hasAccessToken) {
-        console.log("has access token:",hasAccessToken)
-        // TODO  添加对accessToken的过期检查和refresh
-        // fixme change to check permissions
+        console.info("hastoken")
 
-        if (to.path === '/login') {
-            // if is logged in, redirect to the home page
-                const next_path = to.query && to.query.redirect ? to.query.redirect : '/'
-                next({path: next_path})
-            NProgress.done() // hack: https://github.com/PanJiaChen/vue-element-admin/pull/2939
+        let roles = store.getters.roles && store.getters.roles.length > 0
+        if (roles) {
+            console.info("has roles")
+
+            hasPagePermission = checkPermission(roles, to)
         } else {
-            // determine whether the user has obtained his permission roles through getInfo
-            console.log("check is has roles")
-            // console.log(store.getters.roles)
-            // note Ctrl + F5强制刷新界面，对store有啥影响吗，为啥会导致没有roles，重新获取Info？?
-            // note: 因为store是存在内存中的，所以每次刷新就会判断为空，需要重新获取数据，而cookie保存在本地，所以刷新不会丢失
-            const hasRoles = store.getters.roles && store.getters.roles.length > 0
-            if (hasRoles) {
-                console.log("yes has roles")
-                next()
-                console.log('next done')
-            } else {
-                console.log('can not get roles from store')
-                try {
-                    // get user info
-                    // question: roles must be a object array! such as: ['admin'] or ,['developer','editor']
-                    // question  这里的roles是user/GetInfo如何反馈的，如何只反馈roles的
-                    // note: await 's result and 对象解构赋值
-                    const { roles } = await store.dispatch('user/getInfo')
-                    console.log(roles)
-                    // // generate accessible routes map based on roles
-                    // const accessRoutes = await store.dispatch('permission/generateRoutes', roles)
-                    //
-                    // // dynamically add accessible routes
-                    // router.addRoutes(accessRoutes)
-
-                    // hack method to ensure that addRoutes is complete
-                    // set the replace: true, so the navigation will not leave a history record
-                    next({...to, replace: true})
-                } catch (error) {
-                    // remove token and go to login page to re-login
-                    await store.dispatch('user/resetToken')
-                    ElMessage.error(error || 'Has Error')
-                    next(`/login?redirect=${to.path}`)
-                    NProgress.done()
-                }
+            // 对页面进行刷新后重新获取下info
+            try {
+                // get user info
+                // question  这里的roles是user/GetInfo如何反馈的，如何只反馈roles的
+                // note: await 's result and 对象解构赋值
+                let {roles} = await store.dispatch('user/getInfo')
+                hasPagePermission = checkPermission(roles, to)
+                next({...to, replace: true})
+            } catch (error) {
+                // remove token and go to login page to re-login
+                await store.dispatch('user/resetToken')
+                ElMessage.error(error || 'Has Error')
+                next({...from, replace: true})
+                // NProgress.done()
             }
         }
+
     } else {
         /* has no token*/
+        let roles = ['anonymous']
+        hasPagePermission = checkPermission(roles, to)
 
-        if (whiteList.indexOf(to.path) !== -1) {
-            // in the free login whitelist, go directly
-            next()
-        } else {
-            // other pages that do not have permission to access are redirected to the login page.
-            next(`/login?redirect=${to.path}`)
-            NProgress.done()
-        }
+    }
+    console.info("check permission done")
+    console.log(hasPagePermission)
+    if (hasPagePermission) {
+        console.info("has permission done")
+
+        next({...to, replace: true})
+        // NProgress.done()
+
+    } else {
+        ElMessage.error("Access denied")
+        console.info("access denied permission done")
+
+        next({...from, replace: true})
+        // NProgress.done()
+
     }
 })
 
@@ -108,3 +107,4 @@ router.afterEach(() => {
     // finish progress bar
     NProgress.done()
 })
+

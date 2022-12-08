@@ -36,7 +36,6 @@
                 // const url = 'https://graph.qq.com/oauth2.0/authorize?response_type=code&client_id=' + client_id + '&redirect_uri=' + redirect_uri
                 const thirdPart = window.location.search === '' ? "?thirdPart=github" : "&thirdPart=github"
                 const redirect_uri = window.location.href + thirdPart
-                console.info(redirect_uri)
                 return this.githubAuthBaseUri  + GITHUBCLIENTID + "&redirect_uri=" + encodeURIComponent(redirect_uri)
             }
         }

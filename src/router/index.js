@@ -26,29 +26,29 @@ const routes = [
                 path: 'list',
                 component: ArticleList,
                 name: 'articleListPage',
-                meta: { title: 'ArticleList'}
+                meta: {
+                    title: 'ArticleList', roles: ['anonymous','guest']
+                }
 
             },
             {
                 path: 'detail/:id(\\d+)/',
                 component: ArticleDetail,
                 name: 'articleDetailPage',
-                meta: { title: 'ArticleDetail'}
+                meta: {title: 'ArticleDetail', roles: ['anonymous','guest']}
 
             },
             {
                 path: 'edit/:id(\\d+)/',
                 component: ArticleEdit,
                 name: 'articleEditPage',
-                meta: { title: 'ArticleEdit'}
-
-
+                meta: {title: 'ArticleEdit', roles: ['admin']}
             },
             {
                 path: 'create',
                 component: ArticleCreate,
                 name: 'articleCreatePage',
-                meta: { title: 'ArticleCreate'}
+                meta: {title: 'ArticleCreate', roles: ['admin']}
             }
         ]
     }
