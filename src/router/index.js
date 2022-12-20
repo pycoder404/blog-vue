@@ -11,23 +11,32 @@ const routes = [
     {
         path: '/',
         component: LayOut,
-        redirect: '/article'
+        redirect: '/article',
+        meta: {
+            title: 'ArticleList', roles: ['anonymous', 'guest']
+        }
     },
     {
-        path: '/login/:thirdPart?',
+        path: '/login',
         component: LoginPage,
+        meta: {
+            title: 'ArticleList', roles: ['anonymous', 'guest']
+        }
     },
     {
         path: '/article',
         component: LayOut,
         redirect: '/article/list',
+        meta: {
+            title: 'ArticleList', roles: ['anonymous', 'guest']
+        },
         children: [
             {
                 path: 'list',
                 component: ArticleList,
                 name: 'articleListPage',
                 meta: {
-                    title: 'ArticleList', roles: ['anonymous','guest']
+                    title: 'ArticleList', roles: ['anonymous', 'guest']
                 }
 
             },
@@ -35,7 +44,7 @@ const routes = [
                 path: 'detail/:id(\\d+)/',
                 component: ArticleDetail,
                 name: 'articleDetailPage',
-                meta: {title: 'ArticleDetail', roles: ['anonymous','guest']}
+                meta: {title: 'ArticleDetail', roles: ['anonymous', 'guest']}
 
             },
             {

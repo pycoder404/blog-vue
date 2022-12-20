@@ -11,19 +11,22 @@ NProgress.configure({showSpinner: false}) // NProgress Configuration
 // const whiteList = ['/login', '/article/list', '/login/github', '/article/detail'] // no redirect whitelist
 
 function checkPermission(roles, to) {
-    console.info("check permission")
+    // console.info("check permission")
     const permittedRoles = to.meta.roles
-    let accessRoles = roles.filter(function (v) {
-        permittedRoles.indexOf(v) > -1
+    // console.info(roles)
+    let accessRoles = roles.filter(v => {
+         return permittedRoles.indexOf(v) > -1
     })
+    // console.log(accessRoles)
+
     return accessRoles.length > 0
 }
 
 router.beforeEach(async (to, from, next) => {
     // start progress bar
     NProgress.start()
-    console.log("before route change")
-    console.log(to.path)
+    // console.log("before route change")
+    // console.log(to.path)
     // set page title
     document.title = getPageTitle(to.meta.title)
     // console.info(to)
@@ -50,17 +53,16 @@ router.beforeEach(async (to, from, next) => {
     }
 
     // determine whether the user has logged in
-    console.info("check if hastoken")
+    // console.info("check if hastoken")
     let hasPagePermission = false
     const hasAccessToken = getAccessToken()
     if (hasAccessToken) {
-        console.info("hastoken")
+        // console.info("hastoken")
 
-        let roles = store.getters.roles && store.getters.roles.length > 0
-        if (roles) {
-            console.info("has roles")
-
-            hasPagePermission = checkPermission(roles, to)
+        let hasRoles = store.getters.roles && store.getters.roles.length > 0
+        if (hasRoles) {
+            // console.info("has roles")
+            hasPagePermission = await checkPermission(store.getters.roles, to)
         } else {
             // 对页面进行刷新后重新获取下info
             try {
@@ -68,35 +70,48 @@ router.beforeEach(async (to, from, next) => {
                 // question  这里的roles是user/GetInfo如何反馈的，如何只反馈roles的
                 // note: await 's result and 对象解构赋值
                 let {roles} = await store.dispatch('user/getInfo')
-                hasPagePermission = checkPermission(roles, to)
-                next({...to, replace: true})
+                hasPagePermission = await checkPermission(roles, to)
+                // next({...to, replace: true})
             } catch (error) {
                 // remove token and go to login page to re-login
                 await store.dispatch('user/resetToken')
                 ElMessage.error(error || 'Has Error')
-                next({...from, replace: true})
+                // next({...from, replace: true})
                 // NProgress.done()
             }
         }
 
     } else {
         /* has no token*/
+        // console.log("not has token")
         let roles = ['anonymous']
-        hasPagePermission = checkPermission(roles, to)
-
+        hasPagePermission = await checkPermission(roles, to)
     }
-    console.info("check permission done")
-    console.log(hasPagePermission)
+    // console.info("check permission done")
+    // console.log(hasPagePermission)
+    // console.info(to)
     if (hasPagePermission) {
-        console.info("has permission done")
+        // console.info("has permission done")
+        if (to.path === '/login'){
+            //  if is logged in, redirect to redirect page or home page
+            if(hasAccessToken){
+                const next_path = to.query.redirect || "/"
+                next({path:next_path})
+            }else{
+                next()
+            }
 
-        next({...to, replace: true})
+        }else {
+            next()
+        }
         // NProgress.done()
 
     } else {
         ElMessage.error("Access denied")
-        console.info("access denied permission done")
-
+        // console.info("access denied permission done")
+        // 如果只是next()，则会在权限不足的情况下仍然打开创建文档的界面
+        // todo 还需要捋捋这里的实现
+        // next()
         next({...from, replace: true})
         // NProgress.done()
 
