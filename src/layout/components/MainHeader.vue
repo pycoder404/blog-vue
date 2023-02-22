@@ -54,9 +54,6 @@
         },
         data() {
             return {
-                activeIndex: ref('1'),
-                activeIndex2: ref('2')
-
             }
 
         },
