@@ -31,20 +31,30 @@
                     </el-button>
                 </div>
             </template>
-            <div v-hlcode  class="comment-body" v-html="comment.mdcontent"></div>
+            <div v-hlcode class="comment-body" v-html="comment.mdcontent"></div>
         </el-card>
         <el-divider></el-divider>
         <div>
             <el-form ref="commentFormRef" :model="commentForm">
                 <el-form-item prop="content">
-                    <mavon-editor
-                            ref="commentEditor"
-                            class="mavon-edtior-custom-comment"
-                            code-style="vs2015"
-                            placeholder="发表评论，支持markdown语法"
-                            :ishljs="true"
-                            v-model="commentForm.content"
-                    />
+                    <!--                    <mavon-editor-->
+                    <!--                            ref="commentEditor"-->
+                    <!--                            class="mavon-edtior-custom-comment"-->
+                    <!--                            code-style="vs2015"-->
+                    <!--                            placeholder="发表评论，支持markdown语法"-->
+                    <!--                            :ishljs="true"-->
+                    <!--                            v-model="commentForm.content"-->
+                    <!--                    />-->
+
+                    <!--todo tiny editor多个组件是分开加载的比较慢-->
+<!--                    <tiny-editor-->
+<!--                            api-key="iuykxb7ohtmpw9c8fboekzycycj1zxhqumwjm73lkm1cu2gl"-->
+<!--                            :init="{plugins:['wordcount','visualchars']}"-->
+<!--                    >-->
+<!--                    </tiny-editor>-->
+
+<!--                    <tiny-mce></tiny-mce>-->
+
                 </el-form-item>
             </el-form>
             <div class="comment-status">
@@ -62,10 +72,16 @@
 <script>
     import {getCommentList, createComment} from "@/api/comment";
     import {mapGetters} from 'vuex'
+    // import TinyEditor from '@tinymce/tinymce-vue'
+    // import TinyMce from '@/components/TinyMce'
 
     export default {
         name: 'ArticleComment',
-        components: {},
+        components: {
+            // TinyEditor: TinyEditor,
+            // TinyMce:TinyMce
+
+        },
         props: {
             articleId: {
                 type: Number
@@ -112,9 +128,9 @@
                     this.commentForm.replied_to = comment.comment_order
                     content = "> 回复 " + comment.comment_order + "楼  @" + comment.author
                     if (quoted) {
-                        content =  "> 引用 " + comment.comment_order + "楼  @" + comment.author + "\n\n"
+                        content = "> 引用 " + comment.comment_order + "楼  @" + comment.author + "\n\n"
 
-                        content = content + "<div class='quote-reply'>" +  comment.mdcontent + "</div>"
+                        content = content + "<div class='quote-reply'>" + comment.mdcontent + "</div>"
                     }
 
                     this.commentForm.content = content + "\n\n"
@@ -154,10 +170,11 @@
 
     .comment-item {
         margin-top: 10px;
-        padding:5px;
+        padding: 5px;
 
 
     }
+
     .comment-body {
         padding-left: 30px;
         font-size: small;
@@ -180,10 +197,10 @@
 
 
     blockquote {
-        padding:0 1em;
+        padding: 0 1em;
         color: black;
         border-left: 0.25em solid;
-     }
+    }
 
     .comment-status {
         text-align: right;

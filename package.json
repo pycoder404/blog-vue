@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@element-plus/icons-vue": "^2.0.6",
+    "@tinymce/tinymce-vue": "^5.0.0",
     "axios": "^0.26.1",
     "babel-plugin-transform-remove-console": "^6.9.4",
     "core-js": "^3.8.3",

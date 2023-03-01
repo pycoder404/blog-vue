@@ -19,7 +19,8 @@ import mavonEditor from 'mavon-editor'
 // note 这里引入的css能够全局使用
 import 'mavon-editor/dist/css/index.css'
 
-
+import TinyEditor from '@tinymce/tinymce-vue'
+// var Editor = require('@tinymce/tinymce-vue').default;
 
 const app = createApp(App)
 //
@@ -50,6 +51,6 @@ app.component('SearchIcon', Search)
 app.component('PlusIcon', Plus)
 app.component('UserIcon', User)
 app.component('LockIcon', Lock)
-app.use(router).use(store).use(ElementPlus).use(mavonEditor).mount('#app')
+app.use(router).use(store).use(TinyEditor).use(ElementPlus).use(mavonEditor).mount('#app')
 // app.use(ElementPlus, { size: 'small', zIndex: 5000 })
 // app.mount('#app')
