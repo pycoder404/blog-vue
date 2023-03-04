@@ -9,7 +9,10 @@ yarn-debug.log*
 yarn-error.log*
 package-lock.json
 tests/**/coverage/
-
+.env.production
+.env.prodebug
+.env.development
+.env.devdebug
 nohup.out
 
 # Editor directories and files
