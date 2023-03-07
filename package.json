@@ -3,8 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
+    "serve": "vue-cli-service serve --mode dev --port 28080",
+    "local": "vue-cli-service build --mode local",
+    "staging": "vue-cli-service serve --mode staging --port 28080",
+    "build": "vue-cli-service build --mode pro",
     "report": "vue-cli-service build --report",
     "lint": "vue-cli-service lint"
   },

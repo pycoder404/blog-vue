@@ -17,7 +17,7 @@
     import IconGithub from "@/components/SvgIcon/components/IconGithub";
     import IconWechat from "@/components/SvgIcon/components/IconWechat";
 
-    const GITHUBCLIENTID = process.env.VUE_APP_GITHUB_CLIENTID
+    const GITHUB_CLIENT_ID = process.env.VUE_APP_GITHUB_CLIENT_ID
     export default {
         name: 'SocialSignin',
         components: {
@@ -36,7 +36,7 @@
                 // const url = 'https://graph.qq.com/oauth2.0/authorize?response_type=code&client_id=' + client_id + '&redirect_uri=' + redirect_uri
                 const thirdPart = window.location.search === '' ? "?thirdPart=github" : "&thirdPart=github"
                 const redirect_uri = window.location.href + thirdPart
-                return this.githubAuthBaseUri  + GITHUBCLIENTID + "&redirect_uri=" + encodeURIComponent(redirect_uri)
+                return this.githubAuthBaseUri  + GITHUB_CLIENT_ID + "&redirect_uri=" + encodeURIComponent(redirect_uri)
             }
         }
         ,
