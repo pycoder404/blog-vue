@@ -18,6 +18,16 @@
                             v-model="postForm.content"
                             @imgAdd="handleImgUpload"
                     />
+
+<!--                    <tiny-mce-->
+<!--                    ref="editor"-->
+<!--                    class="mavon-edtior-custom"-->
+<!--                    v-model="postForm.content"-->
+<!--                    height="800"-->
+<!--                    width=100%-->
+<!--                    >-->
+<!--                    </tiny-mce>-->
+
                 </el-form-item>
             </div>
 
@@ -90,6 +100,7 @@
     import {getArticleDetail, createArticle, updateArticle} from '@/api/article'
     import {getTagList,createTag} from '@/api/tag'
     import {getCategoryList,createCategory} from '@/api/category'
+    // import TinyMce from '@/components/TinyMce'
     // import { CommentDropdown, PlatformDropdown, SourceUrlDropdown } from './Dropdown'
     // import axios from 'axios'
     import {uploadFile} from "@/api/files";
@@ -100,6 +111,7 @@
         components: {
             // Upload,
             StickyNav,
+            // TinyMce,
             // CommentDropdown,
             // PlatformDropdown,
             // SourceUrlDropdown
