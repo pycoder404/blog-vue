@@ -1,8 +1,9 @@
 <template>
     <div style="background-color: #f7f5f5">
-        <div v-for="article in articleList" :key="article.id" >
+        <div v-for="article in articleList" :key="article.id">
             <el-row style="background-color: white">
-                <el-col :span="14" :offset="5" class="article-main" >
+                <el-col :span="14" :offset="5" class="article-main">
+
                     <div class="article-title">
                         <router-link
                                 :to="'/article/detail/'+ article.id"
@@ -22,29 +23,37 @@
                             ><el-button
                                     icon="EditPen"
                                     text
-                                    />
+                            />
                         </router-link>
                         </span>
-
                     </div>
+
+                    <!--                    <el-divider style="margin: 1px 0;"/>-->
                 </el-col>
             </el-row>
-            <!--        <el-divider style="margin: 10px 0;"/>-->
         </div>
     </div>
 
-
+    <pagination
+            :total="total"
+            :background="true"
+            v-model:page="listQuery.page"
+            v-model:limit="listQuery.pagesize"
+            @pagination="getList"
+            @update="updatePage"
+    />
 </template>
 
 <script>
     import {getArticleList} from '@/api/article'
+    import PaginNation from '@/components/PagiNation'
     // import SvgIcon from '@/components/SvgIcon/index'
 
     export default {
         name: 'ArticleList',
-        // components:{
-        //     SvgIcon
-        // },
+        components: {
+            Pagination: PaginNation,
+        },
         filters: {
             statusFilter(status) {
                 const statusMap = {
@@ -58,11 +67,11 @@
         data() {
             return {
                 articleList: null,
-                articleCount: 0,
                 listLoading: true,
+                total: 0,
                 listQuery: {
                     page: 1,
-                    pagesize: 20
+                    pagesize: 10
                 }
             }
         },
@@ -72,13 +81,25 @@
         methods: {
             getList() {
                 this.listLoading = true
-                Object.assign(this.listQuery,this.$route.query)
+                // fixme 这里在前端的url界面没有显示 ?page=1&pagesize=10,并且这里如果地址栏如果人工输入，会导致pagination 显示错乱
+                Object.assign(this.listQuery, this.$route.query)
                 getArticleList(this.listQuery).then(response => {
                     this.articleList = response.data
-                    this.articleCount = response.count
+                    this.total = response.count
                     this.listLoading = false
-                })
+                }).catch(() => {
+                    // console.info('error in page')
+                    // console.info(this.$route)
+                    // this.$router.push({path:this.$route.path})
+                    this.listLoading = false
+                }
+
+                )
+            },
+            updatePage(name, value) {
+                console.log(name, value)
             }
+
 
         }
     }
@@ -96,7 +117,7 @@
     }
 
     .article-main {
-        margin-top:10px;
+        margin-top: 10px;
         box-shadow: 1px 2px 3px #ddd;
         border: 1px solid #ddd;
         border-radius: 5px;

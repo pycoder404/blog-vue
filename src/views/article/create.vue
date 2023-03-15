@@ -19,14 +19,14 @@
                             @imgAdd="handleImgUpload"
                     />
 
-<!--                    <tiny-mce-->
-<!--                    ref="editor"-->
-<!--                    class="mavon-edtior-custom"-->
-<!--                    v-model="postForm.content"-->
-<!--                    height="800"-->
-<!--                    width=100%-->
-<!--                    >-->
-<!--                    </tiny-mce>-->
+                    <!--                    <tiny-mce-->
+                    <!--                    ref="editor"-->
+                    <!--                    class="mavon-edtior-custom"-->
+                    <!--                    v-model="postForm.content"-->
+                    <!--                    height="800"-->
+                    <!--                    width=100%-->
+                    <!--                    >-->
+                    <!--                    </tiny-mce>-->
 
                 </el-form-item>
             </div>
@@ -48,7 +48,7 @@
 
             <el-dialog v-model="addCategoryDialogVisible" title="添加分类">
 
-                        <el-input v-model="newCategory" />
+                <el-input v-model="newCategory"/>
                 <template #footer>
                       <span class="dialog-footer">
                         <el-button @click="addCategoryDialogVisible = false">Cancel</el-button>
@@ -72,7 +72,7 @@
             </el-form-item>
 
             <el-dialog v-model="addTagDialogVisible" title="添加标签">
-                <el-input v-model="newTag" />
+                <el-input v-model="newTag"/>
                 <template #footer>
                       <span class="dialog-footer">
                         <el-button @click="addTagDialogVisible = false">Cancel</el-button>
@@ -98,8 +98,8 @@
     import StickyNav from '@/components/StickyNav' // 粘性header组件
     // import { validURL } from '@/utils/validate'
     import {getArticleDetail, createArticle, updateArticle} from '@/api/article'
-    import {getTagList,createTag} from '@/api/tag'
-    import {getCategoryList,createCategory} from '@/api/category'
+    import {getTagList, createTag} from '@/api/tag'
+    import {getCategoryList, createCategory} from '@/api/category'
     // import TinyMce from '@/components/TinyMce'
     // import { CommentDropdown, PlatformDropdown, SourceUrlDropdown } from './Dropdown'
     // import axios from 'axios'
@@ -126,10 +126,10 @@
             const validateRequire = (rule, value, callback) => {
                 if (value === '') {
                     this.$message({
-                        message: rule.field + '为必传项',
+                        message: rule.field + '必填项,请认真填写',
                         type: 'error'
                     })
-                    callback(new Error(rule.field + '为必传项'))
+                    callback(new Error(rule.field + '必填项,请认真填写'))
                 } else {
                     callback()
                 }
@@ -146,9 +146,9 @@
 
                 },
                 loading: false,
-                addCategoryDialogVisible:false,
-                addTagDialogVisible:false,
-                newCategory:'',
+                addCategoryDialogVisible: false,
+                addTagDialogVisible: false,
+                newCategory: '',
                 newTag: '',
                 rules: {
                     title: [{validator: validateRequire}],
@@ -173,9 +173,6 @@
                     this.postForm.display_time = new Date(val)
                 }
             }
-            // articleCategory:{
-            //     return this.articleCategories
-            // }
         },
         created() {
             // fixme 如果有异常了，不应该进入编辑界面，防止对原有文章的破坏
@@ -239,13 +236,13 @@
                 const formData = new FormData();
                 formData.append('upload_file', $file)
                 const that = this;
-                uploadFile(formData).then((res)=>{
+                uploadFile(formData).then((res) => {
                     const img_url = res.data.url
                     that.$refs.editor.$img2Url(pos, img_url)
 
                 }).catch(err => {
-                          console.log(err)
-                        })
+                    console.log(err)
+                })
                 // const formData = new FormData()
                 // formData.append('upload_file', blobInfo.blob(), blobInfo.filename())
                 // axios({
@@ -300,11 +297,11 @@
                                     type: 'success',
                                     duration: 2000
                                 })
-                                this.$router.push({name:'articleDetailPage',params:{id:resp.id}})
+                                this.$router.push({name: 'articleDetailPage', params: {id: resp.id}})
                             })
-                            .catch((err) => {
-                                console.log("Error in update article",err)
-                            })
+                                .catch((err) => {
+                                    console.log("Error in update article", err)
+                                })
                         } else {
                             createArticle(this.postForm).then((res) => {
                                 const resp = res
@@ -314,11 +311,11 @@
                                     type: 'success',
                                     duration: 2000
                                 })
-                                this.$router.push({name:'articleDetailPage',params:{id:resp.id}})
+                                this.$router.push({name: 'articleDetailPage', params: {id: resp.id}})
                             })
-                            .catch((err) => {
-                                console.log("Error in create article",err)
-                            })
+                                .catch((err) => {
+                                    console.log("Error in create article", err)
+                                })
                         }
                         this.loading = false
                     } else {
@@ -328,7 +325,7 @@
                 })
             },
             submitToCreateCategory() {
-                const data={title:this.newCategory}
+                const data = {title: this.newCategory}
                 createCategory(data).then(() => {
                     this.addCategoryDialogVisible = false
                     this.fetchArticleCategory()
@@ -340,25 +337,25 @@
                     })
                 })
                     .catch((err) => {
-                        console.log("Error: ",err)
+                        console.log("Error: ", err)
                     })
             },
-        submitToCreateTag() {
-            const data={title:this.newTag}
-            createTag(data).then(() => {
-                this.addTagDialogVisible = false
-                this.fetchArticleTag()
-                this.$notify({
-                    title: 'Success',
-                    message: 'Create Successfully',
-                    type: 'success',
-                    duration: 2000
+            submitToCreateTag() {
+                const data = {title: this.newTag}
+                createTag(data).then(() => {
+                    this.addTagDialogVisible = false
+                    this.fetchArticleTag()
+                    this.$notify({
+                        title: 'Success',
+                        message: 'Create Successfully',
+                        type: 'success',
+                        duration: 2000
+                    })
                 })
-            })
-                .catch((err) => {
-                    console.log("Error: ",err)
-                })
-        }
+                    .catch((err) => {
+                        console.log("Error: ", err)
+                    })
+            }
         }
     }
 </script>

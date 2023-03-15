@@ -26,7 +26,7 @@
                             @{{articleDetail.created_time }} {{ articleDetail.author }},views:{{articleDetail.views_count}} likes:{{articleDetail.likes_count}} comments:0
                             <el-button icon="DeleteFilled" text/>
                             <router-link
-                                    :to="'/article/edit/'+ articleDetail.id"
+                                    :to="'/article/edit/'+ articleId"
                             ><el-button
                                     icon="EditPen"
                                     text
@@ -57,7 +57,6 @@
 
 <script>
     import {getArticleDetail} from '@/api/article'
-    // import SvgIcon from '@/components/SvgIcon/index'
 
     import LikeFavorite from "@/views/article/components/LikeFavorite"
     import CategoryAndTag from "@/views/article/components/CategoryAndTag"
@@ -90,10 +89,6 @@
                     const data = response
                     data['toc'] = response['toc'].replaceAll('<ul', '<ul class=article-toc')
                     this.articleDetail = data
-                    // just for test
-                    // this.postForm.title += `   Article Id:${this.postForm.id}`
-                    // this.postForm.content_short += `   Article Id:${this.postForm.id}`
-
                     // set tagsview title
                     // this.setTagsViewTitle()
                     //

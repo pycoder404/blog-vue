@@ -2,6 +2,7 @@
 /context/
 /log/
 node_modules/
+node_modules*
 dist/
 tmp/
 npm-debug.log*
