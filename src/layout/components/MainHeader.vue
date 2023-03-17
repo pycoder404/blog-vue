@@ -81,12 +81,12 @@
         background: #24292f;
         /*background:#304156;*/
         box-shadow: 0 1px 4px rgba(0, 21, 41, .08);
-        padding:16px 32px;
+        padding: 4px 32px;
         .left-menu {
             float: left;
             height: 100%;
             /*line-height: 30px;*/
-
+            padding:10px 1px;
 
             &:focus {
                 outline: none;
@@ -146,7 +146,7 @@
             .right-menu-item {
                 display: inline-block;
                 padding: 0 8px;
-                height: 100%;
+                margin: 8px 0;
                 font-size: 18px;
                 color: #5a5e66;
                 vertical-align: text-bottom;
