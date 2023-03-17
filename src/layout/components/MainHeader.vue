@@ -75,7 +75,7 @@
 
 <style lang="scss" scoped>
     .main-header {
-        height: 62px;
+        height: 52px;
         overflow: hidden;
         position: relative;
         background: #24292f;
@@ -85,7 +85,7 @@
         .left-menu {
             float: left;
             height: 100%;
-            line-height: 30px;
+            /*line-height: 30px;*/
 
 
             &:focus {
@@ -94,7 +94,7 @@
 
             .left-menu-item {
                 display: inline-block;
-                padding: 0 8px;
+                margin: 0 8px;
                 height: 100%;
                 font-size: 18px;
                 color: #FFFFFF;

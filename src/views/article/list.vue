@@ -1,47 +1,48 @@
 <template>
-    <div style="background-color: #f7f5f5">
-        <div v-for="article in articleList" :key="article.id">
-            <el-row style="background-color: white">
-                <el-col :span="14" :offset="5" class="article-main">
-
-                    <div class="article-title">
-                        <router-link
-                                :to="'/article/detail/'+ article.id"
-                                class="article-title"
-                        >{{article.title}}
-                        </router-link>
-                    </div>
-                    <el-divider border-style="dotted" style="margin: 1px 0;"/>
-
-                    <div class="article-desc">
-                        <span>
-                            @{{article.created_time }} {{ article.author }}, views:{{article.views_count}} likes:{{article.likes_count}} comments:{{article.comments_count}}
-                            <el-button icon="DeleteFilled" text/>
+    <div class="content-main">
+        <el-row style="background-color: white;">
+            <el-col :span="14" :offset="5">
+                <div v-for="article in articleList" :key="article.id">
+                    <div class="article-main">
+                        <div class="article-title">
                             <router-link
-                                    :to="'/article/edit/'+ article.id"
+                                    :to="'/article/detail/'+ article.id"
                                     class="article-title"
-                            ><el-button
-                                    icon="EditPen"
-                                    text
-                            />
-                        </router-link>
-                        </span>
-                    </div>
+                            >{{article.title}}
+                            </router-link>
+                        </div>
 
-                    <!--                    <el-divider style="margin: 1px 0;"/>-->
-                </el-col>
-            </el-row>
-        </div>
+                        <el-divider border-style="dotted" style="margin: 1px 0;"/>
+
+                        <div class="article-desc">
+                            <span>
+                                @{{article.created_time }} {{ article.author }}, views:{{article.views_count}} likes:{{article.likes_count}} comments:{{article.comments_count}}
+                                <el-button icon="DeleteFilled" text/>
+                                <router-link
+                                        :to="'/article/edit/'+ article.id"
+                                        class="article-title"
+                                ><el-button
+                                        icon="EditPen"
+                                        text/>
+                                </router-link>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <!--  <el-divider style="margin: 1px 0;"/>-->
+            </el-col>
+        </el-row>
+
+        <pagi-nation
+                :total="total"
+                :background="true"
+                v-model:page="listQuery.page"
+                v-model:limit="listQuery.pagesize"
+                @pagination="getList"
+        />
+
     </div>
 
-    <pagination
-            :total="total"
-            :background="true"
-            v-model:page="listQuery.page"
-            v-model:limit="listQuery.pagesize"
-            @pagination="getList"
-            @update="updatePage"
-    />
 </template>
 
 <script>
@@ -52,7 +53,7 @@
     export default {
         name: 'ArticleList',
         components: {
-            Pagination: PaginNation,
+            PagiNation: PaginNation,
         },
         filters: {
             statusFilter(status) {
@@ -92,12 +93,7 @@
                     // console.info(this.$route)
                     // this.$router.push({path:this.$route.path})
                     this.listLoading = false
-                }
-
-                )
-            },
-            updatePage(name, value) {
-                console.log(name, value)
+                })
             }
 
 
@@ -130,6 +126,17 @@
         font-weight: bold;
         color: black;
         text-decoration: none
+
+    }
+
+    .content-main {
+        height: 100%;
+        width: 100%;
+        display: flex;
+        background-color: #f7f5f5;
+        flex-direction: column;
+        justify-content: space-between;
+        box-sizing: border-box;
 
     }
 

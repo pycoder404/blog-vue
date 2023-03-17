@@ -31,8 +31,16 @@
                     </el-button>
                 </div>
             </template>
-            <div v-hlcode  class="comment-body" v-html="comment.mdcontent"></div>
+            <div v-hlcode class="comment-body" v-html="comment.mdcontent"></div>
         </el-card>
+        <pagi-nation
+                :total="commentCount"
+                :background="true"
+                :auto-scroll="false"
+                v-model:page="page"
+                v-model:limit="pagesize"
+                @pagination="getList"
+        />
         <el-divider></el-divider>
         <div>
             <el-form ref="commentFormRef" :model="commentForm">
@@ -61,11 +69,13 @@
 
 <script>
     import {getCommentList, createComment} from "@/api/comment";
+    import PaginNation from '@/components/PagiNation'
+
     import {mapGetters} from 'vuex'
 
     export default {
         name: 'ArticleComment',
-        components: {},
+        components: {PagiNation: PaginNation},
         props: {
             articleId: {
                 type: Number
@@ -78,6 +88,8 @@
                 tempRoute: {},
                 commentList: [],
                 commentCount: 0,
+                page: 1,
+                pagesize: 10,
                 commentForm: {
                     article_id: 0,
                     content: '', // comment 内容
@@ -98,12 +110,12 @@
         },
         methods: {
             getList() {
-                this.listLoading = true
-                const queryParams = {'article_id': this.articleId}
+                // this.listLoading = true
+                const queryParams = {'article_id': this.articleId, page: this.page, pagesize: this.pagesize}
                 getCommentList(queryParams).then(response => {
                     this.commentList = response.data
                     this.commentCount = response.count
-                    this.listLoading = false
+                    // this.listLoading = false
                 })
             },
             replyToSomeone(comment = undefined, quoted = false) {
@@ -112,9 +124,9 @@
                     this.commentForm.replied_to = comment.comment_order
                     content = "> 回复 " + comment.comment_order + "楼  @" + comment.author
                     if (quoted) {
-                        content =  "> 引用 " + comment.comment_order + "楼  @" + comment.author + "\n\n"
+                        content = "> 引用 " + comment.comment_order + "楼  @" + comment.author + "\n\n"
 
-                        content = content + "<div class='quote-reply'>" +  comment.mdcontent + "</div>"
+                        content = content + "<div class='quote-reply'>" + comment.mdcontent + "</div>"
                     }
 
                     this.commentForm.content = content + "\n\n"
@@ -122,7 +134,6 @@
                 this.$refs.commentEditor.textAreaFocus()
             },
             submitForm() {
-                console.log(this.postForm)
                 this.loading = true
                 this.commentForm.article_id = this.articleId
                 createComment(this.commentForm).then((res) => {
@@ -154,10 +165,11 @@
 
     .comment-item {
         margin-top: 10px;
-        padding:5px;
+        padding: 5px;
 
 
     }
+
     .comment-body {
         padding-left: 30px;
         font-size: small;
@@ -180,10 +192,10 @@
 
 
     blockquote {
-        padding:0 1em;
+        padding: 0 1em;
         color: black;
         border-left: 0.25em solid;
-     }
+    }
 
     .comment-status {
         text-align: right;

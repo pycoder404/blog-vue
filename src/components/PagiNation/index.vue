@@ -2,7 +2,7 @@
     <div :class="{'hidden':hidden}" class="pagination-container">
         <el-pagination
                 :background="background"
-                small="true"
+                :small="true"
                 v-model:current-page="currentPage"
                 v-model:page-size="pageSize"
                 :layout="layout"
@@ -17,7 +17,7 @@
 </template>
 
 <script>
-    // fixme why use this, @pycoder404
+    // scroll to page's top after page changed
     import { scrollTo } from '@/utils/scroll-to'
 
     export default {
@@ -40,7 +40,7 @@
             pageSizes: {
                 type: Array,
                 default() {
-                    return [10, 20, 30, 50]
+                    return [5, 10, 20, 30, 50]
                 }
             },
             layout: {
@@ -87,7 +87,9 @@
             //         scrollTo(0, 800)
             //     }
             // },
+            // fixme 修复在blog界面中， 给评论添加了pagination， 翻页后如何跳转到对应的位置（评论开始的地方）
             handleSizeChange() {
+                // page size change ,set page to 1st page
                 this.$emit('update:page', 1)
                 this.$emit('pagination')
                 if (this.autoScroll) {
