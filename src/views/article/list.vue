@@ -17,8 +17,9 @@
                         <div class="article-desc">
                             <span>
                                 @{{article.created_time }} {{ article.author }}, views:{{article.views_count}} likes:{{article.likes_count}} comments:{{article.comments_count}}
-                                <el-button icon="DeleteFilled" text/>
+                                <el-button v-if=false icon="DeleteFilled" text/>
                                 <router-link
+                                        v-if="false"
                                         :to="'/article/edit/'+ article.id"
                                         class="article-title"
                                 ><el-button
@@ -48,6 +49,7 @@
 <script>
     import {getArticleList} from '@/api/article'
     import PaginNation from '@/components/PagiNation'
+    import {mapGetters} from "vuex";
     // import SvgIcon from '@/components/SvgIcon/index'
 
     export default {
@@ -79,9 +81,14 @@
         created() {
             this.getList()
         },
+        computed: {
+            ...mapGetters([
+                'roles'
+            ])
+        },
         methods: {
             getList() {
-                this.listLoading = true
+                // this.listLoading = true
                 // fixme 这里在前端的url界面没有显示 ?page=1&pagesize=10,并且这里如果地址栏如果人工输入，会导致pagination 显示错乱
                 Object.assign(this.listQuery, this.$route.query)
                 getArticleList(this.listQuery).then(response => {

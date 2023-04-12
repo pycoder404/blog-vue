@@ -46,6 +46,7 @@
             <el-form ref="commentFormRef" :model="commentForm">
                 <el-form-item prop="content">
                     <mavon-editor
+                            :autofocus="false"
                             ref="commentEditor"
                             class="mavon-edtior-custom-comment"
                             code-style="vs2015"

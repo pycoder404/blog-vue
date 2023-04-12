@@ -31,9 +31,10 @@
                 </el-form-item>
             </div>
 
-            <el-form-item label="分类" prop="category">
+            <el-form-item style="margin-left:45px;" label="分类: " prop="category">
                 <el-radio-group v-model="postForm.category">
                     <el-radio-button
+                            class="mar-left"
                             v-for="category in articleCategories"
                             :key="category['title']"
                             :label="category['title']"
@@ -41,13 +42,32 @@
                     >
                         {{category['title']}}
                     </el-radio-button>
-                    <el-button icon="PlusIcon" @click="addCategoryDialogVisible=true">新建分类</el-button>
-
                 </el-radio-group>
+                <div class="mar-left">
+                    <el-button icon="PlusIcon" @click="addCategoryDialogVisible=true">新建分类</el-button>
+                </div>
+            </el-form-item>
+
+
+            <el-form-item style="margin-left:45px;" label='标签: ' prop="tags">
+                <el-checkbox-group
+                        v-model="postForm.tags"
+                >
+                    <el-checkbox
+                            class="mar-left"
+                            v-for="tag in articleTags"
+                            :key="tag['title']"
+                            :label="tag['title']"
+                            :value="tag['title']"
+                    />
+                </el-checkbox-group>
+                <div class="mar-left">
+                    <el-button icon="PlusIcon" @click="addTagDialogVisible=true">新建标签</el-button>
+                </div>
+
             </el-form-item>
 
             <el-dialog v-model="addCategoryDialogVisible" title="添加分类">
-
                 <el-input v-model="newCategory"/>
                 <template #footer>
                       <span class="dialog-footer">
@@ -56,20 +76,6 @@
                       </span>
                 </template>
             </el-dialog>
-
-            <el-form-item label='标签' prop="tags">
-                <el-checkbox-group
-                        v-model="postForm.tags"
-                >
-                    <el-checkbox
-                            v-for="tag in articleTags"
-                            :key="tag['title']"
-                            :label="tag['title']"
-                            :value="tag['title']"
-                    />
-                    <el-button icon="PlusIcon" @click="addTagDialogVisible=true">新建标签</el-button>
-                </el-checkbox-group>
-            </el-form-item>
 
             <el-dialog v-model="addTagDialogVisible" title="添加标签">
                 <el-input v-model="newTag"/>
@@ -80,14 +86,18 @@
                       </span>
                 </template>
             </el-dialog>
+
         </el-form>
 
         <sticky-nav
-                :class-name="'sub-navbar '+postForm.status"
-                style="padding: 0px 45px 15px 45px;"
+                class-name="sub-navbar"
+                style="padding: 0px 45px 0px 45px;"
         >
-            <el-button v-loading="loading" style="margin-left: 10px;" type="success" @click="submitForm">
-                Submit
+            <el-button v-loading="loading" type="success" @click="submitForm('published')">
+                Publish
+            </el-button>
+            <el-button v-loading="loading" style="margin-left: 10px;" type="success" @click="submitForm('draft')">
+                Save Draft
             </el-button>
         </sticky-nav>
     </div>
@@ -282,13 +292,14 @@
                 const title = 'Edit Article'
                 document.title = `${title} - ${this.postForm.id}`
             },
-            submitForm() {
+            submitForm(status = 'draft') {
                 console.log(this.postForm)
                 this.$refs.postFormRef.validate(valid => {
                     if (valid) {
                         this.loading = true
                         if (this.isEdit) {
                             const articleId = this.$route.params && this.$route.params.id
+                            this.postForm['status'] = status
                             updateArticle(articleId, this.postForm).then((res) => {
                                 const resp = res
                                 this.$notify({
@@ -391,6 +402,10 @@
             right: 10px;
             top: 0px;
         }
+    }
+
+    .mar-left {
+        margin-left: 10px;
     }
 
     .article-textarea ::v-deep {
