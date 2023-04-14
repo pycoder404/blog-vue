@@ -17,9 +17,9 @@
                         <div class="article-desc">
                             <span>
                                 @{{article.created_time }} {{ article.author }}, views:{{article.views_count}} likes:{{article.likes_count}} comments:{{article.comments_count}}
-                                <el-button v-if=false icon="DeleteFilled" text/>
+                                <el-button v-if=isAdmin icon="DeleteFilled" text/>
                                 <router-link
-                                        v-if="false"
+                                        v-if="isAdmin"
                                         :to="'/article/edit/'+ article.id"
                                         class="article-title"
                                 ><el-button
@@ -83,7 +83,8 @@
         },
         computed: {
             ...mapGetters([
-                'roles'
+                'isLogin',
+                'isAdmin',
             ])
         },
         methods: {

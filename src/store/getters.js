@@ -7,5 +7,7 @@ const getters = {
     username: state => state.user.username,
     introduction: state => state.user.introduction,
     roles: state => state.user.roles,
+    isLogin: state => state.user.roles.length > 0,
+    isAdmin: state => state.user.roles.indexOf('admin') > -1,
 }
 export default getters

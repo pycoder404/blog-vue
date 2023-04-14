@@ -4,34 +4,40 @@
             <router-link to="/" class="left-menu-item">HOME</router-link>
             <router-link to="/article/list" class="left-menu-item">LIST</router-link>
             <router-link to="/article/list" class="left-menu-item">ARCHIVE</router-link>
-            <router-link to="/article/create" class="left-menu-item">NEW</router-link>
+            <router-link v-if=isAdmin to="/article/create" class="left-menu-item">NEW</router-link>
 
         </div>
 
         <div class="right-menu">
-            <el-button class="right-menu-item"> <el-icon><SearchIcon /></el-icon></el-button>
+            <el-button class="right-menu-item">
+                <el-icon>
+                    <SearchIcon/>
+                </el-icon>
+            </el-button>
             <el-dropdown class="avatar-container right-menu-item hover-effect" trigger="click">
                 <div class="avatar-wrapper">
                     <el-avatar shape="square" :size="30" fit="fill" :src="avatar"></el-avatar>
-                    <el-icon><CaretBottom /></el-icon>
+                    <el-icon>
+                        <CaretBottom/>
+                    </el-icon>
                 </div>
 
                 <template #dropdown>
-                <el-dropdown-menu>
-                    <router-link to="/">
-                        <el-dropdown-item>Home</el-dropdown-item>
-                    </router-link>
-                    <router-link to="/article/create">
-                        <el-dropdown-item>New</el-dropdown-item>
-                    </router-link>
+                    <el-dropdown-menu>
+                        <router-link to="/">
+                            <el-dropdown-item>Home</el-dropdown-item>
+                        </router-link>
+                        <router-link to="/article/create">
+                            <el-dropdown-item>New</el-dropdown-item>
+                        </router-link>
 
-                    <a target="_blank" href="https://github.com/pycoder404/blog-vue">
-                        <el-dropdown-item>Github</el-dropdown-item>
-                    </a>
-                    <el-dropdown-item divided @click="logout">
-                        <span style="display:block;">Log Out</span>
-                    </el-dropdown-item>
-                </el-dropdown-menu>
+                        <a target="_blank" href="https://github.com/pycoder404/blog-vue">
+                            <el-dropdown-item>Github</el-dropdown-item>
+                        </a>
+                        <el-dropdown-item divided @click="logout">
+                            <span style="display:block;">Log Out</span>
+                        </el-dropdown-item>
+                    </el-dropdown-menu>
                 </template>
             </el-dropdown>
         </div>
@@ -45,7 +51,7 @@
     import {mapGetters} from 'vuex'
     // import Breadcrumb from '@/components/Breadcrumb'
     // import Hamburger from '@/components/Hamburger'
-    import {ref} from 'vue'
+    // import {ref} from 'vue'
     import SvgIcon from '@/components/SvgIcon/index'
 
     export default {
@@ -53,20 +59,23 @@
             SvgIcon
         },
         data() {
-            return {
-            }
+            return {}
 
         },
 
         computed: {
             ...mapGetters([
-                'avatar'
+                'avatar',
+                'isAdmin',
             ])
         },
 
         methods: {
             async logout() {
                 await this.$store.dispatch('user/logout')
+                // fixme if push to this.$route.fullPath, because the route path is not change,
+                // fixme so the page is not reloaded
+                // this.$router.push(this.$route.fullPath)
                 this.$router.push(`/login?redirect=${this.$route.fullPath}`)
             }
         }
@@ -82,11 +91,12 @@
         /*background:#304156;*/
         box-shadow: 0 1px 4px rgba(0, 21, 41, .08);
         padding: 4px 32px;
+
         .left-menu {
             float: left;
             height: 100%;
             /*line-height: 30px;*/
-            padding:10px 1px;
+            padding: 10px 1px;
 
             &:focus {
                 outline: none;
@@ -207,8 +217,6 @@
     .icon-padding {
         padding-bottom: 20px;
     }
-
-
 
 
 </style>
