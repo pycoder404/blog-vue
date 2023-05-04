@@ -2,13 +2,19 @@
     <div class="main-footer">
         <span>Copyright@pycoder404</span>
         <br>
-        <span>powered by pycoder404</span>
+        <span>{{ ICP_ID }}</span>
     </div>
 </template>
 
 <script>
+    const VUE_APP_ICP_ID = process.env.VUE_APP_ICP_ID
     export default {
-        name: "MainFooter"
+        name: "MainFooter",
+        data() {
+            return {
+                ICP_ID: VUE_APP_ICP_ID
+            }
+        }
     }
 </script>
 
