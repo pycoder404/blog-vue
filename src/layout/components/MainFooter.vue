@@ -2,17 +2,21 @@
     <div class="main-footer">
         <span>Copyright@pycoder404</span>
         <br>
-        <span>{{ ICP_ID }}</span>
+        <el-link href="https://beian.miit.gov.cn" type="info"> {{ ICP_ID }}</el-link>
+        <el-link href="https://beian.miit.gov.cn" type="info"> {{ POL_ICP_ID }}</el-link>
+
     </div>
 </template>
 
 <script>
     const VUE_APP_ICP_ID = process.env.VUE_APP_ICP_ID
+    const VUE_APP_POL_ICP_ID = process.env.VUE_APP_POL_ICP_ID
     export default {
         name: "MainFooter",
         data() {
             return {
-                ICP_ID: VUE_APP_ICP_ID
+                ICP_ID: VUE_APP_ICP_ID,
+                POL_ICP_ID:VUE_APP_POL_ICP_ID
             }
         }
     }
